@@ -2,11 +2,13 @@
   "name": "game-editor",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node app.js",
-    "dev": "node --watch app.js",
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "dotenv -e .env.test -- node --test --test-concurrency=1",
+    "test:migrate": "dotenv -e .env.test -- prisma migrate deploy",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
     "prisma:generate": "prisma generate"
@@ -23,6 +25,8 @@
     "jsonwebtoken": "^9.0.3"
   },
   "devDependencies": {
-    "prisma": "^7.8.0"
+    "dotenv-cli": "^7.4.4",
+    "prisma": "^7.8.0",
+    "supertest": "^7.2.2"
   }
 }
