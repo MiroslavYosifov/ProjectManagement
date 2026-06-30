@@ -7,7 +7,6 @@ import { validateUuidParam } from '../../validators/common/index.js';
 
 const router = Router();
 
-// Any member can see who else is on the project; only the owner can change it.
 router.get(
     '/projects/:projectId/members',
     Authentication.authenticate,

@@ -1,28 +1,29 @@
-// Обвивки около auth ендпойнтите на бекенда.
+import { apiFetch } from './client';
 
-import { request, saveSession, getAccessToken } from './client.js';
-
-// POST /api/auth/register → { user }. Не връща токени.
 export function register({ email, password, username }) {
-  return request('/auth/register', {
+  return apiFetch('/auth/register', {
     method: 'POST',
     body: { email, password, username },
+    auth: false,
   });
 }
 
-// POST /api/auth/login → { user, accessToken, refreshToken }. Запазва сесията.
-export async function login({ email, password }) {
-  const data = await request('/auth/login', {
+export function login({ email, password }) {
+  return apiFetch('/auth/login', {
     method: 'POST',
     body: { email, password },
+    auth: false,
   });
-  saveSession(data);
-  return data;
 }
 
-// POST /api/auth/logout (изисква Bearer access токен).
-export async function logout() {
-  if (getAccessToken()) {
-    await request('/auth/logout', { method: 'POST', auth: true });
-  }
+export function refresh(refreshToken) {
+  return apiFetch('/auth/refresh', {
+    method: 'POST',
+    body: { refreshToken },
+    auth: false,
+  });
+}
+
+export function logout() {
+  return apiFetch('/auth/logout', { method: 'POST' });
 }
