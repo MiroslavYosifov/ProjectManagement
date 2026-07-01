@@ -12,3 +12,13 @@ export function listProjects({ page = 1, limit = 20 } = {}) {
 export function getProject(id) {
   return apiFetch(`/projects/${id}`);
 }
+
+// POST /api/projects/:id -> { project: {...} }
+export function postProject({ name, description }) {
+  console.log("name", name)
+  return apiFetch(`/projects/`, {
+    method: 'POST',
+    body: { name, description },
+    auth: true,
+  });
+}

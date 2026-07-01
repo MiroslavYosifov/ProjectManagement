@@ -213,3 +213,26 @@ a {
   color: var(--muted);
   text-align: center;
 }
+
+.project-page {
+
+}
+
+.project-page .list-items {
+
+}
+
+.project-page .list-items ul {
+  padding: 0;
+}
+
+.project-page .list-items li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  color: var(--text);
+}
