@@ -22,3 +22,10 @@ export function postProject({ name, description }) {
     auth: true,
   });
 }
+
+export function deleteProject(id) {
+  return apiFetch(`/projects/${id}`, {
+    method: 'DELETE',
+    auth: true,
+  });
+}

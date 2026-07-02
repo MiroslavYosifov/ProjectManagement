@@ -182,7 +182,8 @@ a {
   color: var(--muted);
 }
 
-.form-field input {
+.form-field input,
+.form-field textarea {
   padding: 0.55rem 0.7rem;
   background: var(--bg);
   border: 1px solid var(--border);
@@ -192,7 +193,8 @@ a {
   font-size: 0.9rem;
 }
 
-.form-field input:focus {
+.form-field input:focus,
+.form-field textarea:focus {
   outline: none;
   border-color: var(--accent);
 }
@@ -218,6 +220,34 @@ a {
 
 }
 
+.project-page .form-container { 
+  display: none; 
+}
+
+.project-page .form-container.active {
+  display: block;
+}
+
+.project-page .form-container.form-create {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0f172aaf;
+}
+
+.project-page .form-container.form-create form {
+    position: absolute;
+    width: 98%;
+    max-width: 500px;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background:#202a42;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
 .project-page .list-items {
 
 }
@@ -235,4 +265,22 @@ a {
   border: 1px solid var(--border);
   border-radius: 0.5rem;
   color: var(--text);
+}
+
+.project-name { width: 30%; }
+.project-description { width: 40%; text-align: left; }
+
+.project-actions {
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.btn-delete {
+  background: var(--error);
+}
+
+.btn-delete:hover {
+  background: #ef4444;
 }

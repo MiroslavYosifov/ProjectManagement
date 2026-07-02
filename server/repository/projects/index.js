@@ -49,6 +49,7 @@ export class ProjectsRepository {
     }
 
     static async delete(id, client = prisma) {
-        await client.project.delete({ where: { id } });
+        const row = await client.project.delete({ where: { id } });
+        return toProject(row);
     }
 }
