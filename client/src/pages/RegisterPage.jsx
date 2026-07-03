@@ -1,5 +1,3 @@
-// Страница за регистрация: заглавие + RegisterForm + линк към вход.
-
 import { Link } from 'react-router-dom';
 
 import RegisterForm from '../components/auth/RegisterForm';

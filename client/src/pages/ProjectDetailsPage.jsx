@@ -1,20 +1,14 @@
-// Placeholder за детайлите на проект — показва id-то от URL-а и линк назад.
-// Пълните детайли (зареждане през getProject, сцени, членове) идват по-късно.
-
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import ProjectDetail from '../components/projects/ProjectDetail';
 
 export default function ProjectDetailsPage() {
-  const { id } = useParams();
-
   return (
-    <>
-      <h1>Project details</h1>
-      <p className="muted">
-        Project ID: <code>{id}</code>
-      </p>
+    <div className='project-detail-page'>
       <p>
         <Link to="/projects">← Back to projects</Link>
       </p>
-    </>
+      <h1>Project details</h1>
+      <ProjectDetail/>
+    </div>
   );
 }

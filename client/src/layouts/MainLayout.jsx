@@ -12,11 +12,11 @@ export default function MainLayout() {
     <>
       <nav className="app-nav">
         <div className="app-nav-left">
-          <Link to="/projects" className="app-nav-brand">
+          <Link to="/" className="app-nav-brand">
             Game Editor
           </Link>
           <div className="app-nav-links">
-            <NavLink to="/projects">Проекти</NavLink>
+            <NavLink to="/projects">Projects</NavLink>
           </div>
         </div>
 

@@ -6,11 +6,13 @@ import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import PageLoader from "./components/common/PageLoader";
 
+const HomePage = lazy(() => import("./pages/HomePage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
 const ProjectDetailsPage = lazy(() => import("./pages/ProjectDetailsPage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
+
 
 export default function App() {
   return (
@@ -25,7 +27,7 @@ export default function App() {
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
-            <Route index element={<Navigate to="/projects" replace />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/projects/:id" element={<ProjectDetailsPage />} />
           </Route>
