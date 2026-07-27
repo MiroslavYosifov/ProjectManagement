@@ -1,4 +1,5 @@
 import { ProjectMembersRepository } from '../../repository/projectMembers/index.js';
+import logger from '../../loggers/logger.js';
 
 // Roles are hierarchical: a higher rank implies every lower permission.
 // One ordered map drives every access check, so we never need separate
@@ -21,12 +22,13 @@ export class Authorization {
                     projectId: req.params.projectId,
                     userId: req.user.id,
                 });
-                // No membership at all: 404 so we don't reveal the project exists.
+
                 if (!role) {
                     return res.status(404).json({ message: 'Project not found' });
                 }
-                // Member, but rank too low: 403 — they already know it exists.
+
                 if (ProjectRole[role] < ProjectRole[minRole]) {
+                    logger.warn({}, 'Insufficient permissions');
                     return res.status(403).json({ message: 'Insufficient permissions' });
                 }
                 req.projectRole = role;

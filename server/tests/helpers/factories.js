@@ -2,7 +2,6 @@ import request from 'supertest';
 
 // Thin wrappers over the real endpoints so authz tests can set up an
 // owner/editor/viewer scenario without repeating supertest boilerplate.
-
 export async function createProject(app, token, { name = 'Test Project', description } = {}) {
     const res = await request(app)
         .post('/api/projects')

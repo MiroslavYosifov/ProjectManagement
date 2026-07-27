@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import logger from '../../loggers/logger.js';
 
 export class Authentication {
     
@@ -29,8 +30,10 @@ export class Authentication {
             next();
         } catch (error) {
             if (error.name === 'TokenExpiredError') {
+                logger.warn({}, 'Token is expired');
                 return res.status(401).json({ message: 'Token is expired' });
             }
+            logger.warn({}, 'Token is invalid');
             return res.status(401).json({ message: 'Token is invalid' });
         }
     }

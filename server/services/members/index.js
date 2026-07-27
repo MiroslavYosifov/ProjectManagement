@@ -1,6 +1,7 @@
 import { ProjectMembersRepository } from '../../repository/projectMembers/index.js';
 import { AuthRepository } from '../../repository/auth/index.js';
 import { AppError } from '../../errors/AppError.js';
+import logger from '../../loggers/logger.js';
 
 export class MembersService {
 
@@ -23,6 +24,7 @@ export class MembersService {
         }
 
         await ProjectMembersRepository.upsertRole({ projectId, userId: user.id, role });
+        logger.info({ projectId, userId: user.id, role }, 'Member role set');
         return { user_id: user.id, email: user.email, role };
     }
 
@@ -36,5 +38,6 @@ export class MembersService {
         if (removed === 0) {
             throw new AppError(404, 'Member not found');
         }
+        logger.info({ projectId, targetUserId }, 'Member removed');
     }
 }

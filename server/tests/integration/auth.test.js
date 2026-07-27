@@ -5,6 +5,7 @@ import request from 'supertest';
 import { app } from '../helpers/app.js';
 import { resetDb, disconnectDb } from '../helpers/db.js';
 import { registerAndLogin } from '../helpers/auth.js';
+import { mintToken, tamperToken } from '../helpers/jwt.js';
 
 before(resetDb);       // clean slate when the file starts
 beforeEach(resetDb);   // ...and before every test
@@ -13,7 +14,7 @@ after(disconnectDb);   // close the pool so the process can exit
 const VALID = { email: 'alice@example.com', password: 'password123', username: 'alice' };
 
 // ---------------------------------------------------------------------------
-// register
+// Register
 // ---------------------------------------------------------------------------
 test('POST /auth/register: 201 and returns the public user', async () => {
     const res = await request(app).post('/api/auth/register').send(VALID);
@@ -21,7 +22,7 @@ test('POST /auth/register: 201 and returns the public user', async () => {
     assert.equal(res.body.user.email, 'alice@example.com');
     assert.equal(res.body.user.username, 'alice');
     assert.ok(res.body.user.id);
-    assert.equal(res.body.user.password_hash, undefined); // never leak the hash
+    assert.equal(res.body.user.password_hash, undefined);
 });
 
 test('POST /auth/register: 409 on duplicate email', async () => {
@@ -38,7 +39,7 @@ test('POST /auth/register: 400 on invalid email', async () => {
 });
 
 // ---------------------------------------------------------------------------
-// login
+// Login
 // ---------------------------------------------------------------------------
 test('POST /auth/login: 200 with access + refresh tokens', async () => {
     await request(app).post('/api/auth/register').send(VALID);
@@ -60,7 +61,7 @@ test('POST /auth/login: 401 on wrong password', async () => {
 });
 
 // ---------------------------------------------------------------------------
-// refresh (rotation)
+// Refresh token
 // ---------------------------------------------------------------------------
 test('POST /auth/refresh: 200 rotates and the old token is then rejected', async () => {
     const { refreshToken } = await registerAndLogin(app, VALID);
@@ -93,7 +94,7 @@ test('POST /auth/refresh: 400 when no token supplied', async () => {
 });
 
 // ---------------------------------------------------------------------------
-// logout
+// Logout
 // ---------------------------------------------------------------------------
 test('POST /auth/logout: revokes the session so its refresh token stops working', async () => {
     const { accessToken, refreshToken } = await registerAndLogin(app, VALID);
@@ -109,5 +110,46 @@ test('POST /auth/logout: revokes the session so its refresh token stops working'
 
 test('POST /auth/logout: 401 without an access token', async () => {
     const res = await request(app).post('/api/auth/logout');
+    assert.equal(res.status, 401);
+});
+
+// ---------------------------------------------------------------------------
+// Authentication
+// ---------------------------------------------------------------------------
+
+test('GET /projects: 401 with an expired access token', async () => {
+    const token = mintToken({ expiresIn: '-10s' });
+    const res = await request(app)
+        .get('/api/projects')
+        .set('Authorization', `Bearer ${token}`);
+    assert.equal(res.status, 401);
+    assert.equal(res.body.message, 'Token is expired');
+});
+
+test('GET /projects: 401 with a token signed by the wrong secret', async () => {
+    const token = mintToken({ secret: 'not-the-real-secret' });
+    const res = await request(app)
+        .get('/api/projects')
+        .set('Authorization', `Bearer ${token}`);
+    assert.equal(res.status, 401);
+    assert.equal(res.body.message, 'Token is invalid');
+});
+
+test('GET /projects: 401 when a real token has its sub claim tampered with', async () => {
+    const { accessToken } = await registerAndLogin(app);
+    const tampered = tamperToken(accessToken, { payload: { sub: '00000000-0000-0000-0000-000000000000' } });
+
+    const res = await request(app)
+        .get('/api/projects')
+        .set('Authorization', `Bearer ${tampered}`);
+    assert.equal(res.status, 401);
+    assert.equal(res.body.message, 'Token is invalid');
+});
+
+test('GET /projects: 401 with an alg:none token', async () => {
+    const token = mintToken({ algorithm: 'none' });
+    const res = await request(app)
+        .get('/api/projects')
+        .set('Authorization', `Bearer ${token}`);
     assert.equal(res.status, 401);
 });
