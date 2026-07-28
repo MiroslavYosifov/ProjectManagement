@@ -1,9 +1,6 @@
 import { ProjectMembersRepository } from '../../repository/projectMembers/index.js';
 import logger from '../../loggers/logger.js';
 
-// Roles are hierarchical: a higher rank implies every lower permission.
-// One ordered map drives every access check, so we never need separate
-// "canView" / "canEdit" methods — just a different minRole threshold.
 export const ProjectRole = {
     VIEWER: 1,
     EDITOR: 2,
@@ -12,9 +9,6 @@ export const ProjectRole = {
 
 export class Authorization {
 
-    // Factory: returns middleware that allows the request only if the caller's
-    // role on req.params.projectId is at least minRole. Runs after
-    // Authentication.authenticate (which sets req.user) and validateUuidParam.
     static requireProjectRole(minRole) {
         return async (req, res, next) => {
             try {

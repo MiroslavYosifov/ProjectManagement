@@ -145,3 +145,41 @@ test('a VIEWER cannot add members -> 403', async () => {
     });
     assert.equal(res.status, 403);
 });
+
+test('an EDITOR cannot add members -> 403', async () => {
+    const { owner, member, project } = await setup();
+    await addMember(app, owner.accessToken, project.id, { email: 'member@example.com', role: 'EDITOR' });
+
+    const res = await addMember(app, member.accessToken, project.id, {
+        email: 'outsider@example.com',
+        role: 'VIEWER',
+    });
+    assert.equal(res.status, 403);
+});
+
+test('a VIEWER or EDITOR cannot remove members -> 403', async () => {
+    const { owner, member, outsider, project } = await setup();
+    await addMember(app, owner.accessToken, project.id, { email: 'member@example.com', role: 'VIEWER' });
+    await addMember(app, owner.accessToken, project.id, { email: 'outsider@example.com', role: 'EDITOR' });
+
+    const asViewer = await request(app)
+        .delete(`/api/projects/${project.id}/members/${outsider.user.id}`)
+        .set(...bearer(member.accessToken));
+    assert.equal(asViewer.status, 403);
+
+    const asEditor = await request(app)
+        .delete(`/api/projects/${project.id}/members/${member.user.id}`)
+        .set(...bearer(outsider.accessToken));
+    assert.equal(asEditor.status, 403);
+});
+
+test('addMember matches an already-registered user regardless of email casing', async () => {
+    const { owner, project } = await setup();
+
+    const res = await addMember(app, owner.accessToken, project.id, {
+        email: 'MEMBER@Example.com',
+        role: 'VIEWER',
+    });
+    assert.equal(res.status, 200);
+    assert.equal(res.body.member.email, 'member@example.com');
+});

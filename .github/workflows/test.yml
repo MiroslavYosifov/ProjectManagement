@@ -45,8 +45,8 @@ jobs:
         run: |
           cat > .env.test <<'EOF'
           PORT=3001
-          JWT_SECRET=TEST_SECRET_KEY
-          DATABASE_URL="postgresql://postgres:12345678@localhost:5433/game_editor_test_db?schema=public"
+          JWT_SECRET=ci_test_secret_key
+          DATABASE_URL="postgresql://postgres:postgres@localhost:5432/game_editor_test_db?schema=public"
           EOF
 
       - name: Apply Prisma migrations

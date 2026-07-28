@@ -40,6 +40,16 @@ test('non-member listing scenes -> 404', async () => {
     assert.equal(res.status, 404);
 });
 
+test('non-member DELETE scene -> 404', async () => {
+    const { owner, outsider, project } = await setupRoles();
+    const scene = await createScene(app, owner.accessToken, project.id, { name: 'S1' });
+
+    const res = await request(app)
+        .delete(`/api/projects/${project.id}/scenes/${scene.id}`)
+        .set(...bearer(outsider.accessToken));
+    assert.equal(res.status, 404);
+});
+
 // ---------------------------------------------------------------------------
 // VIEWER: can read, cannot create
 // ---------------------------------------------------------------------------
@@ -56,6 +66,16 @@ test('VIEWER: GET scenes 200, POST scene 403', async () => {
         .set(...bearer(viewer.accessToken))
         .send({ name: 'Nope' });
     assert.equal(post.status, 403);
+});
+
+test('VIEWER: DELETE scene -> 403', async () => {
+    const { owner, viewer, project } = await setupRoles();
+    const scene = await createScene(app, owner.accessToken, project.id, { name: 'S1' });
+
+    const res = await request(app)
+        .delete(`/api/projects/${project.id}/scenes/${scene.id}`)
+        .set(...bearer(viewer.accessToken));
+    assert.equal(res.status, 403);
 });
 
 // ---------------------------------------------------------------------------
@@ -121,6 +141,44 @@ test('POST scene: 400 on missing name', async () => {
         .post(`/api/projects/${project.id}/scenes`)
         .set(...bearer(editor.accessToken))
         .send({ data: {} });
+    assert.equal(res.status, 400);
+});
+
+test('POST scene: 400 when data is not a plain object', async () => {
+    const { editor, project } = await setupRoles();
+
+    const withString = await request(app)
+        .post(`/api/projects/${project.id}/scenes`)
+        .set(...bearer(editor.accessToken))
+        .send({ name: 'Bad data', data: 'not-an-object' });
+    assert.equal(withString.status, 400);
+
+    const withArray = await request(app)
+        .post(`/api/projects/${project.id}/scenes`)
+        .set(...bearer(editor.accessToken))
+        .send({ name: 'Bad data', data: [1, 2, 3] });
+    assert.equal(withArray.status, 400);
+});
+
+test('PUT scene: 400 when data is not a plain object', async () => {
+    const { editor, project } = await setupRoles();
+    const scene = await createScene(app, editor.accessToken, project.id, { name: 'S1' });
+
+    const res = await request(app)
+        .put(`/api/projects/${project.id}/scenes/${scene.id}`)
+        .set(...bearer(editor.accessToken))
+        .send({ data: [1, 2, 3] });
+    assert.equal(res.status, 400);
+});
+
+test('PUT scene: 400 when neither name nor data is provided', async () => {
+    const { editor, project } = await setupRoles();
+    const scene = await createScene(app, editor.accessToken, project.id, { name: 'S1' });
+
+    const res = await request(app)
+        .put(`/api/projects/${project.id}/scenes/${scene.id}`)
+        .set(...bearer(editor.accessToken))
+        .send({});
     assert.equal(res.status, 400);
 });
 
