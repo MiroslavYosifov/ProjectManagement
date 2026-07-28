@@ -57,10 +57,10 @@ export class ProjectsController {
 
     static async delete(req, res, next) {
         try {
-            const project = await ProjectsService.delete({
+            await ProjectsService.delete({
                 projectId: req.params.projectId,
             });
-            res.status(200).json({ id: project.id });
+            res.status(204).end();
         } catch (error) {
             next(error);
         }
