@@ -8,6 +8,7 @@ const MAX_PROJECTS_PER_USER = 20;
 export class ProjectsService {
 
     static async getAll({ userId, pagination }) {
+        
         // Access flows through membership, so this returns owned + shared projects.
         return ProjectMembersRepository.findProjectsByMember(userId, pagination);
     }

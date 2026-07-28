@@ -1,0 +1,58 @@
+name: Server Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: game_editor_test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+
+      - name: Install server dependencies
+        working-directory: server
+        run: npm ci
+
+      - name: Write server/.env.test for CI
+        working-directory: server
+        run: |
+          cat > .env.test <<'EOF'
+          PORT=3001
+          JWT_SECRET=TEST_SECRET_KEY
+          DATABASE_URL="postgresql://postgres:12345678@localhost:5433/game_editor_test_db?schema=public"
+          EOF
+
+      - name: Apply Prisma migrations
+        working-directory: server
+        run: npm run test:migrate
+
+      - name: Run tests
+        working-directory: server
+        run: npm test
