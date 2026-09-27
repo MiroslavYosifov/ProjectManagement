@@ -1,0 +1,67 @@
+import { projectsService } from "../../services/projects/index.js";
+
+function parsePagination(query) {
+    const page = Math.max(1, parseInt(query.page, 10) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(query.limit, 10) || 20));
+    return { skip: (page - 1) * limit, take: limit };
+}
+
+async function getAll(req, res, next) {
+    try {
+        const projects = await projectsService.getAll({
+            userId: req.user.id,
+            pagination: parsePagination(req.query),
+        });
+        res.status(200).json({ projects });
+    } catch (error) {
+        next(error);
+    }
+}
+
+async function getById(req, res, next) {
+    try {
+        const project = await projectsService.getById({
+            projectId: req.params.projectId,
+        });
+        res.status(200).json({ project });
+    } catch (error) {
+        next(error);
+    }
+}
+
+async function create(req, res, next) {
+    try {
+        const project = await projectsService.create({
+            userId: req.user.id,
+            data: req.body,
+        });
+        res.status(201).json({ project });
+    } catch (error) {
+        next(error);
+    }
+}
+
+async function update(req, res, next) {
+    try {
+        const project = await projectsService.update({
+            projectId: req.params.projectId,
+            data: req.body,
+        });
+        res.status(200).json({ project });
+    } catch (error) {
+        next(error);
+    }
+}
+
+async function deleteProject(req, res, next) {
+    try {
+        await projectsService.delete({
+            projectId: req.params.projectId,
+        });
+        res.status(204).end();
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const projectsController = { getAll, getById, create, update, delete: deleteProject };

@@ -1,0 +1,35 @@
+model Project {
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String   @map("user_id") @db.Uuid
+  name        String
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  members ProjectMember[]
+  scenes Scene[]
+
+  @@index([userId])
+  @@map("projects")
+}
+
+enum ProjectRole {
+  VIEWER
+  EDITOR
+  OWNER
+}
+
+model ProjectMember {
+  projectId  String @map("project_id") @db.Uuid
+  userId     String @map("user_id") @db.Uuid
+  role       ProjectRole @default(VIEWER)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, userId])
+  @@index([userId])
+  @@map("project_members")
+}

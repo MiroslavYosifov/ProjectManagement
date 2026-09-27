@@ -1,0 +1,111 @@
+import crypto from 'node:crypto';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { authRepository } from '../../repository/auth/index.js';
+import { sessionRepository } from '../../repository/sessions/index.js';
+import { createAppError } from '../../errors/index.js';
+
+const SALT_ROUNDS = 10;
+const ACCESS_TOKEN_EXPIRES_IN = '15m';
+const REFRESH_TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+
+async function issueTokens(user) {
+    const secret = crypto.randomBytes(48).toString('hex');
+    const refreshHash = await bcrypt.hash(secret, SALT_ROUNDS);
+    const expiresAt = new Date(Date.now() + REFRESH_TOKEN_TTL_MS).toISOString();
+
+    const session = await sessionRepository.create({
+        userId: user.id,
+        refreshHash,
+        expiresAt,
+    });
+
+    const accessToken = jwt.sign(
+        { sub: user.id, email: user.email, sid: session.id },
+        process.env.JWT_SECRET,
+        { expiresIn: ACCESS_TOKEN_EXPIRES_IN }
+    );
+
+    const refreshToken = `${session.id}.${secret}`;
+
+    return {
+        user: {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+        },
+        accessToken,
+        refreshToken,
+    };
+}
+
+async function register ({ email, password, username}) {
+    const existing = await authRepository.findByEmail(email);
+    if(existing) throw createAppError(409, 'Email already registered');
+
+    const password_hash = await bcrypt.hash(password, SALT_ROUNDS);
+
+    try {
+        return await authRepository.insertUser({
+            email,
+            password_hash,
+            username: username ?? null,
+        })
+    } catch (err) {
+        if(err.code === '23505') {
+            throw createAppError(409, 'Email already registered');
+        }
+        throw err;
+    }
+}
+
+async function login ({ email, password}) {
+    const user = await authRepository.findByEmail(email);
+    if(!user) {
+        throw createAppError(401, 'Invalid email or password');
+    }
+    const passwordMatches = await bcrypt.compare(password, user.password_hash);
+    if(!passwordMatches) {
+        throw createAppError(401, 'Invalid email or password');
+    }
+
+    return issueTokens(user);
+}
+
+async function refresh({ refreshToken }) {
+
+    if (!refreshToken || typeof refreshToken !== 'string') {
+        throw createAppError(400, 'Refresh token is required');
+    }
+
+    const [sessionId, secret] = refreshToken.split('.');
+    if (!sessionId || !secret) {
+        throw createAppError(401, 'Invalid refresh token');
+    }
+
+    const session = await sessionRepository.findById(sessionId);
+    if (!session) throw createAppError(401, 'Invalid refresh token');
+    if (session.revoked_at) throw createAppError(401, 'Refresh token revoked');
+    if (new Date(session.expires_at) < new Date()) {
+        throw createAppError(401, 'Refresh token expired');
+    }
+
+    const matches = await bcrypt.compare(secret, session.refresh_hash);
+    if (!matches) {
+        await sessionRepository.revoke(sessionId);
+        throw createAppError(401, 'Invalid refresh token');
+    }
+
+    const user = await authRepository.findById(session.user_id);
+    if (!user) throw createAppError(401, 'User no longer exists');
+
+    await sessionRepository.revoke(sessionId);
+    return issueTokens(user);
+}
+
+async function logout({ sessionId }) {
+    if (!sessionId) return;
+    await sessionRepository.revoke(sessionId);
+}
+
+export const authService = { register, login, refresh, logout };

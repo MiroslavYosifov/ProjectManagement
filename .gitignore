@@ -1,0 +1,13 @@
+# env files
+.env
+.env.*
+server/.env
+server/.env.*
+
+# but allow examples
+!.env.example
+!server/.env.example
+!server/.env.test.example
+
+# dependencies
+node_modules/
