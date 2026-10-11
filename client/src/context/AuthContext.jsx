@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import * as authApi from '../api/auth';
-import { clearSession, getRefreshToken, getStoredUser, setSession } from '../api/client';
+import { clearSession, getRefreshToken, getStoredUser, refreshTokens, setSession } from '../api/client';
 
 const AuthContext = createContext(null);
 
@@ -21,18 +21,18 @@ export function AuthProvider({ children }) {
       const cachedUser = getStoredUser();
       if (cachedUser && !cancelled) setUser(cachedUser);
 
-      try {
-        const data = await authApi.refresh(refreshToken);
-        if (cancelled) return;
-        setSession(data);
-        setUser(data.user);
-      } catch {
-        if (cancelled) return;
-        clearSession();
+      // refreshTokens() persists the new session itself, so the result is kept
+      // even if this effect run was cancelled (StrictMode double mount).
+      const refreshed = await refreshTokens();
+      if (cancelled) return;
+
+      if (refreshed) {
+        setUser(getStoredUser());
+      } else if (!getRefreshToken()) {
+        // The server rejected the token and the session was cleared.
         setUser(null);
-      } finally {
-        if (!cancelled) setIsAuthLoading(false);
       }
+      setIsAuthLoading(false);
     }
 
     bootstrap();

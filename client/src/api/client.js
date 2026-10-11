@@ -75,20 +75,29 @@ function rawFetch(path, { method = 'GET', body, headers = {}, auth = true } = {}
 }
 
 let refreshPromise = null;
-async function refreshTokens() {
+// Single entry point for refreshing: concurrent callers share one request,
+// since the server rotates the refresh token on every use.
+export async function refreshTokens() {
   const refreshToken = getRefreshToken();
   if (!refreshToken) return false;
 
   if (!refreshPromise) {
     refreshPromise = (async () => {
-      const response = await rawFetch('/auth/refresh', {
-        method: 'POST',
-        body: { refreshToken },
-        auth: false,
-      });
+      let response;
+      try {
+        response = await rawFetch('/auth/refresh', {
+          method: 'POST',
+          body: { refreshToken },
+          auth: false,
+        });
+      } catch {
+        // Network error: keep the session, the token may still be valid.
+        return false;
+      }
 
       if (!response.ok) {
-        clearSession();
+        // Only drop the session when the server rejected the token itself.
+        if (response.status === 400 || response.status === 401) clearSession();
         return false;
       }
 

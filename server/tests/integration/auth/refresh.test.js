@@ -44,7 +44,7 @@ test('POST /auth/refresh: happy path issues new tokens and revokes the old sessi
     assert.equal(sessionB.revokedAt, null);
 });
 
-test('POST /auth/refresh: rotation — a refresh token can only be used once', async () => {
+test('POST /auth/refresh: rotation — a refresh token can only be used once (past the grace window)', async () => {
     const { refreshToken: refreshTokenA } = await registerAndLogin('rotation@test.com');
 
     const first = await request(app)
@@ -52,11 +52,54 @@ test('POST /auth/refresh: rotation — a refresh token can only be used once', a
         .send({ refreshToken: refreshTokenA });
     assert.equal(first.status, 200);
 
+    // Outlive the in-memory rotation lock (REFRESH_REUSE_GRACE_MS=300 in .env.test).
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
     const second = await request(app)
         .post('/api/auth/refresh')
         .send({ refreshToken: refreshTokenA });
 
     assert.equal(second.status, 401);
+});
+
+test('POST /auth/refresh: a just-rotated token reused within the grace period gets back the same tokens, not a second session', async () => {
+    const { refreshToken: refreshTokenA } = await registerAndLogin('grace@test.com');
+
+    const first = await request(app)
+        .post('/api/auth/refresh')
+        .send({ refreshToken: refreshTokenA });
+    const second = await request(app)
+        .post('/api/auth/refresh')
+        .send({ refreshToken: refreshTokenA });
+
+    assert.equal(first.status, 200);
+    assert.equal(second.status, 200);
+    // Idempotent: a replay of an already-rotated token must not be able to
+    // mint an extra, independent session - it only ever gets the one result
+    // the legitimate rotation already produced.
+    assert.equal(second.body.accessToken, first.body.accessToken);
+    assert.equal(second.body.refreshToken, first.body.refreshToken);
+
+    const user = await prisma.user.findUnique({ where: { email: 'grace@test.com' } });
+    const sessions = await prisma.session.findMany({ where: { userId: user.id } });
+    assert.equal(sessions.length, 2); // the original (now revoked) + exactly one successor
+});
+
+test('POST /auth/refresh: concurrent requests with the same token all succeed and share one new session', async () => {
+    const { refreshToken } = await registerAndLogin('concurrent@test.com');
+
+    const results = await Promise.all([
+        request(app).post('/api/auth/refresh').send({ refreshToken }),
+        request(app).post('/api/auth/refresh').send({ refreshToken }),
+    ]);
+
+    assert.deepEqual(results.map((r) => r.status), [200, 200]);
+    assert.equal(results[0].body.accessToken, results[1].body.accessToken);
+    assert.equal(results[0].body.refreshToken, results[1].body.refreshToken);
+
+    const user = await prisma.user.findUnique({ where: { email: 'concurrent@test.com' } });
+    const sessions = await prisma.session.findMany({ where: { userId: user.id } });
+    assert.equal(sessions.length, 2);
 });
 
 test('POST /auth/refresh: 401 on a malformed refresh token, not a 500', async () => {
