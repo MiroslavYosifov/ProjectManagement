@@ -26,9 +26,9 @@ test('POST /auth/login: 200 with tokens, and the refresh token is stored hashed,
     const [sessionId, secret] = res.body.refreshToken.split('.');
     const session = await prisma.session.findUnique({ where: { id: sessionId } });
 
-    assert.ok(session); // refresh session was persisted
+    assert.ok(session);
     assert.notEqual(session.refreshHash, res.body.refreshToken);
-    assert.notEqual(session.refreshHash, secret); // not stored as plaintext
+    assert.notEqual(session.refreshHash, secret);
     assert.ok(await bcrypt.compare(secret, session.refreshHash));
 });
 

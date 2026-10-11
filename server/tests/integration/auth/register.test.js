@@ -6,9 +6,9 @@ import bcrypt from 'bcryptjs';
 import { app } from '../../helpers/app.js';
 import { resetDb, disconnectDb, prisma } from '../../helpers/db.js';
 
-before(resetDb);       // clean slate when the file starts
-beforeEach(resetDb);   // ...and before every test
-after(disconnectDb);   // close the pool so the process can exit
+before(resetDb);
+beforeEach(resetDb);
+after(disconnectDb);
 
 test('POST /auth/register: creates the user, hides the password, stores it hashed', async () => {
     const res = await request(app)

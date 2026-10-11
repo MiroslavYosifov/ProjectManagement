@@ -52,7 +52,6 @@ test('POST /auth/refresh: rotation — a refresh token can only be used once (pa
         .send({ refreshToken: refreshTokenA });
     assert.equal(first.status, 200);
 
-    // Outlive the in-memory rotation lock (REFRESH_REUSE_GRACE_MS=300 in .env.test).
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     const second = await request(app)
@@ -74,15 +73,12 @@ test('POST /auth/refresh: a just-rotated token reused within the grace period ge
 
     assert.equal(first.status, 200);
     assert.equal(second.status, 200);
-    // Idempotent: a replay of an already-rotated token must not be able to
-    // mint an extra, independent session - it only ever gets the one result
-    // the legitimate rotation already produced.
     assert.equal(second.body.accessToken, first.body.accessToken);
     assert.equal(second.body.refreshToken, first.body.refreshToken);
 
     const user = await prisma.user.findUnique({ where: { email: 'grace@test.com' } });
     const sessions = await prisma.session.findMany({ where: { userId: user.id } });
-    assert.equal(sessions.length, 2); // the original (now revoked) + exactly one successor
+    assert.equal(sessions.length, 2);
 });
 
 test('POST /auth/refresh: concurrent requests with the same token all succeed and share one new session', async () => {
