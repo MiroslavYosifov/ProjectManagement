@@ -1,16 +1,17 @@
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useProjects } from '../../context/ProjectsContext';
+import { getErrorMessage } from '../../api/client';
 
-export default function ProjectCreateForm({ onSuccess }) {
+export default function ProjectCreateForm({ onSuccess }: { onSuccess?: () => void }) {
 
   const { createProject } = useProjects();
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
     setSubmitting(true);
@@ -20,7 +21,7 @@ export default function ProjectCreateForm({ onSuccess }) {
       setDescription('');
       onSuccess?.();
     } catch (err) {
-      setError(err.message || 'Failed to create project');
+      setError(getErrorMessage(err, 'Failed to create project'));
     } finally {
       setSubmitting(false);
     }
@@ -51,7 +52,6 @@ export default function ProjectCreateForm({ onSuccess }) {
         <label htmlFor="project-description">Description:</label>
         <textarea
           id="project-description"
-          type="text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           autoComplete="description"

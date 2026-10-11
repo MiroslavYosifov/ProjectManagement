@@ -1,8 +1,17 @@
+import type { AuthResponse, User } from '../types/api';
+
 const API_BASE = '/api';
 const STORAGE_KEYS = {
   accessToken: 'accessToken',
   refreshToken: 'refreshToken',
   user: 'user',
+};
+
+type FetchOptions = {
+  method?: string;
+  body?: unknown;
+  headers?: Record<string, string>;
+  auth?: boolean;
 };
 
 export function getAccessToken() {
@@ -13,7 +22,7 @@ export function getRefreshToken() {
   return localStorage.getItem(STORAGE_KEYS.refreshToken);
 }
 
-export function getStoredUser() {
+export function getStoredUser(): User | null {
   const raw = localStorage.getItem(STORAGE_KEYS.user);
   if (!raw) return null;
   try {
@@ -23,7 +32,7 @@ export function getStoredUser() {
   }
 }
 
-export function setSession({ user, accessToken, refreshToken }) {
+export function setSession({ user, accessToken, refreshToken }: Partial<AuthResponse>) {
   if (accessToken) localStorage.setItem(STORAGE_KEYS.accessToken, accessToken);
   if (refreshToken) localStorage.setItem(STORAGE_KEYS.refreshToken, refreshToken);
   if (user) localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(user));
@@ -36,7 +45,10 @@ export function clearSession() {
 }
 
 export class ApiError extends Error {
-  constructor(message, status, data) {
+  status: number;
+  data: unknown;
+
+  constructor(message: string, status: number, data: unknown) {
     super(message);
     this.name = 'ApiError';
     this.status = status;
@@ -44,7 +56,11 @@ export class ApiError extends Error {
   }
 }
 
-async function parseBody(response) {
+export function getErrorMessage(err: unknown, fallback: string) {
+  return (err instanceof Error && err.message) || fallback;
+}
+
+async function parseBody(response: Response): Promise<unknown> {
   if (response.status === 204) return null;
   const text = await response.text();
   if (!text) return null;
@@ -55,7 +71,7 @@ async function parseBody(response) {
   }
 }
 
-function rawFetch(path, { method = 'GET', body, headers = {}, auth = true } = {}) {
+function rawFetch(path: string, { method = 'GET', body, headers = {}, auth = true }: FetchOptions = {}) {
   const finalHeaders = { ...headers };
 
   if (body !== undefined && finalHeaders['Content-Type'] === undefined) {
@@ -74,9 +90,8 @@ function rawFetch(path, { method = 'GET', body, headers = {}, auth = true } = {}
   });
 }
 
-let refreshPromise = null;
-// Single entry point for refreshing: concurrent callers share one request,
-// since the server rotates the refresh token on every use.
+let refreshPromise: Promise<boolean> | null = null;
+
 export async function refreshTokens() {
   const refreshToken = getRefreshToken();
   if (!refreshToken) return false;
@@ -91,17 +106,15 @@ export async function refreshTokens() {
           auth: false,
         });
       } catch {
-        // Network error: keep the session, the token may still be valid.
         return false;
       }
 
       if (!response.ok) {
-        // Only drop the session when the server rejected the token itself.
         if (response.status === 400 || response.status === 401) clearSession();
         return false;
       }
 
-      const data = await parseBody(response);
+      const data = await parseBody(response) as AuthResponse;
       setSession(data);
       return true;
     })().finally(() => {
@@ -112,7 +125,15 @@ export async function refreshTokens() {
   return refreshPromise;
 }
 
-export async function apiFetch(path, options = {}) {
+function errorMessageFrom(data: unknown, status: number) {
+  return (
+    (data && typeof data === 'object' && 'message' in data && data.message) ||
+    (typeof data === 'string' && data) ||
+    `Request failed: (${status})`
+  );
+}
+
+export async function apiFetch<T>(path: string, options: FetchOptions = {}): Promise<T> {
 
   let response = await rawFetch(path, options);
 
@@ -127,12 +148,8 @@ export async function apiFetch(path, options = {}) {
   const data = await parseBody(response);
 
   if (!response.ok) {
-    const message =
-      (data && typeof data === 'object' && data.message) ||
-      (typeof data === 'string' && data) ||
-      `Request failed: (${response.status})`;
-    throw new ApiError(message, response.status, data);
+    throw new ApiError(String(errorMessageFrom(data, response.status)), response.status, data);
   }
 
-  return data;
+  return data as T;
 }

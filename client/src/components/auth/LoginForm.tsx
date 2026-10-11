@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { getErrorMessage } from '../../api/client';
 
 export default function LoginForm() {
   const { login } = useAuth();
@@ -9,12 +10,12 @@ export default function LoginForm() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const redirectTo = location.state?.from?.pathname || '/projects';
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
     setSubmitting(true);
@@ -22,7 +23,7 @@ export default function LoginForm() {
       await login(email, password);
       navigate(redirectTo, { replace: true });
     } catch (err) {
-      setError(err.message || 'Login failed!');
+      setError(getErrorMessage(err, 'Login failed!'));
     } finally {
       setSubmitting(false);
     }

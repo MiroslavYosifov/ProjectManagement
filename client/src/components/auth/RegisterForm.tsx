@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../../context/AuthContext';
+import { getErrorMessage } from '../../api/client';
 
 export default function RegisterForm() {
   const { register } = useAuth();
@@ -10,10 +11,10 @@ export default function RegisterForm() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
     setSubmitting(true);
@@ -21,7 +22,7 @@ export default function RegisterForm() {
       await register({ email, password, username: username || undefined });
       navigate('/projects', { replace: true });
     } catch (err) {
-      setError(err.message || 'Registration failed!');
+      setError(getErrorMessage(err, 'Registration failed!'));
     } finally {
       setSubmitting(false);
     }

@@ -1,11 +1,20 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import * as authApi from '../api/auth';
 import { clearSession, getRefreshToken, getStoredUser, refreshTokens, setSession } from '../api/client';
+import type { User } from '../types/api';
 
-const AuthContext = createContext(null);
+type AuthContextValue = {
+  user: User | null;
+  isAuthLoading: boolean;
+  login: (email: string, password: string) => Promise<User>;
+  register: (data: { email: string; password: string; username?: string }) => Promise<User>;
+  logout: () => Promise<void>;
+};
 
-export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+const AuthContext = createContext<AuthContextValue | null>(null);
+
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
 
   useEffect(() => {
@@ -21,15 +30,12 @@ export function AuthProvider({ children }) {
       const cachedUser = getStoredUser();
       if (cachedUser && !cancelled) setUser(cachedUser);
 
-      // refreshTokens() persists the new session itself, so the result is kept
-      // even if this effect run was cancelled (StrictMode double mount).
       const refreshed = await refreshTokens();
       if (cancelled) return;
 
       if (refreshed) {
         setUser(getStoredUser());
       } else if (!getRefreshToken()) {
-        // The server rejected the token and the session was cleared.
         setUser(null);
       }
       setIsAuthLoading(false);
@@ -41,14 +47,14 @@ export function AuthProvider({ children }) {
     };
   }, []);
 
-  async function login(email, password) {
+  async function login(email: string, password: string) {
     const data = await authApi.login({ email, password });
     setSession(data);
     setUser(data.user);
     return data.user;
   }
 
-  async function register({ email, password, username }) {
+  async function register({ email, password, username }: { email: string; password: string; username?: string }) {
     const data = await authApi.register({ email, password, username });
     if (!data.accessToken) {
       return login(email, password);

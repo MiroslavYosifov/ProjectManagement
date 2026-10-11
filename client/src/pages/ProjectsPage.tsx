@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type MouseEvent } from 'react';
 import ProjectCreateForm from '../components/projects/ProjectCreateForm';
 import ProjectsList from '../components/projects/ProjectsList'
 import { ProjectsProvider } from '../context/ProjectsContext';
@@ -7,7 +7,7 @@ export default function ProjectsPage() {
 
   const [hasForm, setHasForm] = useState(false);
 
-  function onAddProject(e) {
+  function onAddProject(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     setHasForm(!hasForm);
   }

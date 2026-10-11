@@ -1,4 +1,4 @@
-name: Server Tests
+name: CI
 
 on:
   push:
@@ -45,6 +45,10 @@ jobs:
         working-directory: server
         run: pnpm install --frozen-lockfile
 
+      - name: Typecheck
+        working-directory: server
+        run: pnpm typecheck
+
       - name: Write server/.env.test for CI
         working-directory: server
         run: |
@@ -62,3 +66,30 @@ jobs:
       - name: Run tests
         working-directory: server
         run: pnpm test
+
+  client:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: client/package.json
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: client/pnpm-lock.yaml
+
+      - name: Install client dependencies
+        working-directory: client
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck and build
+        working-directory: client
+        run: pnpm build

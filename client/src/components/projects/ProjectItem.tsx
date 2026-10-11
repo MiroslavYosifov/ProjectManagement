@@ -1,11 +1,13 @@
+import type { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useProjects } from '../../context/ProjectsContext';
+import type { Project } from '../../types/api';
 
-export default function ProjectItem({ projectData }) {
+export default function ProjectItem({ projectData }: { projectData: Project }) {
     const { id, name, description } = projectData;
     const { projects, loading, error, removeProject } = useProjects();
 
-    async function onDeleteHandler(e) {
+    async function onDeleteHandler(e: MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
         console.log("ID ==> ", id);
         await removeProject(id);

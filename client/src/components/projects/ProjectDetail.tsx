@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProject } from '../../api/projects';
+import { getErrorMessage } from '../../api/client';
+import type { Project } from '../../types/api';
 
 export default function ProjectDetail() {
     const { id } = useParams();
-    const [project, setProject] = useState(null);
+    const [project, setProject] = useState<Project | null>(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         let ignore = false;
         setLoading(true);
         setError(null);
 
-        getProject(id)
+        getProject(id!)
             .then((data) => { if (!ignore) setProject(data.project); })
-            .catch((err) => { if (!ignore) setError(err.message || 'Failed to load project'); })
+            .catch((err) => { if (!ignore) setError(getErrorMessage(err, 'Failed to load project')); })
             .finally(() => { if (!ignore) setLoading(false); });
 
         return () => { ignore = true; };
