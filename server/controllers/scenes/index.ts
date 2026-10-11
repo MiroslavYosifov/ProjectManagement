@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import { scenesService } from "../../services/scenes/index.js";
-import type { SceneListResponse, SceneResponse } from '@game-editor/shared';
+import type { SceneListResponse, SceneResponse } from '@simulations-project-management/shared';
 
 type ProjectParams = { projectId: string };
 type SceneParams = ProjectParams & { sceneId: string };

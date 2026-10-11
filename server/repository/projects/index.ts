@@ -1,6 +1,6 @@
 import { prisma, type DbClient, type Pagination } from '../../db/prisma.js';
 import type { Prisma, Project as ProjectRow } from '../../generated/prisma/client.js';
-import type { CreateProjectRequest, Project, UpdateProjectRequest } from '@game-editor/shared';
+import type { CreateProjectRequest, Project, UpdateProjectRequest } from '@simulations-project-management/shared';
 
 function toProject(row: ProjectRow): Project {
     return {

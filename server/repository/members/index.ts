@@ -1,6 +1,6 @@
 import { prisma, type DbClient, type Pagination } from '../../db/prisma.js';
 import type { Project as ProjectRow, ProjectRole } from '../../generated/prisma/client.js';
-import type { Member, Project, ProjectWithRole } from '@game-editor/shared';
+import type { Member, Project, ProjectWithRole } from '@simulations-project-management/shared';
 
 type Membership = { projectId: string; userId: string };
 

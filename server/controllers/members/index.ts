@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import { membersService } from '../../services/members/index.js';
-import type { MemberListResponse, SetMemberResponse } from '@game-editor/shared';
+import type { MemberListResponse, SetMemberResponse } from '@simulations-project-management/shared';
 
 type ProjectParams = { projectId: string };
 

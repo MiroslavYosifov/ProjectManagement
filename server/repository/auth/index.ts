@@ -1,7 +1,7 @@
 import { prisma } from '../../db/prisma.js';
 import { errorCode } from '../../errors/index.js';
 import type { User } from '../../generated/prisma/client.js';
-import type { RegisteredUser } from '@game-editor/shared';
+import type { RegisteredUser } from '@simulations-project-management/shared';
 
 type UserWithHash = RegisteredUser & { password_hash: string };
 

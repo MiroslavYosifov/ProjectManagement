@@ -2,6 +2,7 @@ packages:
   - server
   - client
   - shared
+  - simulation-engine
 
 allowBuilds:
   '@prisma/engines': true

@@ -286,3 +286,79 @@ a { text-decoration: none; color: wheat; }
 .btn-delete:hover {
   background: #ef4444;
 }
+.scene-list {
+  margin-top: 2rem;
+}
+
+.scene-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.scene-list ul {
+  padding: 0;
+}
+
+.scene-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.scene-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.editor-status {
+  margin-left: 0.5rem;
+}
+
+.editor-save {
+  margin-left: auto;
+}
+
+.editor-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 1rem;
+}
+
+.editor-canvas {
+  position: relative;
+  height: 70vh;
+  min-height: 360px;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.editor-canvas canvas {
+  display: block;
+}
+
+.scene-settings {
+  padding: 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 800px) {
+  .editor-body {
+    grid-template-columns: 1fr;
+  }
+}

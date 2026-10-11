@@ -1,13 +1,13 @@
 import { prisma, type DbClient, type Pagination } from '../../db/prisma.js';
 import type { Prisma, Scene as SceneRow } from '../../generated/prisma/client.js';
-import type { CreateSceneRequest, Scene, SceneData, UpdateSceneRequest } from '@game-editor/shared';
+import type { CreateSceneRequest, Scene, SceneData, UpdateSceneRequest } from '@simulations-project-management/shared';
 
 function toScene(row: SceneRow): Scene {
     return {
         id: row.id,
         project_id: row.projectId,
         name: row.name,
-        data: row.data as SceneData,
+        data: row.data as unknown as SceneData,
         created_at: row.createdAt.toISOString(),
         updated_at: row.updatedAt.toISOString(),
     };
@@ -45,7 +45,7 @@ async function create(
 async function update(id: string, { name, data }: UpdateSceneRequest, client: DbClient = prisma) {
     const patch: Prisma.SceneUpdateInput = {};
     if (name !== undefined) patch.name = name;
-    if (data !== undefined) patch.data = data as Prisma.InputJsonValue;
+    if (data !== undefined) patch.data = data as unknown as Prisma.InputJsonValue;
     const row = await client.scene.update({ where: { id }, data: patch });
     return toScene(row);
 }

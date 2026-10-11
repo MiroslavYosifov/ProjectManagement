@@ -1,6 +1,7 @@
+import type { SceneSetup } from '@simulation-engine/core';
 import type { Timestamp } from './common.js';
 
-export type SceneData = { [key: string]: unknown };
+export type SceneData = SceneSetup;
 
 export type Scene = {
   id: string;

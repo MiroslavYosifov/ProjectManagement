@@ -2,7 +2,7 @@ import { prisma, type Pagination } from '../../db/prisma.js';
 import { projectsRepository } from '../../repository/projects/index.js';
 import { membersRepository } from '../../repository/members/index.js';
 import { createAppError } from '../../errors/index.js';
-import type { CreateProjectRequest, UpdateProjectRequest } from '@game-editor/shared';
+import type { CreateProjectRequest, UpdateProjectRequest } from '@simulations-project-management/shared';
 
 const MAX_PROJECTS_PER_USER = 20;
 

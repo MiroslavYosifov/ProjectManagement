@@ -2,7 +2,7 @@ import { membersRepository } from '../../repository/members/index.js';
 import { authRepository } from '../../repository/auth/index.js';
 import { createAppError } from '../../errors/index.js';
 import logger from '../../loggers/logger.js';
-import type { SetMemberRequest, SetMemberResult } from '@game-editor/shared';
+import type { SetMemberRequest, SetMemberResult } from '@simulations-project-management/shared';
 
 async function list({ projectId }: { projectId: string }) {
     return membersRepository.findMembers(projectId);

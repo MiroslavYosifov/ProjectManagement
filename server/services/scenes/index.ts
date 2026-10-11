@@ -1,7 +1,7 @@
 import { prisma, type DbClient, type Pagination } from '../../db/prisma.js';
 import { scenesRepository } from '../../repository/scenes/index.js';
 import { createAppError } from '../../errors/index.js';
-import type { CreateSceneRequest, UpdateSceneRequest } from '@game-editor/shared';
+import type { CreateSceneRequest, UpdateSceneRequest } from '@simulations-project-management/shared';
 
 const MAX_SCENES_PER_PROJECT = 100;
 

@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import { authService } from "../../services/auth/index.js"
-import type { AuthResponse, MessageResponse, RegisterResponse } from '@game-editor/shared';
+import type { AuthResponse, MessageResponse, RegisterResponse } from '@simulations-project-management/shared';
 
 async function register(req: Request, res: Response<RegisterResponse>, next: NextFunction) {
     try {

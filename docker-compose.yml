@@ -49,6 +49,9 @@ services:
     volumes:
       - ./client:/app/client
       - /app/client/node_modules
+      - ./shared:/app/shared
+      - ./simulation-engine:/app/simulation-engine
+      - /app/simulation-engine/node_modules
 
 volumes:
   db_data:

@@ -40,7 +40,7 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
 
       - name: Install server dependencies
-        run: pnpm install --frozen-lockfile --filter game-editor...
+        run: pnpm install --frozen-lockfile --filter @simulations-project-management/server...
 
       - name: Typecheck
         working-directory: server
@@ -82,7 +82,17 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
 
       - name: Install client dependencies
-        run: pnpm install --frozen-lockfile --filter game-editor-client...
+        run: pnpm install --frozen-lockfile --filter @simulations-project-management/client...
+
+      - name: Typecheck and test simulation engine
+        working-directory: simulation-engine
+        run: |
+          pnpm typecheck
+          pnpm test
+
+      - name: Test editor core
+        working-directory: client
+        run: pnpm test
 
       - name: Typecheck and build
         working-directory: client

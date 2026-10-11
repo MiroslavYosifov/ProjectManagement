@@ -1,12 +1,14 @@
-import type { EntityId } from "../Entity";
-import type { Position } from "../components/Position";
-import type { Movement } from "../components/Movement";
+import type { EntityId } from "../Entity.js";
+import type { Position } from "../components/Position.js";
+import type { Movement } from "../components/Movement.js";
+import type { Appearance } from "../components/Appearance.js";
 
 export class World {
     private nextEntityId: EntityId = 1;
     readonly entities = new Set<EntityId>();
     readonly positions = new Map<EntityId, Position>();
     readonly movements = new Map<EntityId, Movement>();
+    readonly appearances = new Map<EntityId, Appearance>();
 
     tick = 0;
 
@@ -19,6 +21,7 @@ export class World {
     destroyEntity(id: EntityId): void {
         this.entities.delete(id);
         this.positions.delete(id);
-        this.entities.delete(id);
+        this.movements.delete(id);
+        this.appearances.delete(id);
     }
 }

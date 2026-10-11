@@ -8,7 +8,8 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY server/package.json server/
 COPY client/package.json client/
 COPY shared/package.json shared/
-RUN pnpm install --frozen-lockfile --filter game-editor...
+COPY simulation-engine/package.json simulation-engine/
+RUN pnpm install --frozen-lockfile --filter @simulations-project-management/server...
 
 COPY shared shared
 COPY server server

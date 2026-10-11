@@ -1,5 +1,5 @@
 {
-  "name": "game-editor-monorepo",
+  "name": "simulations-project-management",
   "private": true,
   "packageManager": "pnpm@11.13.0",
   "scripts": {

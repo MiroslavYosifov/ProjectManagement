@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { authRepository } from '../../repository/auth/index.js';
 import { sessionRepository } from '../../repository/sessions/index.js';
 import { createAppError, errorCode } from '../../errors/index.js';
-import type { AuthResponse, LoginRequest, RegisterRequest, User } from '@game-editor/shared';
+import type { AuthResponse, LoginRequest, RegisterRequest, User } from '@simulations-project-management/shared';
 
 const SALT_ROUNDS = 10;
 const ACCESS_TOKEN_EXPIRES_IN = '15m';

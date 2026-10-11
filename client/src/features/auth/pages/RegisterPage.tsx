@@ -1,0 +1,15 @@
+import { Link } from 'react-router-dom';
+
+import RegisterForm from '../components/RegisterForm';
+
+export default function RegisterPage() {
+  return (
+    <>
+      <h1>Register</h1>
+      <RegisterForm />
+      <p className="auth-switch">
+        Already have an account? <Link to="/login">Login</Link>
+      </p>
+    </>
+  );
+}

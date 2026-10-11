@@ -1,5 +1,5 @@
 {
-  "name": "@game-editor/shared",
+  "name": "@simulations-project-management/shared",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@simulation-engine/core": "workspace:*"
   }
 }
