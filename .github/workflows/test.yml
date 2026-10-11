@@ -29,16 +29,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: server/package.json
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: npm
-          cache-dependency-path: server/package-lock.json
+          cache: pnpm
+          cache-dependency-path: server/pnpm-lock.yaml
 
       - name: Install server dependencies
         working-directory: server
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Write server/.env.test for CI
         working-directory: server
@@ -47,12 +52,13 @@ jobs:
           PORT=3001
           JWT_SECRET=ci_test_secret_key
           DATABASE_URL="postgresql://postgres:postgres@localhost:5432/game_editor_test_db?schema=public"
+          REFRESH_REUSE_GRACE_MS=300
           EOF
 
       - name: Apply Prisma migrations
         working-directory: server
-        run: npm run test:migrate
+        run: pnpm test:migrate
 
       - name: Run tests
         working-directory: server
-        run: npm test
+        run: pnpm test
