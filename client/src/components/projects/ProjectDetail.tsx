@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProject } from '../../api/projects';
 import { getErrorMessage } from '../../api/client';
-import type { Project } from '../../types/api';
+import type { Project } from '@game-editor/shared';
 
 export default function ProjectDetail() {
     const { id } = useParams();

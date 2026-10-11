@@ -1,14 +1,15 @@
 import { prisma, type DbClient, type Pagination } from '../../db/prisma.js';
-import type { Prisma, Project } from '../../generated/prisma/client.js';
+import type { Prisma, Project as ProjectRow } from '../../generated/prisma/client.js';
+import type { CreateProjectRequest, Project, UpdateProjectRequest } from '@game-editor/shared';
 
-function toProject(row: Project) {
+function toProject(row: ProjectRow): Project {
     return {
         id: row.id,
         user_id: row.userId,
         name: row.name,
         description: row.description,
-        created_at: row.createdAt,
-        updated_at: row.updatedAt,
+        created_at: row.createdAt.toISOString(),
+        updated_at: row.updatedAt.toISOString(),
     };
 }
 
@@ -32,7 +33,7 @@ async function countByUser(userId: string, client: DbClient = prisma) {
 }
 
 async function create(
-    { userId, name, description }: { userId: string; name: string; description?: string | null },
+    { userId, name, description }: CreateProjectRequest & { userId: string },
     client: DbClient = prisma,
 ) {
     const row = await client.project.create({
@@ -41,11 +42,7 @@ async function create(
     return toProject(row);
 }
 
-async function update(
-    id: string,
-    { name, description }: { name?: string; description?: string | null },
-    client: DbClient = prisma,
-) {
+async function update(id: string, { name, description }: UpdateProjectRequest, client: DbClient = prisma) {
     const data: Prisma.ProjectUpdateInput = {};
     if (name !== undefined) data.name = name;
     if (description !== undefined) data.description = description;

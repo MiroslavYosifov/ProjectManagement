@@ -1,13 +1,13 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import * as authApi from '../api/auth';
 import { clearSession, getRefreshToken, getStoredUser, refreshTokens, setSession } from '../api/client';
-import type { User } from '../types/api';
+import type { RegisterRequest, User } from '@game-editor/shared';
 
 type AuthContextValue = {
   user: User | null;
   isAuthLoading: boolean;
   login: (email: string, password: string) => Promise<User>;
-  register: (data: { email: string; password: string; username?: string }) => Promise<User>;
+  register: (data: RegisterRequest) => Promise<User>;
   logout: () => Promise<void>;
 };
 
@@ -54,14 +54,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return data.user;
   }
 
-  async function register({ email, password, username }: { email: string; password: string; username?: string }) {
-    const data = await authApi.register({ email, password, username });
-    if (!data.accessToken) {
-      return login(email, password);
-    }
-    setSession(data);
-    setUser(data.user);
-    return data.user;
+  async function register({ email, password, username }: RegisterRequest) {
+    await authApi.register({ email, password, username });
+    return login(email, password);
   }
 
   async function logout() {

@@ -2,13 +2,13 @@ import { membersRepository } from '../../repository/members/index.js';
 import { authRepository } from '../../repository/auth/index.js';
 import { createAppError } from '../../errors/index.js';
 import logger from '../../loggers/logger.js';
-import type { ProjectRole } from '../../generated/prisma/client.js';
+import type { SetMemberRequest, SetMemberResult } from '@game-editor/shared';
 
 async function list({ projectId }: { projectId: string }) {
     return membersRepository.findMembers(projectId);
 }
 
-async function setMember({ projectId, email, role }: { projectId: string; email: string; role: ProjectRole }) {
+async function setMember({ projectId, email, role }: SetMemberRequest & { projectId: string }): Promise<SetMemberResult> {
     const user = await authRepository.findByEmail(email);
     if (!user) {
         throw createAppError(404, 'User not found');

@@ -1,17 +1,17 @@
 import { apiFetch } from './client';
-import type { Project } from '../types/api';
+import type { CreateProjectRequest, ProjectListResponse, ProjectResponse } from '@game-editor/shared';
 
 export function listProjects({ page = 1, limit = 20 } = {}) {
-  return apiFetch<{ projects: Project[] }>(`/projects?page=${page}&limit=${limit}`);
+  return apiFetch<ProjectListResponse>(`/projects?page=${page}&limit=${limit}`);
 }
 
 export function getProject(id: string) {
-  return apiFetch<{ project: Project }>(`/projects/${id}`);
+  return apiFetch<ProjectResponse>(`/projects/${id}`);
 }
 
-export function postProject({ name, description }: { name: string; description: string }) {
+export function postProject({ name, description }: CreateProjectRequest) {
   console.log("name", name)
-  return apiFetch<{ project: Project }>(`/projects/`, {
+  return apiFetch<ProjectResponse>(`/projects/`, {
     method: 'POST',
     body: { name, description },
     auth: true,

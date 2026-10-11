@@ -5,9 +5,15 @@ RUN corepack enable
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-RUN pnpm install --frozen-lockfile
+COPY server/package.json server/
+COPY client/package.json client/
+COPY shared/package.json shared/
+RUN pnpm install --frozen-lockfile --filter game-editor...
 
-COPY . .
+COPY shared shared
+COPY server server
+
+WORKDIR /app/server
 
 EXPOSE 3000
 

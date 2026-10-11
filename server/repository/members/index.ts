@@ -1,16 +1,17 @@
 import { prisma, type DbClient, type Pagination } from '../../db/prisma.js';
-import type { Project, ProjectRole } from '../../generated/prisma/client.js';
+import type { Project as ProjectRow, ProjectRole } from '../../generated/prisma/client.js';
+import type { Member, Project, ProjectWithRole } from '@game-editor/shared';
 
 type Membership = { projectId: string; userId: string };
 
-function toProject(row: Project) {
+function toProject(row: ProjectRow): Project {
     return {
         id: row.id,
         user_id: row.userId,
         name: row.name,
         description: row.description,
-        created_at: row.createdAt,
-        updated_at: row.updatedAt,
+        created_at: row.createdAt.toISOString(),
+        updated_at: row.updatedAt.toISOString(),
     };
 }
 
@@ -36,7 +37,7 @@ async function findProjectsByMember(userId: string, { skip = 0, take = 20 }: Pag
         take,
         include: { project: true },
     });
-    return rows.map((m) => ({ ...toProject(m.project), role: m.role }));
+    return rows.map((m): ProjectWithRole => ({ ...toProject(m.project), role: m.role }));
 }
 
 async function upsertRole({ projectId, userId, role }: Membership & { role: ProjectRole }, client: DbClient = prisma) {
@@ -60,12 +61,12 @@ async function findMembers(projectId: string, client: DbClient = prisma) {
         orderBy: { createdAt: 'asc' },
         include: { user: { select: { id: true, email: true, username: true } } },
     });
-    return rows.map((m) => ({
+    return rows.map((m): Member => ({
         user_id: m.userId,
         email: m.user.email,
         username: m.user.username,
         role: m.role,
-        created_at: m.createdAt,
+        created_at: m.createdAt.toISOString(),
     }));
 }
 

@@ -1,7 +1,7 @@
 import type { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useProjects } from '../../context/ProjectsContext';
-import type { Project } from '../../types/api';
+import type { Project } from '@game-editor/shared';
 
 export default function ProjectItem({ projectData }: { projectData: Project }) {
     const { id, name, description } = projectData;

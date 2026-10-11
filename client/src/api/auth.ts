@@ -1,7 +1,7 @@
 import { apiFetch } from './client';
-import type { AuthResponse, RegisterResponse } from '../types/api';
+import type { AuthResponse, LoginRequest, MessageResponse, RegisterRequest, RegisterResponse } from '@game-editor/shared';
 
-export function register({ email, password, username }: { email: string; password: string; username?: string }) {
+export function register({ email, password, username }: RegisterRequest) {
   return apiFetch<RegisterResponse>('/auth/register', {
     method: 'POST',
     body: { email, password, username },
@@ -9,7 +9,7 @@ export function register({ email, password, username }: { email: string; passwor
   });
 }
 
-export function login({ email, password }: { email: string; password: string }) {
+export function login({ email, password }: LoginRequest) {
   return apiFetch<AuthResponse>('/auth/login', {
     method: 'POST',
     body: { email, password },
@@ -26,5 +26,5 @@ export function refresh(refreshToken: string) {
 }
 
 export function logout() {
-  return apiFetch<{ message: string }>('/auth/logout', { method: 'POST' });
+  return apiFetch<MessageResponse>('/auth/logout', { method: 'POST' });
 }

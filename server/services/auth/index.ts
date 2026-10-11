@@ -1,9 +1,10 @@
 import crypto from 'node:crypto';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { authRepository, type UserPublic } from '../../repository/auth/index.js';
+import { authRepository } from '../../repository/auth/index.js';
 import { sessionRepository } from '../../repository/sessions/index.js';
 import { createAppError, errorCode } from '../../errors/index.js';
+import type { AuthResponse, LoginRequest, RegisterRequest, User } from '@game-editor/shared';
 
 const SALT_ROUNDS = 10;
 const ACCESS_TOKEN_EXPIRES_IN = '15m';
@@ -11,7 +12,7 @@ const REFRESH_TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 
 const REFRESH_REUSE_GRACE_MS = Number(process.env.REFRESH_REUSE_GRACE_MS) || 15 * 1000;
 
-type Tokens = Awaited<ReturnType<typeof issueTokens>>;
+type Tokens = AuthResponse;
 
 const rotationsInFlight = new Map<string, Promise<Tokens>>();
 
@@ -27,7 +28,7 @@ function rememberRotation(sessionId: string, promise: Promise<Tokens>) {
     });
 }
 
-async function issueTokens(user: Pick<UserPublic, 'id' | 'email' | 'username'>) {
+async function issueTokens(user: User): Promise<AuthResponse> {
     const secret = crypto.randomBytes(48).toString('hex');
     const refreshHash = await bcrypt.hash(secret, SALT_ROUNDS);
     const expiresAt = new Date(Date.now() + REFRESH_TOKEN_TTL_MS).toISOString();
@@ -57,7 +58,7 @@ async function issueTokens(user: Pick<UserPublic, 'id' | 'email' | 'username'>) 
     };
 }
 
-async function register ({ email, password, username}: { email: string; password: string; username?: string | null }) {
+async function register ({ email, password, username}: RegisterRequest) {
     const existing = await authRepository.findByEmail(email);
     if(existing) throw createAppError(409, 'Email already registered');
 
@@ -77,7 +78,7 @@ async function register ({ email, password, username}: { email: string; password
     }
 }
 
-async function login ({ email, password}: { email: string; password: string }) {
+async function login ({ email, password}: LoginRequest) {
     const user = await authRepository.findByEmail(email);
     if(!user) {
         throw createAppError(401, 'Invalid email or password');

@@ -1,11 +1,9 @@
 import { prisma, type DbClient, type Pagination } from '../../db/prisma.js';
 import { scenesRepository } from '../../repository/scenes/index.js';
 import { createAppError } from '../../errors/index.js';
-import type { Prisma } from '../../generated/prisma/client.js';
+import type { CreateSceneRequest, UpdateSceneRequest } from '@game-editor/shared';
 
 const MAX_SCENES_PER_PROJECT = 100;
-
-type SceneInput = { name: string; data?: Prisma.InputJsonValue };
 
 async function findSceneInProject(sceneId: string, projectId: string, client?: DbClient) {
     const scene = await scenesRepository.findById(sceneId, client);
@@ -23,7 +21,7 @@ async function getById({ projectId, sceneId }: { projectId: string; sceneId: str
     return findSceneInProject(sceneId, projectId);
 }
 
-async function create({ projectId, data }: { projectId: string; data: SceneInput }) {
+async function create({ projectId, data }: { projectId: string; data: CreateSceneRequest }) {
     const { name, data: sceneData } = data;
     return prisma.$transaction(async (tx) => {
         const count = await scenesRepository.countByProject(projectId, tx);
@@ -34,7 +32,7 @@ async function create({ projectId, data }: { projectId: string; data: SceneInput
     }, { isolationLevel: 'Serializable' });
 }
 
-async function update({ projectId, sceneId, data }: { projectId: string; sceneId: string; data: Partial<SceneInput> }) {
+async function update({ projectId, sceneId, data }: { projectId: string; sceneId: string; data: UpdateSceneRequest }) {
     return prisma.$transaction(async (tx) => {
         await findSceneInProject(sceneId, projectId, tx);
         return scenesRepository.update(sceneId, data, tx);

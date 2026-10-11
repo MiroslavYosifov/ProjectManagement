@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import { projectsService } from "../../services/projects/index.js";
+import type { ProjectListResponse, ProjectResponse } from '@game-editor/shared';
 
 type ProjectParams = { projectId: string };
 
@@ -9,7 +10,7 @@ function parsePagination(query: Request['query']) {
     return { skip: (page - 1) * limit, take: limit };
 }
 
-async function getAll(req: Request, res: Response, next: NextFunction) {
+async function getAll(req: Request, res: Response<ProjectListResponse>, next: NextFunction) {
     try {
         const projects = await projectsService.getAll({
             userId: req.user!.id,
@@ -21,7 +22,7 @@ async function getAll(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-async function getById(req: Request<ProjectParams>, res: Response, next: NextFunction) {
+async function getById(req: Request<ProjectParams>, res: Response<ProjectResponse>, next: NextFunction) {
     try {
         const project = await projectsService.getById({
             projectId: req.params.projectId,
@@ -32,7 +33,7 @@ async function getById(req: Request<ProjectParams>, res: Response, next: NextFun
     }
 }
 
-async function create(req: Request, res: Response, next: NextFunction) {
+async function create(req: Request, res: Response<ProjectResponse>, next: NextFunction) {
     try {
         const project = await projectsService.create({
             userId: req.user!.id,
@@ -44,7 +45,7 @@ async function create(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-async function update(req: Request<ProjectParams>, res: Response, next: NextFunction) {
+async function update(req: Request<ProjectParams>, res: Response<ProjectResponse>, next: NextFunction) {
     try {
         const project = await projectsService.update({
             projectId: req.params.projectId,

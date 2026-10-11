@@ -1,9 +1,10 @@
 import type { Request, Response, NextFunction } from 'express';
 import { membersService } from '../../services/members/index.js';
+import type { MemberListResponse, SetMemberResponse } from '@game-editor/shared';
 
 type ProjectParams = { projectId: string };
 
-async function list(req: Request<ProjectParams>, res: Response, next: NextFunction) {
+async function list(req: Request<ProjectParams>, res: Response<MemberListResponse>, next: NextFunction) {
     try {
         const members = await membersService.list({ projectId: req.params.projectId });
         res.status(200).json({ members });
@@ -12,7 +13,7 @@ async function list(req: Request<ProjectParams>, res: Response, next: NextFuncti
     }
 }
 
-async function set(req: Request<ProjectParams>, res: Response, next: NextFunction) {
+async function set(req: Request<ProjectParams>, res: Response<SetMemberResponse>, next: NextFunction) {
     try {
         const member = await membersService.setMember({
             projectId: req.params.projectId,

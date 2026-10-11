@@ -1,4 +1,4 @@
-import type { AuthResponse, User } from '../types/api';
+import type { AuthResponse, User } from '@game-editor/shared';
 
 const API_BASE = '/api';
 const STORAGE_KEYS = {

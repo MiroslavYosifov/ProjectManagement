@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import { scenesService } from "../../services/scenes/index.js";
+import type { SceneListResponse, SceneResponse } from '@game-editor/shared';
 
 type ProjectParams = { projectId: string };
 type SceneParams = ProjectParams & { sceneId: string };
@@ -10,7 +11,7 @@ function parsePagination(query: Request['query']) {
     return { skip: (page - 1) * limit, take: limit };
 }
 
-async function getAll(req: Request<ProjectParams>, res: Response, next: NextFunction) {
+async function getAll(req: Request<ProjectParams>, res: Response<SceneListResponse>, next: NextFunction) {
     try {
         const scenes = await scenesService.getAll({
             projectId: req.params.projectId,
@@ -22,7 +23,7 @@ async function getAll(req: Request<ProjectParams>, res: Response, next: NextFunc
     }
 }
 
-async function getById(req: Request<SceneParams>, res: Response, next: NextFunction) {
+async function getById(req: Request<SceneParams>, res: Response<SceneResponse>, next: NextFunction) {
     try {
         const scene = await scenesService.getById({
             projectId: req.params.projectId,
@@ -34,7 +35,7 @@ async function getById(req: Request<SceneParams>, res: Response, next: NextFunct
     }
 }
 
-async function create(req: Request<ProjectParams>, res: Response, next: NextFunction) {
+async function create(req: Request<ProjectParams>, res: Response<SceneResponse>, next: NextFunction) {
     try {
         const scene = await scenesService.create({
             projectId: req.params.projectId,
@@ -46,7 +47,7 @@ async function create(req: Request<ProjectParams>, res: Response, next: NextFunc
     }
 }
 
-async function update(req: Request<SceneParams>, res: Response, next: NextFunction) {
+async function update(req: Request<SceneParams>, res: Response<SceneResponse>, next: NextFunction) {
     try {
         const scene = await scenesService.update({
             projectId: req.params.projectId,

@@ -2,10 +2,9 @@ import { prisma, type Pagination } from '../../db/prisma.js';
 import { projectsRepository } from '../../repository/projects/index.js';
 import { membersRepository } from '../../repository/members/index.js';
 import { createAppError } from '../../errors/index.js';
+import type { CreateProjectRequest, UpdateProjectRequest } from '@game-editor/shared';
 
 const MAX_PROJECTS_PER_USER = 20;
-
-type ProjectInput = { name: string; description?: string | null };
 
 async function getAll({ userId, pagination }: { userId: string; pagination?: Pagination }) {
     return membersRepository.findProjectsByMember(userId, pagination);
@@ -19,7 +18,7 @@ async function getById({ projectId }: { projectId: string }) {
     return project;
 }
 
-async function create({ userId, data }: { userId: string; data: ProjectInput }) {
+async function create({ userId, data }: { userId: string; data: CreateProjectRequest }) {
     const { name, description } = data;
     return prisma.$transaction(async (tx) => {
         const count = await projectsRepository.countByUser(userId, tx);
@@ -32,7 +31,7 @@ async function create({ userId, data }: { userId: string; data: ProjectInput }) 
     }, { isolationLevel: 'Serializable' });
 }
 
-async function update({ projectId, data }: { projectId: string; data: Partial<ProjectInput> }) {
+async function update({ projectId, data }: { projectId: string; data: UpdateProjectRequest }) {
     return projectsRepository.update(projectId, data);
 }
 

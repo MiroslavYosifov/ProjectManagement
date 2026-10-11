@@ -1,15 +1,9 @@
 import { prisma } from '../../db/prisma.js';
 import { errorCode } from '../../errors/index.js';
 import type { User } from '../../generated/prisma/client.js';
+import type { RegisteredUser } from '@game-editor/shared';
 
-export type UserPublic = {
-    id: string;
-    email: string;
-    username: string | null;
-    created_at: Date;
-};
-
-export type UserWithHash = UserPublic & { password_hash: string };
+type UserWithHash = RegisteredUser & { password_hash: string };
 
 function toUserWithHash(row: User): UserWithHash {
     return {
@@ -17,16 +11,16 @@ function toUserWithHash(row: User): UserWithHash {
         email: row.email,
         password_hash: row.passwordHash,
         username: row.username,
-        created_at: row.createdAt,
+        created_at: row.createdAt.toISOString(),
     };
 }
 
-function toUserPublic(row: User): UserPublic {
+function toUserPublic(row: User): RegisteredUser {
     return {
         id: row.id,
         email: row.email,
         username: row.username,
-        created_at: row.createdAt,
+        created_at: row.createdAt.toISOString(),
     };
 }
 
