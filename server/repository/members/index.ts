@@ -1,7 +1,9 @@
-import { prisma } from '../../db/prisma.js';
+import { prisma, type DbClient, type Pagination } from '../../db/prisma.js';
+import type { Project, ProjectRole } from '../../generated/prisma/client.js';
 
-function toProject(row) {
-    if (!row) return null;
+type Membership = { projectId: string; userId: string };
+
+function toProject(row: Project) {
     return {
         id: row.id,
         user_id: row.userId,
@@ -12,8 +14,7 @@ function toProject(row) {
     };
 }
 
-// Returns the role string ('VIEWER' | 'EDITOR' | 'OWNER')
-async function findRole({ projectId, userId }, client = prisma) {
+async function findRole({ projectId, userId }: Membership, client: DbClient = prisma) {
     const row = await client.projectMember.findUnique({
         where: { projectId_userId: { projectId, userId } },
         select: { role: true },
@@ -21,13 +22,13 @@ async function findRole({ projectId, userId }, client = prisma) {
     return row?.role ?? null;
 }
 
-async function create({ projectId, userId, role }, client = prisma) {
+async function create({ projectId, userId, role }: Membership & { role: ProjectRole }, client: DbClient = prisma) {
     return client.projectMember.create({
         data: { projectId, userId, role },
     });
 }
 
-async function findProjectsByMember(userId, { skip = 0, take = 20 } = {}, client = prisma) {
+async function findProjectsByMember(userId: string, { skip = 0, take = 20 }: Pagination = {}, client: DbClient = prisma) {
     const rows = await client.projectMember.findMany({
         where: { userId },
         orderBy: { project: { createdAt: 'desc' } },
@@ -38,9 +39,7 @@ async function findProjectsByMember(userId, { skip = 0, take = 20 } = {}, client
     return rows.map((m) => ({ ...toProject(m.project), role: m.role }));
 }
 
-// Adds the member if missing, or updates their role if they already exist.
-// Idempotent, so the "invite / change role" endpoint can use one call.
-async function upsertRole({ projectId, userId, role }, client = prisma) {
+async function upsertRole({ projectId, userId, role }: Membership & { role: ProjectRole }, client: DbClient = prisma) {
     return client.projectMember.upsert({
         where: { projectId_userId: { projectId, userId } },
         create: { projectId, userId, role },
@@ -48,15 +47,14 @@ async function upsertRole({ projectId, userId, role }, client = prisma) {
     });
 }
 
-async function deleteMember({ projectId, userId }, client = prisma) {
+async function deleteMember({ projectId, userId }: Membership, client: DbClient = prisma) {
     const { count } = await client.projectMember.deleteMany({
         where: { projectId, userId },
     });
     return count;
 }
 
-// Lists everyone on a project with their role, for the members management UI.
-async function findMembers(projectId, client = prisma) {
+async function findMembers(projectId: string, client: DbClient = prisma) {
     const rows = await client.projectMember.findMany({
         where: { projectId },
         orderBy: { createdAt: 'asc' },

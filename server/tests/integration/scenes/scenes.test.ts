@@ -12,7 +12,7 @@ after(disconnectDb);
 
 const MAX_SCENES = 100;
 
-async function registerAndLogin(email) {
+async function registerAndLogin(email: string) {
     const credentials = { email, username: email.split('@')[0], password: 'Password123!' };
     await request(app).post('/api/auth/register').send(credentials);
     const res = await request(app)
@@ -21,7 +21,7 @@ async function registerAndLogin(email) {
     return { token: res.body.accessToken, userId: res.body.user.id };
 }
 
-async function createProject(token, body = { name: 'Test Project' }) {
+async function createProject(token: string, body: object = { name: 'Test Project' }) {
     const res = await request(app)
         .post('/api/projects')
         .set('Authorization', `Bearer ${token}`)
@@ -29,25 +29,25 @@ async function createProject(token, body = { name: 'Test Project' }) {
     return res.body.project;
 }
 
-async function addMember(token, projectId, email, role) {
+async function addMember(token: string, projectId: string, email: string, role: string) {
     return request(app)
         .post(`/api/projects/${projectId}/members`)
         .set('Authorization', `Bearer ${token}`)
         .send({ email, role });
 }
 
-async function createScene(token, projectId, body = { name: 'Scene', data: { objects: [] } }) {
+async function createScene(token: string, projectId: string, body: object = { name: 'Scene', data: { objects: [] } }) {
     return request(app)
         .post(`/api/projects/${projectId}/scenes`)
         .set('Authorization', `Bearer ${token}`)
         .send(body);
 }
 
-function sceneUrl(projectId, sceneId) {
+function sceneUrl(projectId: string, sceneId: string) {
     return `/api/projects/${projectId}/scenes/${sceneId}`;
 }
 
-async function seedScenes(projectId, count) {
+async function seedScenes(projectId: string, count: number) {
     await prisma.scene.createMany({
         data: Array.from({ length: count }, (_, i) => ({ projectId, name: `Scene ${i}` })),
     });
@@ -67,6 +67,7 @@ test('editor can create a scene', async () => {
     assert.deepEqual(res.body.scene.data, { objects: [1] });
 
     const row = await prisma.scene.findUnique({ where: { id: res.body.scene.id } });
+    assert.ok(row);
     assert.equal(row.projectId, project.id);
     assert.deepEqual(row.data, { objects: [1] });
 });
@@ -92,7 +93,7 @@ test('viewer can list and read scenes', async () => {
         .get(`/api/projects/${project.id}/scenes`)
         .set('Authorization', `Bearer ${viewer.token}`);
     assert.equal(list.status, 200);
-    assert.deepEqual(list.body.scenes.map((s) => s.id), [scene.id]);
+    assert.deepEqual(list.body.scenes.map((s: { id: string }) => s.id), [scene.id]);
 
     const one = await request(app)
         .get(sceneUrl(project.id, scene.id))
@@ -120,6 +121,7 @@ test('viewer cannot update or delete scenes', async () => {
     assert.equal(remove.status, 403);
 
     const row = await prisma.scene.findUnique({ where: { id: scene.id } });
+    assert.ok(row);
     assert.equal(row.name, 'Scene');
 });
 
@@ -162,6 +164,7 @@ test('cannot access a scene from another project through a project the user belo
     assert.equal(remove.status, 404);
 
     const row = await prisma.scene.findUnique({ where: { id: scene.id } });
+    assert.ok(row);
     assert.equal(row.name, 'Secret');
     assert.deepEqual(row.data, { secret: true });
     assert.equal(row.projectId, victimProject.id);
@@ -179,7 +182,7 @@ test('listing scenes only returns scenes of that project', async () => {
         .set('Authorization', `Bearer ${owner.token}`);
 
     assert.equal(res.status, 200);
-    assert.deepEqual(res.body.scenes.map((s) => s.id), [sceneA.id]);
+    assert.deepEqual(res.body.scenes.map((s: { id: string }) => s.id), [sceneA.id]);
 });
 
 test('the last scene within the limit can be created', async () => {
@@ -233,6 +236,7 @@ test('editor can update a scene name and data', async () => {
     assert.deepEqual(res.body.scene.data, { objects: [{ id: 1 }] });
 
     const row = await prisma.scene.findUnique({ where: { id: scene.id } });
+    assert.ok(row);
     assert.equal(row.name, 'Renamed');
     assert.deepEqual(row.data, { objects: [{ id: 1 }] });
 });
@@ -249,6 +253,7 @@ test('partial update keeps the fields that were not sent', async () => {
 
     assert.equal(res.status, 200);
     const row = await prisma.scene.findUnique({ where: { id: scene.id } });
+    assert.ok(row);
     assert.equal(row.name, 'Renamed');
     assert.deepEqual(row.data, { keep: true });
 });
@@ -267,6 +272,7 @@ test('update is rejected when the body is empty or invalid', async () => {
     }
 
     const row = await prisma.scene.findUnique({ where: { id: scene.id } });
+    assert.ok(row);
     assert.equal(row.name, 'Scene');
 });
 
@@ -301,7 +307,7 @@ test('reading, updating or deleting a missing scene returns 404', async () => {
     const owner = await registerAndLogin('owner@test.com');
     const project = await createProject(owner.token);
     const missing = sceneUrl(project.id, crypto.randomUUID());
-    const auth = ['Authorization', `Bearer ${owner.token}`];
+    const auth = ['Authorization', `Bearer ${owner.token}`] as const;
 
     assert.equal((await request(app).get(missing).set(...auth)).status, 404);
     assert.equal((await request(app).put(missing).set(...auth).send({ name: 'x' })).status, 404);

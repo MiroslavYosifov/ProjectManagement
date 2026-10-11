@@ -1,28 +1,21 @@
 import crypto from 'node:crypto';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { authRepository } from '../../repository/auth/index.js';
+import { authRepository, type UserPublic } from '../../repository/auth/index.js';
 import { sessionRepository } from '../../repository/sessions/index.js';
-import { createAppError } from '../../errors/index.js';
+import { createAppError, errorCode } from '../../errors/index.js';
 
 const SALT_ROUNDS = 10;
 const ACCESS_TOKEN_EXPIRES_IN = '15m';
-const REFRESH_TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+const REFRESH_TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 
 const REFRESH_REUSE_GRACE_MS = Number(process.env.REFRESH_REUSE_GRACE_MS) || 15 * 1000;
 
-// In-flight/just-settled rotations, keyed by the old session id. A burst of
-// requests presenting the same already-rotated refresh token (StrictMode's
-// double effect, several tabs, a retried request) join the one rotation
-// instead of each minting its own new session. Without this, the grace
-// window would let anyone holding a copy of a just-rotated refresh token -
-// not only the legitimate client - exchange it for an extra, independent
-// session, defeating rotation's reuse-detection purpose.
-// Assumes a single Node process; a horizontally-scaled deployment would need
-// a shared store (e.g. Redis) instead of this in-memory map.
-const rotationsInFlight = new Map();
+type Tokens = Awaited<ReturnType<typeof issueTokens>>;
 
-function rememberRotation(sessionId, promise) {
+const rotationsInFlight = new Map<string, Promise<Tokens>>();
+
+function rememberRotation(sessionId: string, promise: Promise<Tokens>) {
     rotationsInFlight.set(sessionId, promise);
     promise.catch(() => {}).finally(() => {
         const timer = setTimeout(() => {
@@ -34,7 +27,7 @@ function rememberRotation(sessionId, promise) {
     });
 }
 
-async function issueTokens(user) {
+async function issueTokens(user: Pick<UserPublic, 'id' | 'email' | 'username'>) {
     const secret = crypto.randomBytes(48).toString('hex');
     const refreshHash = await bcrypt.hash(secret, SALT_ROUNDS);
     const expiresAt = new Date(Date.now() + REFRESH_TOKEN_TTL_MS).toISOString();
@@ -47,7 +40,7 @@ async function issueTokens(user) {
 
     const accessToken = jwt.sign(
         { sub: user.id, email: user.email, sid: session.id },
-        process.env.JWT_SECRET,
+        process.env.JWT_SECRET!,
         { expiresIn: ACCESS_TOKEN_EXPIRES_IN }
     );
 
@@ -64,7 +57,7 @@ async function issueTokens(user) {
     };
 }
 
-async function register ({ email, password, username}) {
+async function register ({ email, password, username}: { email: string; password: string; username?: string | null }) {
     const existing = await authRepository.findByEmail(email);
     if(existing) throw createAppError(409, 'Email already registered');
 
@@ -77,14 +70,14 @@ async function register ({ email, password, username}) {
             username: username ?? null,
         })
     } catch (err) {
-        if(err.code === '23505') {
+        if(errorCode(err) === '23505') {
             throw createAppError(409, 'Email already registered');
         }
         throw err;
     }
 }
 
-async function login ({ email, password}) {
+async function login ({ email, password}: { email: string; password: string }) {
     const user = await authRepository.findByEmail(email);
     if(!user) {
         throw createAppError(401, 'Invalid email or password');
@@ -97,7 +90,7 @@ async function login ({ email, password}) {
     return issueTokens(user);
 }
 
-async function refresh({ refreshToken }) {
+async function refresh({ refreshToken }: { refreshToken: unknown }) {
 
     if (!refreshToken || typeof refreshToken !== 'string') {
         throw createAppError(400, 'Refresh token is required');
@@ -112,11 +105,6 @@ async function refresh({ refreshToken }) {
     if (!session) throw createAppError(401, 'Invalid refresh token');
 
     if (session.revoked_at) {
-        // A duplicate/late request for a rotation that's already in flight (or
-        // settled within the grace window) can join that same result - but
-        // only once it proves it held the real secret. The session id alone
-        // is not secret (it's also readable from the access token's `sid`
-        // claim), so the lock may never be honored on id alone.
         const inFlight = rotationsInFlight.get(sessionId);
         if (inFlight) {
             const matches = await bcrypt.compare(secret, session.refresh_hash);
@@ -135,19 +123,10 @@ async function refresh({ refreshToken }) {
         throw createAppError(401, 'Invalid refresh token');
     }
 
-    // Two truly concurrent requests for the same still-active session can
-    // both reach this point before either has registered a rotation (both
-    // read revoked_at as null). The check above only catches a request that
-    // arrives after revocation was already written, so it must be repeated
-    // here, now that this request has yielded (via the bcrypt await) and
-    // could have been overtaken by one that registered first.
     const alreadyRotating = rotationsInFlight.get(sessionId);
     if (alreadyRotating) return alreadyRotating;
 
     const rotation = (async () => {
-        // Atomic: of any requests that reach here concurrently (before either
-        // had a chance to register the in-flight rotation above), only one
-        // wins this update; the rest must not mint their own session.
         const revokedNow = await sessionRepository.revokeIfActive(sessionId);
         if (!revokedNow) {
             throw createAppError(401, 'Refresh token revoked');
@@ -160,7 +139,7 @@ async function refresh({ refreshToken }) {
     return rotation;
 }
 
-async function logout({ sessionId }) {
+async function logout({ sessionId }: { sessionId?: string }) {
     if (!sessionId) return;
     await sessionRepository.revokeImmediately(sessionId);
 }

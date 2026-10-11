@@ -9,7 +9,7 @@ before(resetDb);
 beforeEach(resetDb);
 after(disconnectDb);
 
-async function registerAndLogin(email) {
+async function registerAndLogin(email: string) {
     const credentials = { email, username: email.split('@')[0], password: 'Password123!' };
     await request(app).post('/api/auth/register').send(credentials);
     const res = await request(app)
@@ -30,7 +30,7 @@ test('POST /auth/logout: 200, and revokes the session tied to the access token',
     assert.equal(res.body.message, 'Logged out successfully');
 
     const session = await prisma.session.findUnique({ where: { id: sessionId } });
-    assert.ok(session.revokedAt);
+    assert.ok(session?.revokedAt);
 });
 
 test('POST /auth/logout: the refresh token can no longer be used after logout', async () => {

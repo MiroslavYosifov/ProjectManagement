@@ -1,6 +1,7 @@
+import type { Request, Response, NextFunction } from 'express';
 import { authService } from "../../services/auth/index.js"
 
-async function register(req, res, next) {
+async function register(req: Request, res: Response, next: NextFunction) {
     try {
         const { email, password, username } = req.body;
         const user = await authService.register({ email, password, username});
@@ -10,7 +11,7 @@ async function register(req, res, next) {
     }
 }
 
-async function login(req, res, next) {
+async function login(req: Request, res: Response, next: NextFunction) {
     try {
         const { email, password } = req.body;
         const result = await authService.login({ email, password });
@@ -20,7 +21,7 @@ async function login(req, res, next) {
     }
 }
 
-async function refresh(req, res, next) {
+async function refresh(req: Request, res: Response, next: NextFunction) {
     try {
         const { refreshToken } = req.body ?? {};
         const result = await authService.refresh({ refreshToken });
@@ -31,9 +32,9 @@ async function refresh(req, res, next) {
     }
 }
 
-async function logout(req, res, next) {
+async function logout(req: Request, res: Response, next: NextFunction) {
     try {
-        await authService.logout({ sessionId: req.user.sid });
+        await authService.logout({ sessionId: req.user!.sid });
         res.status(200).json({ message: 'Logged out successfully' });
     } catch (err) {
         next(err);

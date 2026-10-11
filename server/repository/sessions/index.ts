@@ -1,6 +1,7 @@
 import { prisma } from '../../db/prisma.js';
+import type { Session } from '../../generated/prisma/client.js';
 
-function toSessionCreated(row) {
+function toSessionCreated(row: Session) {
     return {
         id: row.id,
         user_id: row.userId,
@@ -9,8 +10,7 @@ function toSessionCreated(row) {
     };
 }
 
-function toSessionForAuth(row) {
-    if (!row) return null;
+function toSessionForAuth(row: Session) {
     return {
         id: row.id,
         user_id: row.userId,
@@ -20,7 +20,7 @@ function toSessionForAuth(row) {
     };
 }
 
-async function create({ userId, refreshHash, expiresAt }) {
+async function create({ userId, refreshHash, expiresAt }: { userId: string; refreshHash: string; expiresAt: string }) {
     const row = await prisma.session.create({
         data: {
             userId,
@@ -31,21 +31,19 @@ async function create({ userId, refreshHash, expiresAt }) {
     return toSessionCreated(row);
 }
 
-async function findById(id) {
+async function findById(id: string) {
     const row = await prisma.session.findUnique({ where: { id } });
-    return toSessionForAuth(row);
+    return row ? toSessionForAuth(row) : null;
 }
 
-async function revoke(id) {
+async function revoke(id: string) {
     await prisma.session.update({
         where: { id },
         data: { revokedAt: new Date() },
     });
 }
 
-// Atomically revokes the session only if it is still active.
-// Returns true if this call performed the revocation, false if it was already revoked.
-async function revokeIfActive(id) {
+async function revokeIfActive(id: string) {
     const { count } = await prisma.session.updateMany({
         where: { id, revokedAt: null },
         data: { revokedAt: new Date() },
@@ -53,9 +51,7 @@ async function revokeIfActive(id) {
     return count > 0;
 }
 
-// Revokes the session with a timestamp far in the past so no refresh grace
-// period applies (used for logout, as opposed to token rotation).
-async function revokeImmediately(id) {
+async function revokeImmediately(id: string) {
     await prisma.session.update({
         where: { id },
         data: { revokedAt: new Date(0) },

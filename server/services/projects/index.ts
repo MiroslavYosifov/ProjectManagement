@@ -1,15 +1,17 @@
-import { prisma } from '../../db/prisma.js';
+import { prisma, type Pagination } from '../../db/prisma.js';
 import { projectsRepository } from '../../repository/projects/index.js';
 import { membersRepository } from '../../repository/members/index.js';
 import { createAppError } from '../../errors/index.js';
 
 const MAX_PROJECTS_PER_USER = 20;
 
-async function getAll({ userId, pagination }) {
+type ProjectInput = { name: string; description?: string | null };
+
+async function getAll({ userId, pagination }: { userId: string; pagination?: Pagination }) {
     return membersRepository.findProjectsByMember(userId, pagination);
 }
 
-async function getById({ projectId }) {
+async function getById({ projectId }: { projectId: string }) {
     const project = await projectsRepository.findById(projectId);
     if (!project) {
         throw createAppError(404, 'Project not found');
@@ -17,7 +19,7 @@ async function getById({ projectId }) {
     return project;
 }
 
-async function create({ userId, data }) {
+async function create({ userId, data }: { userId: string; data: ProjectInput }) {
     const { name, description } = data;
     return prisma.$transaction(async (tx) => {
         const count = await projectsRepository.countByUser(userId, tx);
@@ -30,11 +32,11 @@ async function create({ userId, data }) {
     }, { isolationLevel: 'Serializable' });
 }
 
-async function update({ projectId, data }) {
+async function update({ projectId, data }: { projectId: string; data: Partial<ProjectInput> }) {
     return projectsRepository.update(projectId, data);
 }
 
-async function deleteProject({ projectId }) {
+async function deleteProject({ projectId }: { projectId: string }) {
     return projectsRepository.delete(projectId);
 }
 

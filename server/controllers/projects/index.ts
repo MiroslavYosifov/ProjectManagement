@@ -1,15 +1,18 @@
+import type { Request, Response, NextFunction } from 'express';
 import { projectsService } from "../../services/projects/index.js";
 
-function parsePagination(query) {
-    const page = Math.max(1, parseInt(query.page, 10) || 1);
-    const limit = Math.min(100, Math.max(1, parseInt(query.limit, 10) || 20));
+type ProjectParams = { projectId: string };
+
+function parsePagination(query: Request['query']) {
+    const page = Math.max(1, parseInt(String(query.page), 10) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(String(query.limit), 10) || 20));
     return { skip: (page - 1) * limit, take: limit };
 }
 
-async function getAll(req, res, next) {
+async function getAll(req: Request, res: Response, next: NextFunction) {
     try {
         const projects = await projectsService.getAll({
-            userId: req.user.id,
+            userId: req.user!.id,
             pagination: parsePagination(req.query),
         });
         res.status(200).json({ projects });
@@ -18,7 +21,7 @@ async function getAll(req, res, next) {
     }
 }
 
-async function getById(req, res, next) {
+async function getById(req: Request<ProjectParams>, res: Response, next: NextFunction) {
     try {
         const project = await projectsService.getById({
             projectId: req.params.projectId,
@@ -29,10 +32,10 @@ async function getById(req, res, next) {
     }
 }
 
-async function create(req, res, next) {
+async function create(req: Request, res: Response, next: NextFunction) {
     try {
         const project = await projectsService.create({
-            userId: req.user.id,
+            userId: req.user!.id,
             data: req.body,
         });
         res.status(201).json({ project });
@@ -41,7 +44,7 @@ async function create(req, res, next) {
     }
 }
 
-async function update(req, res, next) {
+async function update(req: Request<ProjectParams>, res: Response, next: NextFunction) {
     try {
         const project = await projectsService.update({
             projectId: req.params.projectId,
@@ -53,7 +56,7 @@ async function update(req, res, next) {
     }
 }
 
-async function deleteProject(req, res, next) {
+async function deleteProject(req: Request<ProjectParams>, res: Response, next: NextFunction) {
     try {
         await projectsService.delete({
             projectId: req.params.projectId,

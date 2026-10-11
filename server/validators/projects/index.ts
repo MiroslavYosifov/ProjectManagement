@@ -1,7 +1,9 @@
+import type { Request, Response, NextFunction } from 'express';
+
 const NAME_MAX = 100;
 const DESCRIPTION_MAX = 1000;
 
-function validateName(name) {
+function validateName(name: unknown) {
     if (typeof name !== 'string') return 'Name must be a string';
     const trimmed = name.trim();
     if (trimmed.length < 1) return 'Name is required';
@@ -9,13 +11,13 @@ function validateName(name) {
     return null;
 }
 
-function validateDescription(description) {
+function validateDescription(description: unknown) {
     if (typeof description !== 'string') return 'Description must be a string';
     if (description.length > DESCRIPTION_MAX) return `Description must be max ${DESCRIPTION_MAX} characters`;
     return null;
 }
 
-function create(req, res, next) {
+function create(req: Request, res: Response, next: NextFunction) {
     const { name, description } = req.body ?? {};
 
     const nameError = validateName(name);
@@ -30,7 +32,7 @@ function create(req, res, next) {
     next();
 }
 
-function update(req, res, next) {
+function update(req: Request, res: Response, next: NextFunction) {
     const { name, description } = req.body ?? {};
 
     if (name === undefined && description === undefined) {

@@ -10,7 +10,7 @@ before(resetDb);
 beforeEach(resetDb);
 after(disconnectDb);
 
-async function registerAndLogin(email) {
+async function registerAndLogin(email: string) {
     const credentials = { email, username: email.split('@')[0], password: 'Password123!' };
     await request(app).post('/api/auth/register').send(credentials);
     const res = await request(app)
@@ -37,7 +37,7 @@ test('POST /auth/refresh: happy path issues new tokens and revokes the old sessi
     assert.notEqual(sessionIdB, sessionIdA);
 
     const sessionA = await prisma.session.findUnique({ where: { id: sessionIdA } });
-    assert.ok(sessionA.revokedAt);
+    assert.ok(sessionA?.revokedAt);
 
     const sessionB = await prisma.session.findUnique({ where: { id: sessionIdB } });
     assert.ok(sessionB);
@@ -77,6 +77,7 @@ test('POST /auth/refresh: a just-rotated token reused within the grace period ge
     assert.equal(second.body.refreshToken, first.body.refreshToken);
 
     const user = await prisma.user.findUnique({ where: { email: 'grace@test.com' } });
+    assert.ok(user);
     const sessions = await prisma.session.findMany({ where: { userId: user.id } });
     assert.equal(sessions.length, 2);
 });
@@ -94,6 +95,7 @@ test('POST /auth/refresh: concurrent requests with the same token all succeed an
     assert.equal(results[0].body.refreshToken, results[1].body.refreshToken);
 
     const user = await prisma.user.findUnique({ where: { email: 'concurrent@test.com' } });
+    assert.ok(user);
     const sessions = await prisma.session.findMany({ where: { userId: user.id } });
     assert.equal(sessions.length, 2);
 });
@@ -124,6 +126,7 @@ test('POST /auth/refresh: 401 when the session is expired', async () => {
         password: 'Password123!',
     });
     const user = await prisma.user.findUnique({ where: { email: 'expired-session@test.com' } });
+    assert.ok(user);
 
     const session = await prisma.session.create({
         data: {
@@ -148,6 +151,7 @@ test('POST /auth/refresh: 401 when the session is revoked', async () => {
         password: 'Password123!',
     });
     const user = await prisma.user.findUnique({ where: { email: 'revoked-session@test.com' } });
+    assert.ok(user);
 
     const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000);
     const session = await prisma.session.create({

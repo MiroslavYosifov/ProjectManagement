@@ -1,6 +1,8 @@
+import type { Request, Response, NextFunction } from 'express';
+
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function register(req, res, next) {
+function register(req: Request, res: Response, next: NextFunction) {
     const { email, password, username } = req.body ?? {};
 
     if(!email || typeof email !== 'string') {
@@ -42,7 +44,7 @@ function register(req, res, next) {
     next();
 }
 
-function login(req, res, next) {
+function login(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body ?? {};
 
     if(!email || typeof email !== 'string') {

@@ -1,6 +1,9 @@
+import type { Request, Response, NextFunction } from 'express';
 import { membersService } from '../../services/members/index.js';
 
-async function list(req, res, next) {
+type ProjectParams = { projectId: string };
+
+async function list(req: Request<ProjectParams>, res: Response, next: NextFunction) {
     try {
         const members = await membersService.list({ projectId: req.params.projectId });
         res.status(200).json({ members });
@@ -9,7 +12,7 @@ async function list(req, res, next) {
     }
 }
 
-async function set(req, res, next) {
+async function set(req: Request<ProjectParams>, res: Response, next: NextFunction) {
     try {
         const member = await membersService.setMember({
             projectId: req.params.projectId,
@@ -22,7 +25,7 @@ async function set(req, res, next) {
     }
 }
 
-async function remove(req, res, next) {
+async function remove(req: Request<ProjectParams & { userId: string }>, res: Response, next: NextFunction) {
     try {
         await membersService.removeMember({
             projectId: req.params.projectId,

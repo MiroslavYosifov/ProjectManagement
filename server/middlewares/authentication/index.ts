@@ -1,7 +1,10 @@
+import type { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import logger from '../../loggers/logger.js';
 
-function authenticate(req, res, next) {
+type AccessTokenPayload = { sub: string; email: string; sid: string };
+
+function authenticate(req: Request, res: Response, next: NextFunction) {
 
     const authHeader = req.headers.authorization;
 
@@ -19,7 +22,7 @@ function authenticate(req, res, next) {
     }
 
     try {
-        const payload = jwt.verify(token, process.env.JWT_SECRET, { algorithms: ['HS256'] });
+        const payload = jwt.verify(token, process.env.JWT_SECRET!, { algorithms: ['HS256'] }) as AccessTokenPayload;
         req.user = {
             id: payload.sub,
             email: payload.email,
@@ -27,7 +30,7 @@ function authenticate(req, res, next) {
         }
         next();
     } catch (error) {
-        if (error.name === 'TokenExpiredError') {
+        if (error instanceof Error && error.name === 'TokenExpiredError') {
             logger.warn({}, 'Token is expired');
             return res.status(401).json({ message: 'Token is expired' });
         }

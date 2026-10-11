@@ -6,3 +6,7 @@ export function createAppError(status: number, message: string): AppError {
     error.name = 'AppError';
     return error;
 }
+
+export function errorCode(err: unknown): unknown {
+    return typeof err === 'object' && err !== null && 'code' in err ? err.code : undefined;
+}

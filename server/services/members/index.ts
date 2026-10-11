@@ -2,15 +2,13 @@ import { membersRepository } from '../../repository/members/index.js';
 import { authRepository } from '../../repository/auth/index.js';
 import { createAppError } from '../../errors/index.js';
 import logger from '../../loggers/logger.js';
+import type { ProjectRole } from '../../generated/prisma/client.js';
 
-async function list({ projectId }) {
+async function list({ projectId }: { projectId: string }) {
     return membersRepository.findMembers(projectId);
 }
 
-// Invite a user (by email) or change an existing member's role.
-// Only VIEWER/EDITOR are assignable
-// Only the creator can be OWNER 
-async function setMember({ projectId, email, role }) {
+async function setMember({ projectId, email, role }: { projectId: string; email: string; role: ProjectRole }) {
     const user = await authRepository.findByEmail(email);
     if (!user) {
         throw createAppError(404, 'User not found');
@@ -26,7 +24,7 @@ async function setMember({ projectId, email, role }) {
     return { user_id: user.id, email: user.email, role };
 }
 
-async function removeMember({ projectId, targetUserId }) {
+async function removeMember({ projectId, targetUserId }: { projectId: string; targetUserId: string }) {
     const current = await membersRepository.findRole({ projectId, userId: targetUserId });
     if (current === 'OWNER') {
         throw createAppError(409, 'Cannot remove the project owner');

@@ -1,8 +1,9 @@
+import type { Request, Response, NextFunction } from 'express';
 import { isPlainObject } from '../common/index.js';
 
 const NAME_MAX = 100;
 
-function validateName(name) {
+function validateName(name: unknown) {
     if (typeof name !== 'string') return 'Name must be a string';
     const trimmed = name.trim();
     if (trimmed.length < 1) return 'Name is required';
@@ -10,7 +11,7 @@ function validateName(name) {
     return null;
 }
 
-function create(req, res, next) {
+function create(req: Request, res: Response, next: NextFunction) {
     const { name, data } = req.body ?? {};
 
     const nameError = validateName(name);
@@ -24,7 +25,7 @@ function create(req, res, next) {
     next();
 }
 
-function update(req, res, next) {
+function update(req: Request, res: Response, next: NextFunction) {
 
     const { name, data } = req.body ?? {};
     if (name === undefined && data === undefined) {

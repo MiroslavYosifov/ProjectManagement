@@ -1,12 +1,16 @@
+import type { Request, Response, NextFunction } from 'express';
 import { scenesService } from "../../services/scenes/index.js";
 
-function parsePagination(query) {
-    const page = Math.max(1, parseInt(query.page, 10) || 1);
-    const limit = Math.min(100, Math.max(1, parseInt(query.limit, 10) || 100));
+type ProjectParams = { projectId: string };
+type SceneParams = ProjectParams & { sceneId: string };
+
+function parsePagination(query: Request['query']) {
+    const page = Math.max(1, parseInt(String(query.page), 10) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(String(query.limit), 10) || 100));
     return { skip: (page - 1) * limit, take: limit };
 }
 
-async function getAll(req, res, next) {
+async function getAll(req: Request<ProjectParams>, res: Response, next: NextFunction) {
     try {
         const scenes = await scenesService.getAll({
             projectId: req.params.projectId,
@@ -18,7 +22,7 @@ async function getAll(req, res, next) {
     }
 }
 
-async function getById(req, res, next) {
+async function getById(req: Request<SceneParams>, res: Response, next: NextFunction) {
     try {
         const scene = await scenesService.getById({
             projectId: req.params.projectId,
@@ -30,7 +34,7 @@ async function getById(req, res, next) {
     }
 }
 
-async function create(req, res, next) {
+async function create(req: Request<ProjectParams>, res: Response, next: NextFunction) {
     try {
         const scene = await scenesService.create({
             projectId: req.params.projectId,
@@ -42,7 +46,7 @@ async function create(req, res, next) {
     }
 }
 
-async function update(req, res, next) {
+async function update(req: Request<SceneParams>, res: Response, next: NextFunction) {
     try {
         const scene = await scenesService.update({
             projectId: req.params.projectId,
@@ -55,7 +59,7 @@ async function update(req, res, next) {
     }
 }
 
-async function deleteScene(req, res, next) {
+async function deleteScene(req: Request<SceneParams>, res: Response, next: NextFunction) {
     try {
         await scenesService.delete({
             projectId: req.params.projectId,

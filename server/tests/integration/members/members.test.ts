@@ -9,7 +9,7 @@ before(resetDb);
 beforeEach(resetDb);
 after(disconnectDb);
 
-async function registerAndLogin(email) {
+async function registerAndLogin(email: string) {
     const credentials = { email, username: email.split('@')[0], password: 'Password123!' };
     await request(app).post('/api/auth/register').send(credentials);
     const res = await request(app)
@@ -18,7 +18,7 @@ async function registerAndLogin(email) {
     return { token: res.body.accessToken, userId: res.body.user.id };
 }
 
-async function createProject(token, body = { name: 'Test Project' }) {
+async function createProject(token: string, body: object = { name: 'Test Project' }) {
     const res = await request(app)
         .post('/api/projects')
         .set('Authorization', `Bearer ${token}`)
@@ -26,26 +26,26 @@ async function createProject(token, body = { name: 'Test Project' }) {
     return res.body.project;
 }
 
-async function addMember(token, projectId, email, role) {
+async function addMember(token: string, projectId: string, email: string, role: string | undefined) {
     return request(app)
         .post(`/api/projects/${projectId}/members`)
         .set('Authorization', `Bearer ${token}`)
         .send({ email, role });
 }
 
-async function removeMember(token, projectId, userId) {
+async function removeMember(token: string, projectId: string, userId: string) {
     return request(app)
         .delete(`/api/projects/${projectId}/members/${userId}`)
         .set('Authorization', `Bearer ${token}`);
 }
 
-async function findMembership(projectId, userId) {
+async function findMembership(projectId: string, userId: string) {
     return prisma.projectMember.findUnique({
         where: { projectId_userId: { projectId, userId } },
     });
 }
 
-async function setupProjectWith(role) {
+async function setupProjectWith(role: string) {
     const owner = await registerAndLogin('owner@test.com');
     const member = await registerAndLogin(`${role.toLowerCase()}@test.com`);
     const project = await createProject(owner.token);
@@ -64,7 +64,7 @@ test('owner can add a member', async () => {
     assert.deepEqual(res.body.member, { user_id: viewer.userId, email: 'viewer@test.com', role: 'VIEWER' });
 
     const membership = await findMembership(project.id, viewer.userId);
-    assert.equal(membership.role, 'VIEWER');
+    assert.equal(membership?.role, 'VIEWER');
 });
 
 test('owner can change a member role', async () => {
@@ -99,7 +99,7 @@ test('any member can list the project members', async () => {
         .set('Authorization', `Bearer ${member.token}`);
 
     assert.equal(res.status, 200);
-    const roles = Object.fromEntries(res.body.members.map((m) => [m.user_id, m.role]));
+    const roles = Object.fromEntries(res.body.members.map((m: { user_id: string; role: string }) => [m.user_id, m.role]));
     assert.deepEqual(roles, { [owner.userId]: 'OWNER', [member.userId]: 'VIEWER' });
 });
 
@@ -114,7 +114,7 @@ test('viewer cannot edit the project', async () => {
     assert.equal(res.status, 403);
 
     const row = await prisma.project.findUnique({ where: { id: project.id } });
-    assert.equal(row.name, 'Test Project');
+    assert.equal(row?.name, 'Test Project');
 });
 
 test('viewer cannot create scenes', async () => {
@@ -179,7 +179,7 @@ test('owner role cannot be changed', async () => {
     const res = await addMember(owner.token, project.id, 'owner@test.com', 'VIEWER');
 
     assert.equal(res.status, 409);
-    assert.equal((await findMembership(project.id, owner.userId)).role, 'OWNER');
+    assert.equal((await findMembership(project.id, owner.userId))?.role, 'OWNER');
 });
 
 test('owner cannot be removed', async () => {

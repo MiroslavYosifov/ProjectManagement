@@ -1,7 +1,9 @@
+import type { Request, Response, NextFunction } from 'express';
+
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const ASSIGNABLE_ROLES = ['VIEWER', 'EDITOR'];
 
-function add(req, res, next) {
+function add(req: Request, res: Response, next: NextFunction) {
     const { email, role } = req.body ?? {};
 
     if (!email || typeof email !== 'string') {

@@ -10,7 +10,7 @@ before(resetDb);
 beforeEach(resetDb);
 after(disconnectDb);
 
-async function registerAndLogin(email) {
+async function registerAndLogin(email: string): Promise<string> {
     const credentials = { email, username: email.split('@')[0], password: 'Password123!' };
     await request(app).post('/api/auth/register').send(credentials);
     const res = await request(app)
@@ -19,7 +19,7 @@ async function registerAndLogin(email) {
     return res.body.accessToken;
 }
 
-function tamper(token) {
+function tamper(token: string) {
     const [header, payload, signature] = token.split('.');
     const flippedChar = payload[10] === 'a' ? 'b' : 'a';
     const tamperedPayload = payload.slice(0, 10) + flippedChar + payload.slice(11);
@@ -56,7 +56,7 @@ test('GET /projects: 401 with a tampered token (signature no longer matches payl
 test('GET /projects: 401 with an expired access token', async () => {
     const expiredToken = jwt.sign(
         { sub: 'some-user-id', email: 'expired@test.com', sid: 'some-session-id' },
-        process.env.JWT_SECRET,
+        process.env.JWT_SECRET!,
         { expiresIn: '-1s' }
     );
 

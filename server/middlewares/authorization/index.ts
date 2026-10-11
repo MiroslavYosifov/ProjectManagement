@@ -1,18 +1,20 @@
+import type { Request, Response, NextFunction } from 'express';
 import { membersRepository } from '../../repository/members/index.js';
 import logger from '../../loggers/logger.js';
+import type { ProjectRole as Role } from '../../generated/prisma/client.js';
 
-export const ProjectRole = {
+export const ProjectRole: Record<Role, number> = {
     VIEWER: 1,
     EDITOR: 2,
     OWNER: 3,
 };
 
-function requireProjectRole(minRole) {
-    return async (req, res, next) => {
+function requireProjectRole(minRole: Role) {
+    return async (req: Request<{ projectId: string }>, res: Response, next: NextFunction) => {
         try {
             const role = await membersRepository.findRole({
                 projectId: req.params.projectId,
-                userId: req.user.id,
+                userId: req.user!.id,
             });
 
             if (!role) {

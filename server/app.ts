@@ -1,8 +1,9 @@
 import 'dotenv/config';
-import express from "express";
+import express, { type Request, type Response, type NextFunction } from "express";
 import router from './routes/index.js';
 import logger from './loggers/logger.js';
 import httpLogger from './loggers/httpLogger.js';
+import { errorCode } from './errors/index.js';
 
 const app = express();
 
@@ -10,8 +11,8 @@ app.use(httpLogger);
 app.use(express.json());
 app.use('/api', router);
 
-app.use((err, req, res, next) => {
-    if(err.code === 'P2025') {
+app.use((err: Error & { status?: number }, req: Request, res: Response, next: NextFunction) => {
+    if(errorCode(err) === 'P2025') {
         logger.warn({ err }, 'Resource not found');
         return res.status(404).json({ message: 'Resource not found' });
     }

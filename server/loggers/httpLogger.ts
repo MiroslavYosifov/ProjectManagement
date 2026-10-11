@@ -1,8 +1,16 @@
+import type { IncomingHttpHeaders } from 'node:http';
 import logger from './logger.js';
-import pinoHttp from 'pino-http';
+import { pinoHttp, type ReqId } from 'pino-http';
 
-const pickHeaders = (headers, keys) => {
-    return keys.reduce((acc, key) => {
+type SerializedRequest = {
+    id: ReqId;
+    method: string;
+    url: string;
+    headers: IncomingHttpHeaders;
+};
+
+const pickHeaders = (headers: IncomingHttpHeaders, keys: string[]) => {
+    return keys.reduce<IncomingHttpHeaders>((acc, key) => {
         if (headers[key] !== undefined) acc[key] = headers[key];
         return acc;
     }, {});
@@ -16,7 +24,7 @@ const httpLogger = pinoHttp({
         return 'info';
     },
     serializers: {
-        req: (req) => ({
+        req: (req: SerializedRequest) => ({
             id: req.id,
             method: req.method,
             url: req.url,

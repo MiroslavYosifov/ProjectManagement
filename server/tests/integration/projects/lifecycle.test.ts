@@ -9,7 +9,7 @@ before(resetDb);
 beforeEach(resetDb);
 after(disconnectDb);
 
-async function registerAndLogin(email) {
+async function registerAndLogin(email: string): Promise<string> {
     const credentials = { email, username: email.split('@')[0], password: 'Password123!' };
     await request(app).post('/api/auth/register').send(credentials);
     const res = await request(app)
@@ -18,7 +18,7 @@ async function registerAndLogin(email) {
     return res.body.accessToken;
 }
 
-async function createProject(token, body = { name: 'Test Project' }) {
+async function createProject(token: string, body: object = { name: 'Test Project' }) {
     const res = await request(app)
         .post('/api/projects')
         .set('Authorization', `Bearer ${token}`)
@@ -26,7 +26,7 @@ async function createProject(token, body = { name: 'Test Project' }) {
     return res.body.project;
 }
 
-async function addMember(ownerToken, projectId, email, role) {
+async function addMember(ownerToken: string, projectId: string, email: string, role: string) {
     return request(app)
         .post(`/api/projects/${projectId}/members`)
         .set('Authorization', `Bearer ${ownerToken}`)
@@ -50,6 +50,7 @@ test('user can create a project', async () => {
 test('created project has correct owner', async () => {
     const token = await registerAndLogin('owner2@test.com');
     const user = await prisma.user.findUnique({ where: { email: 'owner2@test.com' } });
+    assert.ok(user);
     const project = await createProject(token);
 
     assert.equal(project.user_id, user.id);
@@ -57,7 +58,7 @@ test('created project has correct owner', async () => {
     const membership = await prisma.projectMember.findUnique({
         where: { projectId_userId: { projectId: project.id, userId: user.id } },
     });
-    assert.equal(membership.role, 'OWNER');
+    assert.equal(membership?.role, 'OWNER');
 });
 
 test('user can list only projects where he is a member', async () => {
@@ -141,7 +142,7 @@ test('viewer cannot update the project', async () => {
     assert.equal(res.status, 403);
 
     const project_ = await prisma.project.findUnique({ where: { id: project.id } });
-    assert.equal(project_.name, project.name);
+    assert.equal(project_?.name, project.name);
 });
 
 test('only the owner can delete the project', async () => {
