@@ -35,6 +35,7 @@ export default function SceneList({ projectId }: { projectId: string }) {
             <span className="scene-name">{scene.name}</span>
             <span className="scene-actions">
               <Link className="btn btn-ghost" to={`/projects/${projectId}/scenes/${scene.id}`}>Open</Link>
+              <Link className="btn btn-ghost" to={`/projects/${projectId}/scenes/${scene.id}/runs`}>Runs</Link>
               <button type="button" className="btn btn-delete" onClick={() => handleDelete(scene.id)}>
                 Delete
               </button>

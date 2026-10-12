@@ -2,7 +2,7 @@ import { useCallback, useSyncExternalStore } from 'react';
 import type { EditorController } from '../core/EditorController';
 import type { EditorState } from '../core/types';
 
-const idleState: EditorState = { status: 'idle', tick: 0, dirty: false };
+const idleState: EditorState = { status: 'idle', tick: 0, dirty: false, recording: false };
 
 export function useEditorState(controller: EditorController | null): EditorState {
   const subscribe = useCallback(

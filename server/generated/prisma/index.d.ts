@@ -34,6 +34,26 @@ export type Scene = $Result.DefaultSelection<Prisma.$ScenePayload>
  */
 export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
 /**
+ * Model SimulationRun
+ * 
+ */
+export type SimulationRun = $Result.DefaultSelection<Prisma.$SimulationRunPayload>
+/**
+ * Model SimulationRunChunk
+ * 
+ */
+export type SimulationRunChunk = $Result.DefaultSelection<Prisma.$SimulationRunChunkPayload>
+/**
+ * Model SimulationCheckpoint
+ * 
+ */
+export type SimulationCheckpoint = $Result.DefaultSelection<Prisma.$SimulationCheckpointPayload>
+/**
+ * Model SimulationMetric
+ * 
+ */
+export type SimulationMetric = $Result.DefaultSelection<Prisma.$SimulationMetricPayload>
+/**
  * Model User
  * 
  */
@@ -51,11 +71,24 @@ export namespace $Enums {
 
 export type ProjectRole = (typeof ProjectRole)[keyof typeof ProjectRole]
 
+
+export const SimulationRunStatus: {
+  RUNNING: 'RUNNING',
+  COMPLETED: 'COMPLETED',
+  INTERRUPTED: 'INTERRUPTED'
+};
+
+export type SimulationRunStatus = (typeof SimulationRunStatus)[keyof typeof SimulationRunStatus]
+
 }
 
 export type ProjectRole = $Enums.ProjectRole
 
 export const ProjectRole: typeof $Enums.ProjectRole
+
+export type SimulationRunStatus = $Enums.SimulationRunStatus
+
+export const SimulationRunStatus: typeof $Enums.SimulationRunStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -217,6 +250,46 @@ export class PrismaClient<
     * ```
     */
   get session(): Prisma.SessionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.simulationRun`: Exposes CRUD operations for the **SimulationRun** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SimulationRuns
+    * const simulationRuns = await prisma.simulationRun.findMany()
+    * ```
+    */
+  get simulationRun(): Prisma.SimulationRunDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.simulationRunChunk`: Exposes CRUD operations for the **SimulationRunChunk** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SimulationRunChunks
+    * const simulationRunChunks = await prisma.simulationRunChunk.findMany()
+    * ```
+    */
+  get simulationRunChunk(): Prisma.SimulationRunChunkDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.simulationCheckpoint`: Exposes CRUD operations for the **SimulationCheckpoint** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SimulationCheckpoints
+    * const simulationCheckpoints = await prisma.simulationCheckpoint.findMany()
+    * ```
+    */
+  get simulationCheckpoint(): Prisma.SimulationCheckpointDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.simulationMetric`: Exposes CRUD operations for the **SimulationMetric** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SimulationMetrics
+    * const simulationMetrics = await prisma.simulationMetric.findMany()
+    * ```
+    */
+  get simulationMetric(): Prisma.SimulationMetricDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
@@ -678,6 +751,10 @@ export namespace Prisma {
     ProjectMember: 'ProjectMember',
     Scene: 'Scene',
     Session: 'Session',
+    SimulationRun: 'SimulationRun',
+    SimulationRunChunk: 'SimulationRunChunk',
+    SimulationCheckpoint: 'SimulationCheckpoint',
+    SimulationMetric: 'SimulationMetric',
     User: 'User'
   };
 
@@ -694,7 +771,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "project" | "projectMember" | "scene" | "session" | "user"
+      modelProps: "project" | "projectMember" | "scene" | "session" | "simulationRun" | "simulationRunChunk" | "simulationCheckpoint" | "simulationMetric" | "user"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -994,6 +1071,302 @@ export namespace Prisma {
           }
         }
       }
+      SimulationRun: {
+        payload: Prisma.$SimulationRunPayload<ExtArgs>
+        fields: Prisma.SimulationRunFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SimulationRunFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SimulationRunFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunPayload>
+          }
+          findFirst: {
+            args: Prisma.SimulationRunFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SimulationRunFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunPayload>
+          }
+          findMany: {
+            args: Prisma.SimulationRunFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunPayload>[]
+          }
+          create: {
+            args: Prisma.SimulationRunCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunPayload>
+          }
+          createMany: {
+            args: Prisma.SimulationRunCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SimulationRunCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunPayload>[]
+          }
+          delete: {
+            args: Prisma.SimulationRunDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunPayload>
+          }
+          update: {
+            args: Prisma.SimulationRunUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunPayload>
+          }
+          deleteMany: {
+            args: Prisma.SimulationRunDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SimulationRunUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SimulationRunUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunPayload>[]
+          }
+          upsert: {
+            args: Prisma.SimulationRunUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunPayload>
+          }
+          aggregate: {
+            args: Prisma.SimulationRunAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSimulationRun>
+          }
+          groupBy: {
+            args: Prisma.SimulationRunGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SimulationRunGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SimulationRunCountArgs<ExtArgs>
+            result: $Utils.Optional<SimulationRunCountAggregateOutputType> | number
+          }
+        }
+      }
+      SimulationRunChunk: {
+        payload: Prisma.$SimulationRunChunkPayload<ExtArgs>
+        fields: Prisma.SimulationRunChunkFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SimulationRunChunkFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunChunkPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SimulationRunChunkFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunChunkPayload>
+          }
+          findFirst: {
+            args: Prisma.SimulationRunChunkFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunChunkPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SimulationRunChunkFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunChunkPayload>
+          }
+          findMany: {
+            args: Prisma.SimulationRunChunkFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunChunkPayload>[]
+          }
+          create: {
+            args: Prisma.SimulationRunChunkCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunChunkPayload>
+          }
+          createMany: {
+            args: Prisma.SimulationRunChunkCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SimulationRunChunkCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunChunkPayload>[]
+          }
+          delete: {
+            args: Prisma.SimulationRunChunkDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunChunkPayload>
+          }
+          update: {
+            args: Prisma.SimulationRunChunkUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunChunkPayload>
+          }
+          deleteMany: {
+            args: Prisma.SimulationRunChunkDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SimulationRunChunkUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SimulationRunChunkUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunChunkPayload>[]
+          }
+          upsert: {
+            args: Prisma.SimulationRunChunkUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationRunChunkPayload>
+          }
+          aggregate: {
+            args: Prisma.SimulationRunChunkAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSimulationRunChunk>
+          }
+          groupBy: {
+            args: Prisma.SimulationRunChunkGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SimulationRunChunkGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SimulationRunChunkCountArgs<ExtArgs>
+            result: $Utils.Optional<SimulationRunChunkCountAggregateOutputType> | number
+          }
+        }
+      }
+      SimulationCheckpoint: {
+        payload: Prisma.$SimulationCheckpointPayload<ExtArgs>
+        fields: Prisma.SimulationCheckpointFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SimulationCheckpointFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationCheckpointPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SimulationCheckpointFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationCheckpointPayload>
+          }
+          findFirst: {
+            args: Prisma.SimulationCheckpointFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationCheckpointPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SimulationCheckpointFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationCheckpointPayload>
+          }
+          findMany: {
+            args: Prisma.SimulationCheckpointFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationCheckpointPayload>[]
+          }
+          create: {
+            args: Prisma.SimulationCheckpointCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationCheckpointPayload>
+          }
+          createMany: {
+            args: Prisma.SimulationCheckpointCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SimulationCheckpointCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationCheckpointPayload>[]
+          }
+          delete: {
+            args: Prisma.SimulationCheckpointDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationCheckpointPayload>
+          }
+          update: {
+            args: Prisma.SimulationCheckpointUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationCheckpointPayload>
+          }
+          deleteMany: {
+            args: Prisma.SimulationCheckpointDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SimulationCheckpointUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SimulationCheckpointUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationCheckpointPayload>[]
+          }
+          upsert: {
+            args: Prisma.SimulationCheckpointUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationCheckpointPayload>
+          }
+          aggregate: {
+            args: Prisma.SimulationCheckpointAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSimulationCheckpoint>
+          }
+          groupBy: {
+            args: Prisma.SimulationCheckpointGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SimulationCheckpointGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SimulationCheckpointCountArgs<ExtArgs>
+            result: $Utils.Optional<SimulationCheckpointCountAggregateOutputType> | number
+          }
+        }
+      }
+      SimulationMetric: {
+        payload: Prisma.$SimulationMetricPayload<ExtArgs>
+        fields: Prisma.SimulationMetricFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SimulationMetricFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationMetricPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SimulationMetricFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationMetricPayload>
+          }
+          findFirst: {
+            args: Prisma.SimulationMetricFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationMetricPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SimulationMetricFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationMetricPayload>
+          }
+          findMany: {
+            args: Prisma.SimulationMetricFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationMetricPayload>[]
+          }
+          create: {
+            args: Prisma.SimulationMetricCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationMetricPayload>
+          }
+          createMany: {
+            args: Prisma.SimulationMetricCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SimulationMetricCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationMetricPayload>[]
+          }
+          delete: {
+            args: Prisma.SimulationMetricDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationMetricPayload>
+          }
+          update: {
+            args: Prisma.SimulationMetricUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationMetricPayload>
+          }
+          deleteMany: {
+            args: Prisma.SimulationMetricDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SimulationMetricUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SimulationMetricUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationMetricPayload>[]
+          }
+          upsert: {
+            args: Prisma.SimulationMetricUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SimulationMetricPayload>
+          }
+          aggregate: {
+            args: Prisma.SimulationMetricAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSimulationMetric>
+          }
+          groupBy: {
+            args: Prisma.SimulationMetricGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SimulationMetricGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SimulationMetricCountArgs<ExtArgs>
+            result: $Utils.Optional<SimulationMetricCountAggregateOutputType> | number
+          }
+        }
+      }
       User: {
         payload: Prisma.$UserPayload<ExtArgs>
         fields: Prisma.UserFieldRefs
@@ -1195,6 +1568,10 @@ export namespace Prisma {
     projectMember?: ProjectMemberOmit
     scene?: SceneOmit
     session?: SessionOmit
+    simulationRun?: SimulationRunOmit
+    simulationRunChunk?: SimulationRunChunkOmit
+    simulationCheckpoint?: SimulationCheckpointOmit
+    simulationMetric?: SimulationMetricOmit
     user?: UserOmit
   }
 
@@ -1308,6 +1685,86 @@ export namespace Prisma {
    */
   export type ProjectCountOutputTypeCountScenesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SceneWhereInput
+  }
+
+
+  /**
+   * Count Type SceneCountOutputType
+   */
+
+  export type SceneCountOutputType = {
+    runs: number
+  }
+
+  export type SceneCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    runs?: boolean | SceneCountOutputTypeCountRunsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SceneCountOutputType without action
+   */
+  export type SceneCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SceneCountOutputType
+     */
+    select?: SceneCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SceneCountOutputType without action
+   */
+  export type SceneCountOutputTypeCountRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SimulationRunWhereInput
+  }
+
+
+  /**
+   * Count Type SimulationRunCountOutputType
+   */
+
+  export type SimulationRunCountOutputType = {
+    chunks: number
+    checkpoints: number
+    metrics: number
+  }
+
+  export type SimulationRunCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chunks?: boolean | SimulationRunCountOutputTypeCountChunksArgs
+    checkpoints?: boolean | SimulationRunCountOutputTypeCountCheckpointsArgs
+    metrics?: boolean | SimulationRunCountOutputTypeCountMetricsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SimulationRunCountOutputType without action
+   */
+  export type SimulationRunCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRunCountOutputType
+     */
+    select?: SimulationRunCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SimulationRunCountOutputType without action
+   */
+  export type SimulationRunCountOutputTypeCountChunksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SimulationRunChunkWhereInput
+  }
+
+  /**
+   * SimulationRunCountOutputType without action
+   */
+  export type SimulationRunCountOutputTypeCountCheckpointsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SimulationCheckpointWhereInput
+  }
+
+  /**
+   * SimulationRunCountOutputType without action
+   */
+  export type SimulationRunCountOutputTypeCountMetricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SimulationMetricWhereInput
   }
 
 
@@ -3725,6 +4182,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     project?: boolean | ProjectDefaultArgs<ExtArgs>
+    runs?: boolean | Scene$runsArgs<ExtArgs>
+    _count?: boolean | SceneCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["scene"]>
 
   export type SceneSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3759,6 +4218,8 @@ export namespace Prisma {
   export type SceneOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "projectId" | "name" | "data" | "createdAt" | "updatedAt", ExtArgs["result"]["scene"]>
   export type SceneInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     project?: boolean | ProjectDefaultArgs<ExtArgs>
+    runs?: boolean | Scene$runsArgs<ExtArgs>
+    _count?: boolean | SceneCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SceneIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     project?: boolean | ProjectDefaultArgs<ExtArgs>
@@ -3771,6 +4232,7 @@ export namespace Prisma {
     name: "Scene"
     objects: {
       project: Prisma.$ProjectPayload<ExtArgs>
+      runs: Prisma.$SimulationRunPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4174,6 +4636,7 @@ export namespace Prisma {
   export interface Prisma__SceneClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    runs<T extends Scene$runsArgs<ExtArgs> = {}>(args?: Subset<T, Scene$runsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4607,6 +5070,30 @@ export namespace Prisma {
      * Limit how many Scenes to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Scene.runs
+   */
+  export type Scene$runsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRun
+     */
+    select?: SimulationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRun
+     */
+    omit?: SimulationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunInclude<ExtArgs> | null
+    where?: SimulationRunWhereInput
+    orderBy?: SimulationRunOrderByWithRelationInput | SimulationRunOrderByWithRelationInput[]
+    cursor?: SimulationRunWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SimulationRunScalarFieldEnum | SimulationRunScalarFieldEnum[]
   }
 
   /**
@@ -5701,6 +6188,4511 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: SessionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SimulationRun
+   */
+
+  export type AggregateSimulationRun = {
+    _count: SimulationRunCountAggregateOutputType | null
+    _avg: SimulationRunAvgAggregateOutputType | null
+    _sum: SimulationRunSumAggregateOutputType | null
+    _min: SimulationRunMinAggregateOutputType | null
+    _max: SimulationRunMaxAggregateOutputType | null
+  }
+
+  export type SimulationRunAvgAggregateOutputType = {
+    engineVersion: number | null
+    lastTick: number | null
+  }
+
+  export type SimulationRunSumAggregateOutputType = {
+    engineVersion: number | null
+    lastTick: number | null
+  }
+
+  export type SimulationRunMinAggregateOutputType = {
+    id: string | null
+    sceneId: string | null
+    engineVersion: number | null
+    status: $Enums.SimulationRunStatus | null
+    lastTick: number | null
+    startedAt: Date | null
+    lastHeartbeatAt: Date | null
+    endedAt: Date | null
+  }
+
+  export type SimulationRunMaxAggregateOutputType = {
+    id: string | null
+    sceneId: string | null
+    engineVersion: number | null
+    status: $Enums.SimulationRunStatus | null
+    lastTick: number | null
+    startedAt: Date | null
+    lastHeartbeatAt: Date | null
+    endedAt: Date | null
+  }
+
+  export type SimulationRunCountAggregateOutputType = {
+    id: number
+    sceneId: number
+    setup: number
+    engineVersion: number
+    status: number
+    lastTick: number
+    startedAt: number
+    lastHeartbeatAt: number
+    endedAt: number
+    _all: number
+  }
+
+
+  export type SimulationRunAvgAggregateInputType = {
+    engineVersion?: true
+    lastTick?: true
+  }
+
+  export type SimulationRunSumAggregateInputType = {
+    engineVersion?: true
+    lastTick?: true
+  }
+
+  export type SimulationRunMinAggregateInputType = {
+    id?: true
+    sceneId?: true
+    engineVersion?: true
+    status?: true
+    lastTick?: true
+    startedAt?: true
+    lastHeartbeatAt?: true
+    endedAt?: true
+  }
+
+  export type SimulationRunMaxAggregateInputType = {
+    id?: true
+    sceneId?: true
+    engineVersion?: true
+    status?: true
+    lastTick?: true
+    startedAt?: true
+    lastHeartbeatAt?: true
+    endedAt?: true
+  }
+
+  export type SimulationRunCountAggregateInputType = {
+    id?: true
+    sceneId?: true
+    setup?: true
+    engineVersion?: true
+    status?: true
+    lastTick?: true
+    startedAt?: true
+    lastHeartbeatAt?: true
+    endedAt?: true
+    _all?: true
+  }
+
+  export type SimulationRunAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SimulationRun to aggregate.
+     */
+    where?: SimulationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationRuns to fetch.
+     */
+    orderBy?: SimulationRunOrderByWithRelationInput | SimulationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SimulationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SimulationRuns
+    **/
+    _count?: true | SimulationRunCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SimulationRunAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SimulationRunSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SimulationRunMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SimulationRunMaxAggregateInputType
+  }
+
+  export type GetSimulationRunAggregateType<T extends SimulationRunAggregateArgs> = {
+        [P in keyof T & keyof AggregateSimulationRun]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSimulationRun[P]>
+      : GetScalarType<T[P], AggregateSimulationRun[P]>
+  }
+
+
+
+
+  export type SimulationRunGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SimulationRunWhereInput
+    orderBy?: SimulationRunOrderByWithAggregationInput | SimulationRunOrderByWithAggregationInput[]
+    by: SimulationRunScalarFieldEnum[] | SimulationRunScalarFieldEnum
+    having?: SimulationRunScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SimulationRunCountAggregateInputType | true
+    _avg?: SimulationRunAvgAggregateInputType
+    _sum?: SimulationRunSumAggregateInputType
+    _min?: SimulationRunMinAggregateInputType
+    _max?: SimulationRunMaxAggregateInputType
+  }
+
+  export type SimulationRunGroupByOutputType = {
+    id: string
+    sceneId: string
+    setup: JsonValue
+    engineVersion: number
+    status: $Enums.SimulationRunStatus
+    lastTick: number
+    startedAt: Date
+    lastHeartbeatAt: Date
+    endedAt: Date | null
+    _count: SimulationRunCountAggregateOutputType | null
+    _avg: SimulationRunAvgAggregateOutputType | null
+    _sum: SimulationRunSumAggregateOutputType | null
+    _min: SimulationRunMinAggregateOutputType | null
+    _max: SimulationRunMaxAggregateOutputType | null
+  }
+
+  type GetSimulationRunGroupByPayload<T extends SimulationRunGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SimulationRunGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SimulationRunGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SimulationRunGroupByOutputType[P]>
+            : GetScalarType<T[P], SimulationRunGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SimulationRunSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sceneId?: boolean
+    setup?: boolean
+    engineVersion?: boolean
+    status?: boolean
+    lastTick?: boolean
+    startedAt?: boolean
+    lastHeartbeatAt?: boolean
+    endedAt?: boolean
+    scene?: boolean | SceneDefaultArgs<ExtArgs>
+    chunks?: boolean | SimulationRun$chunksArgs<ExtArgs>
+    checkpoints?: boolean | SimulationRun$checkpointsArgs<ExtArgs>
+    metrics?: boolean | SimulationRun$metricsArgs<ExtArgs>
+    _count?: boolean | SimulationRunCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["simulationRun"]>
+
+  export type SimulationRunSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sceneId?: boolean
+    setup?: boolean
+    engineVersion?: boolean
+    status?: boolean
+    lastTick?: boolean
+    startedAt?: boolean
+    lastHeartbeatAt?: boolean
+    endedAt?: boolean
+    scene?: boolean | SceneDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["simulationRun"]>
+
+  export type SimulationRunSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sceneId?: boolean
+    setup?: boolean
+    engineVersion?: boolean
+    status?: boolean
+    lastTick?: boolean
+    startedAt?: boolean
+    lastHeartbeatAt?: boolean
+    endedAt?: boolean
+    scene?: boolean | SceneDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["simulationRun"]>
+
+  export type SimulationRunSelectScalar = {
+    id?: boolean
+    sceneId?: boolean
+    setup?: boolean
+    engineVersion?: boolean
+    status?: boolean
+    lastTick?: boolean
+    startedAt?: boolean
+    lastHeartbeatAt?: boolean
+    endedAt?: boolean
+  }
+
+  export type SimulationRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sceneId" | "setup" | "engineVersion" | "status" | "lastTick" | "startedAt" | "lastHeartbeatAt" | "endedAt", ExtArgs["result"]["simulationRun"]>
+  export type SimulationRunInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    scene?: boolean | SceneDefaultArgs<ExtArgs>
+    chunks?: boolean | SimulationRun$chunksArgs<ExtArgs>
+    checkpoints?: boolean | SimulationRun$checkpointsArgs<ExtArgs>
+    metrics?: boolean | SimulationRun$metricsArgs<ExtArgs>
+    _count?: boolean | SimulationRunCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SimulationRunIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    scene?: boolean | SceneDefaultArgs<ExtArgs>
+  }
+  export type SimulationRunIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    scene?: boolean | SceneDefaultArgs<ExtArgs>
+  }
+
+  export type $SimulationRunPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SimulationRun"
+    objects: {
+      scene: Prisma.$ScenePayload<ExtArgs>
+      chunks: Prisma.$SimulationRunChunkPayload<ExtArgs>[]
+      checkpoints: Prisma.$SimulationCheckpointPayload<ExtArgs>[]
+      metrics: Prisma.$SimulationMetricPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      sceneId: string
+      setup: Prisma.JsonValue
+      engineVersion: number
+      status: $Enums.SimulationRunStatus
+      lastTick: number
+      startedAt: Date
+      lastHeartbeatAt: Date
+      endedAt: Date | null
+    }, ExtArgs["result"]["simulationRun"]>
+    composites: {}
+  }
+
+  type SimulationRunGetPayload<S extends boolean | null | undefined | SimulationRunDefaultArgs> = $Result.GetResult<Prisma.$SimulationRunPayload, S>
+
+  type SimulationRunCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SimulationRunFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SimulationRunCountAggregateInputType | true
+    }
+
+  export interface SimulationRunDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SimulationRun'], meta: { name: 'SimulationRun' } }
+    /**
+     * Find zero or one SimulationRun that matches the filter.
+     * @param {SimulationRunFindUniqueArgs} args - Arguments to find a SimulationRun
+     * @example
+     * // Get one SimulationRun
+     * const simulationRun = await prisma.simulationRun.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SimulationRunFindUniqueArgs>(args: SelectSubset<T, SimulationRunFindUniqueArgs<ExtArgs>>): Prisma__SimulationRunClient<$Result.GetResult<Prisma.$SimulationRunPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SimulationRun that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SimulationRunFindUniqueOrThrowArgs} args - Arguments to find a SimulationRun
+     * @example
+     * // Get one SimulationRun
+     * const simulationRun = await prisma.simulationRun.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SimulationRunFindUniqueOrThrowArgs>(args: SelectSubset<T, SimulationRunFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SimulationRunClient<$Result.GetResult<Prisma.$SimulationRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SimulationRun that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationRunFindFirstArgs} args - Arguments to find a SimulationRun
+     * @example
+     * // Get one SimulationRun
+     * const simulationRun = await prisma.simulationRun.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SimulationRunFindFirstArgs>(args?: SelectSubset<T, SimulationRunFindFirstArgs<ExtArgs>>): Prisma__SimulationRunClient<$Result.GetResult<Prisma.$SimulationRunPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SimulationRun that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationRunFindFirstOrThrowArgs} args - Arguments to find a SimulationRun
+     * @example
+     * // Get one SimulationRun
+     * const simulationRun = await prisma.simulationRun.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SimulationRunFindFirstOrThrowArgs>(args?: SelectSubset<T, SimulationRunFindFirstOrThrowArgs<ExtArgs>>): Prisma__SimulationRunClient<$Result.GetResult<Prisma.$SimulationRunPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SimulationRuns that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationRunFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SimulationRuns
+     * const simulationRuns = await prisma.simulationRun.findMany()
+     * 
+     * // Get first 10 SimulationRuns
+     * const simulationRuns = await prisma.simulationRun.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const simulationRunWithIdOnly = await prisma.simulationRun.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SimulationRunFindManyArgs>(args?: SelectSubset<T, SimulationRunFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SimulationRun.
+     * @param {SimulationRunCreateArgs} args - Arguments to create a SimulationRun.
+     * @example
+     * // Create one SimulationRun
+     * const SimulationRun = await prisma.simulationRun.create({
+     *   data: {
+     *     // ... data to create a SimulationRun
+     *   }
+     * })
+     * 
+     */
+    create<T extends SimulationRunCreateArgs>(args: SelectSubset<T, SimulationRunCreateArgs<ExtArgs>>): Prisma__SimulationRunClient<$Result.GetResult<Prisma.$SimulationRunPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SimulationRuns.
+     * @param {SimulationRunCreateManyArgs} args - Arguments to create many SimulationRuns.
+     * @example
+     * // Create many SimulationRuns
+     * const simulationRun = await prisma.simulationRun.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SimulationRunCreateManyArgs>(args?: SelectSubset<T, SimulationRunCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SimulationRuns and returns the data saved in the database.
+     * @param {SimulationRunCreateManyAndReturnArgs} args - Arguments to create many SimulationRuns.
+     * @example
+     * // Create many SimulationRuns
+     * const simulationRun = await prisma.simulationRun.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SimulationRuns and only return the `id`
+     * const simulationRunWithIdOnly = await prisma.simulationRun.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SimulationRunCreateManyAndReturnArgs>(args?: SelectSubset<T, SimulationRunCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationRunPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SimulationRun.
+     * @param {SimulationRunDeleteArgs} args - Arguments to delete one SimulationRun.
+     * @example
+     * // Delete one SimulationRun
+     * const SimulationRun = await prisma.simulationRun.delete({
+     *   where: {
+     *     // ... filter to delete one SimulationRun
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SimulationRunDeleteArgs>(args: SelectSubset<T, SimulationRunDeleteArgs<ExtArgs>>): Prisma__SimulationRunClient<$Result.GetResult<Prisma.$SimulationRunPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SimulationRun.
+     * @param {SimulationRunUpdateArgs} args - Arguments to update one SimulationRun.
+     * @example
+     * // Update one SimulationRun
+     * const simulationRun = await prisma.simulationRun.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SimulationRunUpdateArgs>(args: SelectSubset<T, SimulationRunUpdateArgs<ExtArgs>>): Prisma__SimulationRunClient<$Result.GetResult<Prisma.$SimulationRunPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SimulationRuns.
+     * @param {SimulationRunDeleteManyArgs} args - Arguments to filter SimulationRuns to delete.
+     * @example
+     * // Delete a few SimulationRuns
+     * const { count } = await prisma.simulationRun.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SimulationRunDeleteManyArgs>(args?: SelectSubset<T, SimulationRunDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SimulationRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationRunUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SimulationRuns
+     * const simulationRun = await prisma.simulationRun.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SimulationRunUpdateManyArgs>(args: SelectSubset<T, SimulationRunUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SimulationRuns and returns the data updated in the database.
+     * @param {SimulationRunUpdateManyAndReturnArgs} args - Arguments to update many SimulationRuns.
+     * @example
+     * // Update many SimulationRuns
+     * const simulationRun = await prisma.simulationRun.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SimulationRuns and only return the `id`
+     * const simulationRunWithIdOnly = await prisma.simulationRun.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SimulationRunUpdateManyAndReturnArgs>(args: SelectSubset<T, SimulationRunUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationRunPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SimulationRun.
+     * @param {SimulationRunUpsertArgs} args - Arguments to update or create a SimulationRun.
+     * @example
+     * // Update or create a SimulationRun
+     * const simulationRun = await prisma.simulationRun.upsert({
+     *   create: {
+     *     // ... data to create a SimulationRun
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SimulationRun we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SimulationRunUpsertArgs>(args: SelectSubset<T, SimulationRunUpsertArgs<ExtArgs>>): Prisma__SimulationRunClient<$Result.GetResult<Prisma.$SimulationRunPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SimulationRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationRunCountArgs} args - Arguments to filter SimulationRuns to count.
+     * @example
+     * // Count the number of SimulationRuns
+     * const count = await prisma.simulationRun.count({
+     *   where: {
+     *     // ... the filter for the SimulationRuns we want to count
+     *   }
+     * })
+    **/
+    count<T extends SimulationRunCountArgs>(
+      args?: Subset<T, SimulationRunCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SimulationRunCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SimulationRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationRunAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SimulationRunAggregateArgs>(args: Subset<T, SimulationRunAggregateArgs>): Prisma.PrismaPromise<GetSimulationRunAggregateType<T>>
+
+    /**
+     * Group by SimulationRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationRunGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SimulationRunGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SimulationRunGroupByArgs['orderBy'] }
+        : { orderBy?: SimulationRunGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SimulationRunGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSimulationRunGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SimulationRun model
+   */
+  readonly fields: SimulationRunFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SimulationRun.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SimulationRunClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    scene<T extends SceneDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SceneDefaultArgs<ExtArgs>>): Prisma__SceneClient<$Result.GetResult<Prisma.$ScenePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    chunks<T extends SimulationRun$chunksArgs<ExtArgs> = {}>(args?: Subset<T, SimulationRun$chunksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationRunChunkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    checkpoints<T extends SimulationRun$checkpointsArgs<ExtArgs> = {}>(args?: Subset<T, SimulationRun$checkpointsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationCheckpointPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    metrics<T extends SimulationRun$metricsArgs<ExtArgs> = {}>(args?: Subset<T, SimulationRun$metricsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationMetricPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SimulationRun model
+   */
+  interface SimulationRunFieldRefs {
+    readonly id: FieldRef<"SimulationRun", 'String'>
+    readonly sceneId: FieldRef<"SimulationRun", 'String'>
+    readonly setup: FieldRef<"SimulationRun", 'Json'>
+    readonly engineVersion: FieldRef<"SimulationRun", 'Int'>
+    readonly status: FieldRef<"SimulationRun", 'SimulationRunStatus'>
+    readonly lastTick: FieldRef<"SimulationRun", 'Int'>
+    readonly startedAt: FieldRef<"SimulationRun", 'DateTime'>
+    readonly lastHeartbeatAt: FieldRef<"SimulationRun", 'DateTime'>
+    readonly endedAt: FieldRef<"SimulationRun", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SimulationRun findUnique
+   */
+  export type SimulationRunFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRun
+     */
+    select?: SimulationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRun
+     */
+    omit?: SimulationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationRun to fetch.
+     */
+    where: SimulationRunWhereUniqueInput
+  }
+
+  /**
+   * SimulationRun findUniqueOrThrow
+   */
+  export type SimulationRunFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRun
+     */
+    select?: SimulationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRun
+     */
+    omit?: SimulationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationRun to fetch.
+     */
+    where: SimulationRunWhereUniqueInput
+  }
+
+  /**
+   * SimulationRun findFirst
+   */
+  export type SimulationRunFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRun
+     */
+    select?: SimulationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRun
+     */
+    omit?: SimulationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationRun to fetch.
+     */
+    where?: SimulationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationRuns to fetch.
+     */
+    orderBy?: SimulationRunOrderByWithRelationInput | SimulationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SimulationRuns.
+     */
+    cursor?: SimulationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SimulationRuns.
+     */
+    distinct?: SimulationRunScalarFieldEnum | SimulationRunScalarFieldEnum[]
+  }
+
+  /**
+   * SimulationRun findFirstOrThrow
+   */
+  export type SimulationRunFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRun
+     */
+    select?: SimulationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRun
+     */
+    omit?: SimulationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationRun to fetch.
+     */
+    where?: SimulationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationRuns to fetch.
+     */
+    orderBy?: SimulationRunOrderByWithRelationInput | SimulationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SimulationRuns.
+     */
+    cursor?: SimulationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SimulationRuns.
+     */
+    distinct?: SimulationRunScalarFieldEnum | SimulationRunScalarFieldEnum[]
+  }
+
+  /**
+   * SimulationRun findMany
+   */
+  export type SimulationRunFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRun
+     */
+    select?: SimulationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRun
+     */
+    omit?: SimulationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationRuns to fetch.
+     */
+    where?: SimulationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationRuns to fetch.
+     */
+    orderBy?: SimulationRunOrderByWithRelationInput | SimulationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SimulationRuns.
+     */
+    cursor?: SimulationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SimulationRuns.
+     */
+    distinct?: SimulationRunScalarFieldEnum | SimulationRunScalarFieldEnum[]
+  }
+
+  /**
+   * SimulationRun create
+   */
+  export type SimulationRunCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRun
+     */
+    select?: SimulationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRun
+     */
+    omit?: SimulationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SimulationRun.
+     */
+    data: XOR<SimulationRunCreateInput, SimulationRunUncheckedCreateInput>
+  }
+
+  /**
+   * SimulationRun createMany
+   */
+  export type SimulationRunCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SimulationRuns.
+     */
+    data: SimulationRunCreateManyInput | SimulationRunCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SimulationRun createManyAndReturn
+   */
+  export type SimulationRunCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRun
+     */
+    select?: SimulationRunSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRun
+     */
+    omit?: SimulationRunOmit<ExtArgs> | null
+    /**
+     * The data used to create many SimulationRuns.
+     */
+    data: SimulationRunCreateManyInput | SimulationRunCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SimulationRun update
+   */
+  export type SimulationRunUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRun
+     */
+    select?: SimulationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRun
+     */
+    omit?: SimulationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SimulationRun.
+     */
+    data: XOR<SimulationRunUpdateInput, SimulationRunUncheckedUpdateInput>
+    /**
+     * Choose, which SimulationRun to update.
+     */
+    where: SimulationRunWhereUniqueInput
+  }
+
+  /**
+   * SimulationRun updateMany
+   */
+  export type SimulationRunUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SimulationRuns.
+     */
+    data: XOR<SimulationRunUpdateManyMutationInput, SimulationRunUncheckedUpdateManyInput>
+    /**
+     * Filter which SimulationRuns to update
+     */
+    where?: SimulationRunWhereInput
+    /**
+     * Limit how many SimulationRuns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SimulationRun updateManyAndReturn
+   */
+  export type SimulationRunUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRun
+     */
+    select?: SimulationRunSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRun
+     */
+    omit?: SimulationRunOmit<ExtArgs> | null
+    /**
+     * The data used to update SimulationRuns.
+     */
+    data: XOR<SimulationRunUpdateManyMutationInput, SimulationRunUncheckedUpdateManyInput>
+    /**
+     * Filter which SimulationRuns to update
+     */
+    where?: SimulationRunWhereInput
+    /**
+     * Limit how many SimulationRuns to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SimulationRun upsert
+   */
+  export type SimulationRunUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRun
+     */
+    select?: SimulationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRun
+     */
+    omit?: SimulationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SimulationRun to update in case it exists.
+     */
+    where: SimulationRunWhereUniqueInput
+    /**
+     * In case the SimulationRun found by the `where` argument doesn't exist, create a new SimulationRun with this data.
+     */
+    create: XOR<SimulationRunCreateInput, SimulationRunUncheckedCreateInput>
+    /**
+     * In case the SimulationRun was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SimulationRunUpdateInput, SimulationRunUncheckedUpdateInput>
+  }
+
+  /**
+   * SimulationRun delete
+   */
+  export type SimulationRunDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRun
+     */
+    select?: SimulationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRun
+     */
+    omit?: SimulationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunInclude<ExtArgs> | null
+    /**
+     * Filter which SimulationRun to delete.
+     */
+    where: SimulationRunWhereUniqueInput
+  }
+
+  /**
+   * SimulationRun deleteMany
+   */
+  export type SimulationRunDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SimulationRuns to delete
+     */
+    where?: SimulationRunWhereInput
+    /**
+     * Limit how many SimulationRuns to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SimulationRun.chunks
+   */
+  export type SimulationRun$chunksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRunChunk
+     */
+    select?: SimulationRunChunkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRunChunk
+     */
+    omit?: SimulationRunChunkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunChunkInclude<ExtArgs> | null
+    where?: SimulationRunChunkWhereInput
+    orderBy?: SimulationRunChunkOrderByWithRelationInput | SimulationRunChunkOrderByWithRelationInput[]
+    cursor?: SimulationRunChunkWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SimulationRunChunkScalarFieldEnum | SimulationRunChunkScalarFieldEnum[]
+  }
+
+  /**
+   * SimulationRun.checkpoints
+   */
+  export type SimulationRun$checkpointsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationCheckpoint
+     */
+    select?: SimulationCheckpointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationCheckpoint
+     */
+    omit?: SimulationCheckpointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationCheckpointInclude<ExtArgs> | null
+    where?: SimulationCheckpointWhereInput
+    orderBy?: SimulationCheckpointOrderByWithRelationInput | SimulationCheckpointOrderByWithRelationInput[]
+    cursor?: SimulationCheckpointWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SimulationCheckpointScalarFieldEnum | SimulationCheckpointScalarFieldEnum[]
+  }
+
+  /**
+   * SimulationRun.metrics
+   */
+  export type SimulationRun$metricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationMetric
+     */
+    select?: SimulationMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationMetric
+     */
+    omit?: SimulationMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationMetricInclude<ExtArgs> | null
+    where?: SimulationMetricWhereInput
+    orderBy?: SimulationMetricOrderByWithRelationInput | SimulationMetricOrderByWithRelationInput[]
+    cursor?: SimulationMetricWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SimulationMetricScalarFieldEnum | SimulationMetricScalarFieldEnum[]
+  }
+
+  /**
+   * SimulationRun without action
+   */
+  export type SimulationRunDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRun
+     */
+    select?: SimulationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRun
+     */
+    omit?: SimulationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SimulationRunChunk
+   */
+
+  export type AggregateSimulationRunChunk = {
+    _count: SimulationRunChunkCountAggregateOutputType | null
+    _avg: SimulationRunChunkAvgAggregateOutputType | null
+    _sum: SimulationRunChunkSumAggregateOutputType | null
+    _min: SimulationRunChunkMinAggregateOutputType | null
+    _max: SimulationRunChunkMaxAggregateOutputType | null
+  }
+
+  export type SimulationRunChunkAvgAggregateOutputType = {
+    seq: number | null
+    fromTick: number | null
+    toTick: number | null
+  }
+
+  export type SimulationRunChunkSumAggregateOutputType = {
+    seq: number | null
+    fromTick: number | null
+    toTick: number | null
+  }
+
+  export type SimulationRunChunkMinAggregateOutputType = {
+    runId: string | null
+    seq: number | null
+    fromTick: number | null
+    toTick: number | null
+    createdAt: Date | null
+  }
+
+  export type SimulationRunChunkMaxAggregateOutputType = {
+    runId: string | null
+    seq: number | null
+    fromTick: number | null
+    toTick: number | null
+    createdAt: Date | null
+  }
+
+  export type SimulationRunChunkCountAggregateOutputType = {
+    runId: number
+    seq: number
+    fromTick: number
+    toTick: number
+    commands: number
+    events: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type SimulationRunChunkAvgAggregateInputType = {
+    seq?: true
+    fromTick?: true
+    toTick?: true
+  }
+
+  export type SimulationRunChunkSumAggregateInputType = {
+    seq?: true
+    fromTick?: true
+    toTick?: true
+  }
+
+  export type SimulationRunChunkMinAggregateInputType = {
+    runId?: true
+    seq?: true
+    fromTick?: true
+    toTick?: true
+    createdAt?: true
+  }
+
+  export type SimulationRunChunkMaxAggregateInputType = {
+    runId?: true
+    seq?: true
+    fromTick?: true
+    toTick?: true
+    createdAt?: true
+  }
+
+  export type SimulationRunChunkCountAggregateInputType = {
+    runId?: true
+    seq?: true
+    fromTick?: true
+    toTick?: true
+    commands?: true
+    events?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type SimulationRunChunkAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SimulationRunChunk to aggregate.
+     */
+    where?: SimulationRunChunkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationRunChunks to fetch.
+     */
+    orderBy?: SimulationRunChunkOrderByWithRelationInput | SimulationRunChunkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SimulationRunChunkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationRunChunks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationRunChunks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SimulationRunChunks
+    **/
+    _count?: true | SimulationRunChunkCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SimulationRunChunkAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SimulationRunChunkSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SimulationRunChunkMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SimulationRunChunkMaxAggregateInputType
+  }
+
+  export type GetSimulationRunChunkAggregateType<T extends SimulationRunChunkAggregateArgs> = {
+        [P in keyof T & keyof AggregateSimulationRunChunk]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSimulationRunChunk[P]>
+      : GetScalarType<T[P], AggregateSimulationRunChunk[P]>
+  }
+
+
+
+
+  export type SimulationRunChunkGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SimulationRunChunkWhereInput
+    orderBy?: SimulationRunChunkOrderByWithAggregationInput | SimulationRunChunkOrderByWithAggregationInput[]
+    by: SimulationRunChunkScalarFieldEnum[] | SimulationRunChunkScalarFieldEnum
+    having?: SimulationRunChunkScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SimulationRunChunkCountAggregateInputType | true
+    _avg?: SimulationRunChunkAvgAggregateInputType
+    _sum?: SimulationRunChunkSumAggregateInputType
+    _min?: SimulationRunChunkMinAggregateInputType
+    _max?: SimulationRunChunkMaxAggregateInputType
+  }
+
+  export type SimulationRunChunkGroupByOutputType = {
+    runId: string
+    seq: number
+    fromTick: number
+    toTick: number
+    commands: JsonValue
+    events: JsonValue
+    createdAt: Date
+    _count: SimulationRunChunkCountAggregateOutputType | null
+    _avg: SimulationRunChunkAvgAggregateOutputType | null
+    _sum: SimulationRunChunkSumAggregateOutputType | null
+    _min: SimulationRunChunkMinAggregateOutputType | null
+    _max: SimulationRunChunkMaxAggregateOutputType | null
+  }
+
+  type GetSimulationRunChunkGroupByPayload<T extends SimulationRunChunkGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SimulationRunChunkGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SimulationRunChunkGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SimulationRunChunkGroupByOutputType[P]>
+            : GetScalarType<T[P], SimulationRunChunkGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SimulationRunChunkSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    runId?: boolean
+    seq?: boolean
+    fromTick?: boolean
+    toTick?: boolean
+    commands?: boolean
+    events?: boolean
+    createdAt?: boolean
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["simulationRunChunk"]>
+
+  export type SimulationRunChunkSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    runId?: boolean
+    seq?: boolean
+    fromTick?: boolean
+    toTick?: boolean
+    commands?: boolean
+    events?: boolean
+    createdAt?: boolean
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["simulationRunChunk"]>
+
+  export type SimulationRunChunkSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    runId?: boolean
+    seq?: boolean
+    fromTick?: boolean
+    toTick?: boolean
+    commands?: boolean
+    events?: boolean
+    createdAt?: boolean
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["simulationRunChunk"]>
+
+  export type SimulationRunChunkSelectScalar = {
+    runId?: boolean
+    seq?: boolean
+    fromTick?: boolean
+    toTick?: boolean
+    commands?: boolean
+    events?: boolean
+    createdAt?: boolean
+  }
+
+  export type SimulationRunChunkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"runId" | "seq" | "fromTick" | "toTick" | "commands" | "events" | "createdAt", ExtArgs["result"]["simulationRunChunk"]>
+  export type SimulationRunChunkInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }
+  export type SimulationRunChunkIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }
+  export type SimulationRunChunkIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }
+
+  export type $SimulationRunChunkPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SimulationRunChunk"
+    objects: {
+      run: Prisma.$SimulationRunPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      runId: string
+      seq: number
+      fromTick: number
+      toTick: number
+      commands: Prisma.JsonValue
+      events: Prisma.JsonValue
+      createdAt: Date
+    }, ExtArgs["result"]["simulationRunChunk"]>
+    composites: {}
+  }
+
+  type SimulationRunChunkGetPayload<S extends boolean | null | undefined | SimulationRunChunkDefaultArgs> = $Result.GetResult<Prisma.$SimulationRunChunkPayload, S>
+
+  type SimulationRunChunkCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SimulationRunChunkFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SimulationRunChunkCountAggregateInputType | true
+    }
+
+  export interface SimulationRunChunkDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SimulationRunChunk'], meta: { name: 'SimulationRunChunk' } }
+    /**
+     * Find zero or one SimulationRunChunk that matches the filter.
+     * @param {SimulationRunChunkFindUniqueArgs} args - Arguments to find a SimulationRunChunk
+     * @example
+     * // Get one SimulationRunChunk
+     * const simulationRunChunk = await prisma.simulationRunChunk.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SimulationRunChunkFindUniqueArgs>(args: SelectSubset<T, SimulationRunChunkFindUniqueArgs<ExtArgs>>): Prisma__SimulationRunChunkClient<$Result.GetResult<Prisma.$SimulationRunChunkPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SimulationRunChunk that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SimulationRunChunkFindUniqueOrThrowArgs} args - Arguments to find a SimulationRunChunk
+     * @example
+     * // Get one SimulationRunChunk
+     * const simulationRunChunk = await prisma.simulationRunChunk.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SimulationRunChunkFindUniqueOrThrowArgs>(args: SelectSubset<T, SimulationRunChunkFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SimulationRunChunkClient<$Result.GetResult<Prisma.$SimulationRunChunkPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SimulationRunChunk that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationRunChunkFindFirstArgs} args - Arguments to find a SimulationRunChunk
+     * @example
+     * // Get one SimulationRunChunk
+     * const simulationRunChunk = await prisma.simulationRunChunk.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SimulationRunChunkFindFirstArgs>(args?: SelectSubset<T, SimulationRunChunkFindFirstArgs<ExtArgs>>): Prisma__SimulationRunChunkClient<$Result.GetResult<Prisma.$SimulationRunChunkPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SimulationRunChunk that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationRunChunkFindFirstOrThrowArgs} args - Arguments to find a SimulationRunChunk
+     * @example
+     * // Get one SimulationRunChunk
+     * const simulationRunChunk = await prisma.simulationRunChunk.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SimulationRunChunkFindFirstOrThrowArgs>(args?: SelectSubset<T, SimulationRunChunkFindFirstOrThrowArgs<ExtArgs>>): Prisma__SimulationRunChunkClient<$Result.GetResult<Prisma.$SimulationRunChunkPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SimulationRunChunks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationRunChunkFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SimulationRunChunks
+     * const simulationRunChunks = await prisma.simulationRunChunk.findMany()
+     * 
+     * // Get first 10 SimulationRunChunks
+     * const simulationRunChunks = await prisma.simulationRunChunk.findMany({ take: 10 })
+     * 
+     * // Only select the `runId`
+     * const simulationRunChunkWithRunIdOnly = await prisma.simulationRunChunk.findMany({ select: { runId: true } })
+     * 
+     */
+    findMany<T extends SimulationRunChunkFindManyArgs>(args?: SelectSubset<T, SimulationRunChunkFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationRunChunkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SimulationRunChunk.
+     * @param {SimulationRunChunkCreateArgs} args - Arguments to create a SimulationRunChunk.
+     * @example
+     * // Create one SimulationRunChunk
+     * const SimulationRunChunk = await prisma.simulationRunChunk.create({
+     *   data: {
+     *     // ... data to create a SimulationRunChunk
+     *   }
+     * })
+     * 
+     */
+    create<T extends SimulationRunChunkCreateArgs>(args: SelectSubset<T, SimulationRunChunkCreateArgs<ExtArgs>>): Prisma__SimulationRunChunkClient<$Result.GetResult<Prisma.$SimulationRunChunkPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SimulationRunChunks.
+     * @param {SimulationRunChunkCreateManyArgs} args - Arguments to create many SimulationRunChunks.
+     * @example
+     * // Create many SimulationRunChunks
+     * const simulationRunChunk = await prisma.simulationRunChunk.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SimulationRunChunkCreateManyArgs>(args?: SelectSubset<T, SimulationRunChunkCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SimulationRunChunks and returns the data saved in the database.
+     * @param {SimulationRunChunkCreateManyAndReturnArgs} args - Arguments to create many SimulationRunChunks.
+     * @example
+     * // Create many SimulationRunChunks
+     * const simulationRunChunk = await prisma.simulationRunChunk.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SimulationRunChunks and only return the `runId`
+     * const simulationRunChunkWithRunIdOnly = await prisma.simulationRunChunk.createManyAndReturn({
+     *   select: { runId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SimulationRunChunkCreateManyAndReturnArgs>(args?: SelectSubset<T, SimulationRunChunkCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationRunChunkPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SimulationRunChunk.
+     * @param {SimulationRunChunkDeleteArgs} args - Arguments to delete one SimulationRunChunk.
+     * @example
+     * // Delete one SimulationRunChunk
+     * const SimulationRunChunk = await prisma.simulationRunChunk.delete({
+     *   where: {
+     *     // ... filter to delete one SimulationRunChunk
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SimulationRunChunkDeleteArgs>(args: SelectSubset<T, SimulationRunChunkDeleteArgs<ExtArgs>>): Prisma__SimulationRunChunkClient<$Result.GetResult<Prisma.$SimulationRunChunkPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SimulationRunChunk.
+     * @param {SimulationRunChunkUpdateArgs} args - Arguments to update one SimulationRunChunk.
+     * @example
+     * // Update one SimulationRunChunk
+     * const simulationRunChunk = await prisma.simulationRunChunk.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SimulationRunChunkUpdateArgs>(args: SelectSubset<T, SimulationRunChunkUpdateArgs<ExtArgs>>): Prisma__SimulationRunChunkClient<$Result.GetResult<Prisma.$SimulationRunChunkPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SimulationRunChunks.
+     * @param {SimulationRunChunkDeleteManyArgs} args - Arguments to filter SimulationRunChunks to delete.
+     * @example
+     * // Delete a few SimulationRunChunks
+     * const { count } = await prisma.simulationRunChunk.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SimulationRunChunkDeleteManyArgs>(args?: SelectSubset<T, SimulationRunChunkDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SimulationRunChunks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationRunChunkUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SimulationRunChunks
+     * const simulationRunChunk = await prisma.simulationRunChunk.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SimulationRunChunkUpdateManyArgs>(args: SelectSubset<T, SimulationRunChunkUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SimulationRunChunks and returns the data updated in the database.
+     * @param {SimulationRunChunkUpdateManyAndReturnArgs} args - Arguments to update many SimulationRunChunks.
+     * @example
+     * // Update many SimulationRunChunks
+     * const simulationRunChunk = await prisma.simulationRunChunk.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SimulationRunChunks and only return the `runId`
+     * const simulationRunChunkWithRunIdOnly = await prisma.simulationRunChunk.updateManyAndReturn({
+     *   select: { runId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SimulationRunChunkUpdateManyAndReturnArgs>(args: SelectSubset<T, SimulationRunChunkUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationRunChunkPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SimulationRunChunk.
+     * @param {SimulationRunChunkUpsertArgs} args - Arguments to update or create a SimulationRunChunk.
+     * @example
+     * // Update or create a SimulationRunChunk
+     * const simulationRunChunk = await prisma.simulationRunChunk.upsert({
+     *   create: {
+     *     // ... data to create a SimulationRunChunk
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SimulationRunChunk we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SimulationRunChunkUpsertArgs>(args: SelectSubset<T, SimulationRunChunkUpsertArgs<ExtArgs>>): Prisma__SimulationRunChunkClient<$Result.GetResult<Prisma.$SimulationRunChunkPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SimulationRunChunks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationRunChunkCountArgs} args - Arguments to filter SimulationRunChunks to count.
+     * @example
+     * // Count the number of SimulationRunChunks
+     * const count = await prisma.simulationRunChunk.count({
+     *   where: {
+     *     // ... the filter for the SimulationRunChunks we want to count
+     *   }
+     * })
+    **/
+    count<T extends SimulationRunChunkCountArgs>(
+      args?: Subset<T, SimulationRunChunkCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SimulationRunChunkCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SimulationRunChunk.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationRunChunkAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SimulationRunChunkAggregateArgs>(args: Subset<T, SimulationRunChunkAggregateArgs>): Prisma.PrismaPromise<GetSimulationRunChunkAggregateType<T>>
+
+    /**
+     * Group by SimulationRunChunk.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationRunChunkGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SimulationRunChunkGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SimulationRunChunkGroupByArgs['orderBy'] }
+        : { orderBy?: SimulationRunChunkGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SimulationRunChunkGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSimulationRunChunkGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SimulationRunChunk model
+   */
+  readonly fields: SimulationRunChunkFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SimulationRunChunk.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SimulationRunChunkClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    run<T extends SimulationRunDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SimulationRunDefaultArgs<ExtArgs>>): Prisma__SimulationRunClient<$Result.GetResult<Prisma.$SimulationRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SimulationRunChunk model
+   */
+  interface SimulationRunChunkFieldRefs {
+    readonly runId: FieldRef<"SimulationRunChunk", 'String'>
+    readonly seq: FieldRef<"SimulationRunChunk", 'Int'>
+    readonly fromTick: FieldRef<"SimulationRunChunk", 'Int'>
+    readonly toTick: FieldRef<"SimulationRunChunk", 'Int'>
+    readonly commands: FieldRef<"SimulationRunChunk", 'Json'>
+    readonly events: FieldRef<"SimulationRunChunk", 'Json'>
+    readonly createdAt: FieldRef<"SimulationRunChunk", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SimulationRunChunk findUnique
+   */
+  export type SimulationRunChunkFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRunChunk
+     */
+    select?: SimulationRunChunkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRunChunk
+     */
+    omit?: SimulationRunChunkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunChunkInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationRunChunk to fetch.
+     */
+    where: SimulationRunChunkWhereUniqueInput
+  }
+
+  /**
+   * SimulationRunChunk findUniqueOrThrow
+   */
+  export type SimulationRunChunkFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRunChunk
+     */
+    select?: SimulationRunChunkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRunChunk
+     */
+    omit?: SimulationRunChunkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunChunkInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationRunChunk to fetch.
+     */
+    where: SimulationRunChunkWhereUniqueInput
+  }
+
+  /**
+   * SimulationRunChunk findFirst
+   */
+  export type SimulationRunChunkFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRunChunk
+     */
+    select?: SimulationRunChunkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRunChunk
+     */
+    omit?: SimulationRunChunkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunChunkInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationRunChunk to fetch.
+     */
+    where?: SimulationRunChunkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationRunChunks to fetch.
+     */
+    orderBy?: SimulationRunChunkOrderByWithRelationInput | SimulationRunChunkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SimulationRunChunks.
+     */
+    cursor?: SimulationRunChunkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationRunChunks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationRunChunks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SimulationRunChunks.
+     */
+    distinct?: SimulationRunChunkScalarFieldEnum | SimulationRunChunkScalarFieldEnum[]
+  }
+
+  /**
+   * SimulationRunChunk findFirstOrThrow
+   */
+  export type SimulationRunChunkFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRunChunk
+     */
+    select?: SimulationRunChunkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRunChunk
+     */
+    omit?: SimulationRunChunkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunChunkInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationRunChunk to fetch.
+     */
+    where?: SimulationRunChunkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationRunChunks to fetch.
+     */
+    orderBy?: SimulationRunChunkOrderByWithRelationInput | SimulationRunChunkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SimulationRunChunks.
+     */
+    cursor?: SimulationRunChunkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationRunChunks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationRunChunks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SimulationRunChunks.
+     */
+    distinct?: SimulationRunChunkScalarFieldEnum | SimulationRunChunkScalarFieldEnum[]
+  }
+
+  /**
+   * SimulationRunChunk findMany
+   */
+  export type SimulationRunChunkFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRunChunk
+     */
+    select?: SimulationRunChunkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRunChunk
+     */
+    omit?: SimulationRunChunkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunChunkInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationRunChunks to fetch.
+     */
+    where?: SimulationRunChunkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationRunChunks to fetch.
+     */
+    orderBy?: SimulationRunChunkOrderByWithRelationInput | SimulationRunChunkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SimulationRunChunks.
+     */
+    cursor?: SimulationRunChunkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationRunChunks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationRunChunks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SimulationRunChunks.
+     */
+    distinct?: SimulationRunChunkScalarFieldEnum | SimulationRunChunkScalarFieldEnum[]
+  }
+
+  /**
+   * SimulationRunChunk create
+   */
+  export type SimulationRunChunkCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRunChunk
+     */
+    select?: SimulationRunChunkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRunChunk
+     */
+    omit?: SimulationRunChunkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunChunkInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SimulationRunChunk.
+     */
+    data: XOR<SimulationRunChunkCreateInput, SimulationRunChunkUncheckedCreateInput>
+  }
+
+  /**
+   * SimulationRunChunk createMany
+   */
+  export type SimulationRunChunkCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SimulationRunChunks.
+     */
+    data: SimulationRunChunkCreateManyInput | SimulationRunChunkCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SimulationRunChunk createManyAndReturn
+   */
+  export type SimulationRunChunkCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRunChunk
+     */
+    select?: SimulationRunChunkSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRunChunk
+     */
+    omit?: SimulationRunChunkOmit<ExtArgs> | null
+    /**
+     * The data used to create many SimulationRunChunks.
+     */
+    data: SimulationRunChunkCreateManyInput | SimulationRunChunkCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunChunkIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SimulationRunChunk update
+   */
+  export type SimulationRunChunkUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRunChunk
+     */
+    select?: SimulationRunChunkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRunChunk
+     */
+    omit?: SimulationRunChunkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunChunkInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SimulationRunChunk.
+     */
+    data: XOR<SimulationRunChunkUpdateInput, SimulationRunChunkUncheckedUpdateInput>
+    /**
+     * Choose, which SimulationRunChunk to update.
+     */
+    where: SimulationRunChunkWhereUniqueInput
+  }
+
+  /**
+   * SimulationRunChunk updateMany
+   */
+  export type SimulationRunChunkUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SimulationRunChunks.
+     */
+    data: XOR<SimulationRunChunkUpdateManyMutationInput, SimulationRunChunkUncheckedUpdateManyInput>
+    /**
+     * Filter which SimulationRunChunks to update
+     */
+    where?: SimulationRunChunkWhereInput
+    /**
+     * Limit how many SimulationRunChunks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SimulationRunChunk updateManyAndReturn
+   */
+  export type SimulationRunChunkUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRunChunk
+     */
+    select?: SimulationRunChunkSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRunChunk
+     */
+    omit?: SimulationRunChunkOmit<ExtArgs> | null
+    /**
+     * The data used to update SimulationRunChunks.
+     */
+    data: XOR<SimulationRunChunkUpdateManyMutationInput, SimulationRunChunkUncheckedUpdateManyInput>
+    /**
+     * Filter which SimulationRunChunks to update
+     */
+    where?: SimulationRunChunkWhereInput
+    /**
+     * Limit how many SimulationRunChunks to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunChunkIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SimulationRunChunk upsert
+   */
+  export type SimulationRunChunkUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRunChunk
+     */
+    select?: SimulationRunChunkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRunChunk
+     */
+    omit?: SimulationRunChunkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunChunkInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SimulationRunChunk to update in case it exists.
+     */
+    where: SimulationRunChunkWhereUniqueInput
+    /**
+     * In case the SimulationRunChunk found by the `where` argument doesn't exist, create a new SimulationRunChunk with this data.
+     */
+    create: XOR<SimulationRunChunkCreateInput, SimulationRunChunkUncheckedCreateInput>
+    /**
+     * In case the SimulationRunChunk was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SimulationRunChunkUpdateInput, SimulationRunChunkUncheckedUpdateInput>
+  }
+
+  /**
+   * SimulationRunChunk delete
+   */
+  export type SimulationRunChunkDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRunChunk
+     */
+    select?: SimulationRunChunkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRunChunk
+     */
+    omit?: SimulationRunChunkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunChunkInclude<ExtArgs> | null
+    /**
+     * Filter which SimulationRunChunk to delete.
+     */
+    where: SimulationRunChunkWhereUniqueInput
+  }
+
+  /**
+   * SimulationRunChunk deleteMany
+   */
+  export type SimulationRunChunkDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SimulationRunChunks to delete
+     */
+    where?: SimulationRunChunkWhereInput
+    /**
+     * Limit how many SimulationRunChunks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SimulationRunChunk without action
+   */
+  export type SimulationRunChunkDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationRunChunk
+     */
+    select?: SimulationRunChunkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationRunChunk
+     */
+    omit?: SimulationRunChunkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationRunChunkInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SimulationCheckpoint
+   */
+
+  export type AggregateSimulationCheckpoint = {
+    _count: SimulationCheckpointCountAggregateOutputType | null
+    _avg: SimulationCheckpointAvgAggregateOutputType | null
+    _sum: SimulationCheckpointSumAggregateOutputType | null
+    _min: SimulationCheckpointMinAggregateOutputType | null
+    _max: SimulationCheckpointMaxAggregateOutputType | null
+  }
+
+  export type SimulationCheckpointAvgAggregateOutputType = {
+    tick: number | null
+  }
+
+  export type SimulationCheckpointSumAggregateOutputType = {
+    tick: number | null
+  }
+
+  export type SimulationCheckpointMinAggregateOutputType = {
+    runId: string | null
+    tick: number | null
+    hash: string | null
+  }
+
+  export type SimulationCheckpointMaxAggregateOutputType = {
+    runId: string | null
+    tick: number | null
+    hash: string | null
+  }
+
+  export type SimulationCheckpointCountAggregateOutputType = {
+    runId: number
+    tick: number
+    hash: number
+    state: number
+    _all: number
+  }
+
+
+  export type SimulationCheckpointAvgAggregateInputType = {
+    tick?: true
+  }
+
+  export type SimulationCheckpointSumAggregateInputType = {
+    tick?: true
+  }
+
+  export type SimulationCheckpointMinAggregateInputType = {
+    runId?: true
+    tick?: true
+    hash?: true
+  }
+
+  export type SimulationCheckpointMaxAggregateInputType = {
+    runId?: true
+    tick?: true
+    hash?: true
+  }
+
+  export type SimulationCheckpointCountAggregateInputType = {
+    runId?: true
+    tick?: true
+    hash?: true
+    state?: true
+    _all?: true
+  }
+
+  export type SimulationCheckpointAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SimulationCheckpoint to aggregate.
+     */
+    where?: SimulationCheckpointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationCheckpoints to fetch.
+     */
+    orderBy?: SimulationCheckpointOrderByWithRelationInput | SimulationCheckpointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SimulationCheckpointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationCheckpoints from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationCheckpoints.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SimulationCheckpoints
+    **/
+    _count?: true | SimulationCheckpointCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SimulationCheckpointAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SimulationCheckpointSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SimulationCheckpointMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SimulationCheckpointMaxAggregateInputType
+  }
+
+  export type GetSimulationCheckpointAggregateType<T extends SimulationCheckpointAggregateArgs> = {
+        [P in keyof T & keyof AggregateSimulationCheckpoint]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSimulationCheckpoint[P]>
+      : GetScalarType<T[P], AggregateSimulationCheckpoint[P]>
+  }
+
+
+
+
+  export type SimulationCheckpointGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SimulationCheckpointWhereInput
+    orderBy?: SimulationCheckpointOrderByWithAggregationInput | SimulationCheckpointOrderByWithAggregationInput[]
+    by: SimulationCheckpointScalarFieldEnum[] | SimulationCheckpointScalarFieldEnum
+    having?: SimulationCheckpointScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SimulationCheckpointCountAggregateInputType | true
+    _avg?: SimulationCheckpointAvgAggregateInputType
+    _sum?: SimulationCheckpointSumAggregateInputType
+    _min?: SimulationCheckpointMinAggregateInputType
+    _max?: SimulationCheckpointMaxAggregateInputType
+  }
+
+  export type SimulationCheckpointGroupByOutputType = {
+    runId: string
+    tick: number
+    hash: string
+    state: JsonValue
+    _count: SimulationCheckpointCountAggregateOutputType | null
+    _avg: SimulationCheckpointAvgAggregateOutputType | null
+    _sum: SimulationCheckpointSumAggregateOutputType | null
+    _min: SimulationCheckpointMinAggregateOutputType | null
+    _max: SimulationCheckpointMaxAggregateOutputType | null
+  }
+
+  type GetSimulationCheckpointGroupByPayload<T extends SimulationCheckpointGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SimulationCheckpointGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SimulationCheckpointGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SimulationCheckpointGroupByOutputType[P]>
+            : GetScalarType<T[P], SimulationCheckpointGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SimulationCheckpointSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    runId?: boolean
+    tick?: boolean
+    hash?: boolean
+    state?: boolean
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["simulationCheckpoint"]>
+
+  export type SimulationCheckpointSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    runId?: boolean
+    tick?: boolean
+    hash?: boolean
+    state?: boolean
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["simulationCheckpoint"]>
+
+  export type SimulationCheckpointSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    runId?: boolean
+    tick?: boolean
+    hash?: boolean
+    state?: boolean
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["simulationCheckpoint"]>
+
+  export type SimulationCheckpointSelectScalar = {
+    runId?: boolean
+    tick?: boolean
+    hash?: boolean
+    state?: boolean
+  }
+
+  export type SimulationCheckpointOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"runId" | "tick" | "hash" | "state", ExtArgs["result"]["simulationCheckpoint"]>
+  export type SimulationCheckpointInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }
+  export type SimulationCheckpointIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }
+  export type SimulationCheckpointIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }
+
+  export type $SimulationCheckpointPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SimulationCheckpoint"
+    objects: {
+      run: Prisma.$SimulationRunPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      runId: string
+      tick: number
+      hash: string
+      state: Prisma.JsonValue
+    }, ExtArgs["result"]["simulationCheckpoint"]>
+    composites: {}
+  }
+
+  type SimulationCheckpointGetPayload<S extends boolean | null | undefined | SimulationCheckpointDefaultArgs> = $Result.GetResult<Prisma.$SimulationCheckpointPayload, S>
+
+  type SimulationCheckpointCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SimulationCheckpointFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SimulationCheckpointCountAggregateInputType | true
+    }
+
+  export interface SimulationCheckpointDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SimulationCheckpoint'], meta: { name: 'SimulationCheckpoint' } }
+    /**
+     * Find zero or one SimulationCheckpoint that matches the filter.
+     * @param {SimulationCheckpointFindUniqueArgs} args - Arguments to find a SimulationCheckpoint
+     * @example
+     * // Get one SimulationCheckpoint
+     * const simulationCheckpoint = await prisma.simulationCheckpoint.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SimulationCheckpointFindUniqueArgs>(args: SelectSubset<T, SimulationCheckpointFindUniqueArgs<ExtArgs>>): Prisma__SimulationCheckpointClient<$Result.GetResult<Prisma.$SimulationCheckpointPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SimulationCheckpoint that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SimulationCheckpointFindUniqueOrThrowArgs} args - Arguments to find a SimulationCheckpoint
+     * @example
+     * // Get one SimulationCheckpoint
+     * const simulationCheckpoint = await prisma.simulationCheckpoint.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SimulationCheckpointFindUniqueOrThrowArgs>(args: SelectSubset<T, SimulationCheckpointFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SimulationCheckpointClient<$Result.GetResult<Prisma.$SimulationCheckpointPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SimulationCheckpoint that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationCheckpointFindFirstArgs} args - Arguments to find a SimulationCheckpoint
+     * @example
+     * // Get one SimulationCheckpoint
+     * const simulationCheckpoint = await prisma.simulationCheckpoint.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SimulationCheckpointFindFirstArgs>(args?: SelectSubset<T, SimulationCheckpointFindFirstArgs<ExtArgs>>): Prisma__SimulationCheckpointClient<$Result.GetResult<Prisma.$SimulationCheckpointPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SimulationCheckpoint that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationCheckpointFindFirstOrThrowArgs} args - Arguments to find a SimulationCheckpoint
+     * @example
+     * // Get one SimulationCheckpoint
+     * const simulationCheckpoint = await prisma.simulationCheckpoint.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SimulationCheckpointFindFirstOrThrowArgs>(args?: SelectSubset<T, SimulationCheckpointFindFirstOrThrowArgs<ExtArgs>>): Prisma__SimulationCheckpointClient<$Result.GetResult<Prisma.$SimulationCheckpointPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SimulationCheckpoints that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationCheckpointFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SimulationCheckpoints
+     * const simulationCheckpoints = await prisma.simulationCheckpoint.findMany()
+     * 
+     * // Get first 10 SimulationCheckpoints
+     * const simulationCheckpoints = await prisma.simulationCheckpoint.findMany({ take: 10 })
+     * 
+     * // Only select the `runId`
+     * const simulationCheckpointWithRunIdOnly = await prisma.simulationCheckpoint.findMany({ select: { runId: true } })
+     * 
+     */
+    findMany<T extends SimulationCheckpointFindManyArgs>(args?: SelectSubset<T, SimulationCheckpointFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationCheckpointPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SimulationCheckpoint.
+     * @param {SimulationCheckpointCreateArgs} args - Arguments to create a SimulationCheckpoint.
+     * @example
+     * // Create one SimulationCheckpoint
+     * const SimulationCheckpoint = await prisma.simulationCheckpoint.create({
+     *   data: {
+     *     // ... data to create a SimulationCheckpoint
+     *   }
+     * })
+     * 
+     */
+    create<T extends SimulationCheckpointCreateArgs>(args: SelectSubset<T, SimulationCheckpointCreateArgs<ExtArgs>>): Prisma__SimulationCheckpointClient<$Result.GetResult<Prisma.$SimulationCheckpointPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SimulationCheckpoints.
+     * @param {SimulationCheckpointCreateManyArgs} args - Arguments to create many SimulationCheckpoints.
+     * @example
+     * // Create many SimulationCheckpoints
+     * const simulationCheckpoint = await prisma.simulationCheckpoint.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SimulationCheckpointCreateManyArgs>(args?: SelectSubset<T, SimulationCheckpointCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SimulationCheckpoints and returns the data saved in the database.
+     * @param {SimulationCheckpointCreateManyAndReturnArgs} args - Arguments to create many SimulationCheckpoints.
+     * @example
+     * // Create many SimulationCheckpoints
+     * const simulationCheckpoint = await prisma.simulationCheckpoint.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SimulationCheckpoints and only return the `runId`
+     * const simulationCheckpointWithRunIdOnly = await prisma.simulationCheckpoint.createManyAndReturn({
+     *   select: { runId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SimulationCheckpointCreateManyAndReturnArgs>(args?: SelectSubset<T, SimulationCheckpointCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationCheckpointPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SimulationCheckpoint.
+     * @param {SimulationCheckpointDeleteArgs} args - Arguments to delete one SimulationCheckpoint.
+     * @example
+     * // Delete one SimulationCheckpoint
+     * const SimulationCheckpoint = await prisma.simulationCheckpoint.delete({
+     *   where: {
+     *     // ... filter to delete one SimulationCheckpoint
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SimulationCheckpointDeleteArgs>(args: SelectSubset<T, SimulationCheckpointDeleteArgs<ExtArgs>>): Prisma__SimulationCheckpointClient<$Result.GetResult<Prisma.$SimulationCheckpointPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SimulationCheckpoint.
+     * @param {SimulationCheckpointUpdateArgs} args - Arguments to update one SimulationCheckpoint.
+     * @example
+     * // Update one SimulationCheckpoint
+     * const simulationCheckpoint = await prisma.simulationCheckpoint.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SimulationCheckpointUpdateArgs>(args: SelectSubset<T, SimulationCheckpointUpdateArgs<ExtArgs>>): Prisma__SimulationCheckpointClient<$Result.GetResult<Prisma.$SimulationCheckpointPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SimulationCheckpoints.
+     * @param {SimulationCheckpointDeleteManyArgs} args - Arguments to filter SimulationCheckpoints to delete.
+     * @example
+     * // Delete a few SimulationCheckpoints
+     * const { count } = await prisma.simulationCheckpoint.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SimulationCheckpointDeleteManyArgs>(args?: SelectSubset<T, SimulationCheckpointDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SimulationCheckpoints.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationCheckpointUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SimulationCheckpoints
+     * const simulationCheckpoint = await prisma.simulationCheckpoint.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SimulationCheckpointUpdateManyArgs>(args: SelectSubset<T, SimulationCheckpointUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SimulationCheckpoints and returns the data updated in the database.
+     * @param {SimulationCheckpointUpdateManyAndReturnArgs} args - Arguments to update many SimulationCheckpoints.
+     * @example
+     * // Update many SimulationCheckpoints
+     * const simulationCheckpoint = await prisma.simulationCheckpoint.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SimulationCheckpoints and only return the `runId`
+     * const simulationCheckpointWithRunIdOnly = await prisma.simulationCheckpoint.updateManyAndReturn({
+     *   select: { runId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SimulationCheckpointUpdateManyAndReturnArgs>(args: SelectSubset<T, SimulationCheckpointUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationCheckpointPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SimulationCheckpoint.
+     * @param {SimulationCheckpointUpsertArgs} args - Arguments to update or create a SimulationCheckpoint.
+     * @example
+     * // Update or create a SimulationCheckpoint
+     * const simulationCheckpoint = await prisma.simulationCheckpoint.upsert({
+     *   create: {
+     *     // ... data to create a SimulationCheckpoint
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SimulationCheckpoint we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SimulationCheckpointUpsertArgs>(args: SelectSubset<T, SimulationCheckpointUpsertArgs<ExtArgs>>): Prisma__SimulationCheckpointClient<$Result.GetResult<Prisma.$SimulationCheckpointPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SimulationCheckpoints.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationCheckpointCountArgs} args - Arguments to filter SimulationCheckpoints to count.
+     * @example
+     * // Count the number of SimulationCheckpoints
+     * const count = await prisma.simulationCheckpoint.count({
+     *   where: {
+     *     // ... the filter for the SimulationCheckpoints we want to count
+     *   }
+     * })
+    **/
+    count<T extends SimulationCheckpointCountArgs>(
+      args?: Subset<T, SimulationCheckpointCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SimulationCheckpointCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SimulationCheckpoint.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationCheckpointAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SimulationCheckpointAggregateArgs>(args: Subset<T, SimulationCheckpointAggregateArgs>): Prisma.PrismaPromise<GetSimulationCheckpointAggregateType<T>>
+
+    /**
+     * Group by SimulationCheckpoint.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationCheckpointGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SimulationCheckpointGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SimulationCheckpointGroupByArgs['orderBy'] }
+        : { orderBy?: SimulationCheckpointGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SimulationCheckpointGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSimulationCheckpointGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SimulationCheckpoint model
+   */
+  readonly fields: SimulationCheckpointFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SimulationCheckpoint.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SimulationCheckpointClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    run<T extends SimulationRunDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SimulationRunDefaultArgs<ExtArgs>>): Prisma__SimulationRunClient<$Result.GetResult<Prisma.$SimulationRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SimulationCheckpoint model
+   */
+  interface SimulationCheckpointFieldRefs {
+    readonly runId: FieldRef<"SimulationCheckpoint", 'String'>
+    readonly tick: FieldRef<"SimulationCheckpoint", 'Int'>
+    readonly hash: FieldRef<"SimulationCheckpoint", 'String'>
+    readonly state: FieldRef<"SimulationCheckpoint", 'Json'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SimulationCheckpoint findUnique
+   */
+  export type SimulationCheckpointFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationCheckpoint
+     */
+    select?: SimulationCheckpointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationCheckpoint
+     */
+    omit?: SimulationCheckpointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationCheckpointInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationCheckpoint to fetch.
+     */
+    where: SimulationCheckpointWhereUniqueInput
+  }
+
+  /**
+   * SimulationCheckpoint findUniqueOrThrow
+   */
+  export type SimulationCheckpointFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationCheckpoint
+     */
+    select?: SimulationCheckpointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationCheckpoint
+     */
+    omit?: SimulationCheckpointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationCheckpointInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationCheckpoint to fetch.
+     */
+    where: SimulationCheckpointWhereUniqueInput
+  }
+
+  /**
+   * SimulationCheckpoint findFirst
+   */
+  export type SimulationCheckpointFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationCheckpoint
+     */
+    select?: SimulationCheckpointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationCheckpoint
+     */
+    omit?: SimulationCheckpointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationCheckpointInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationCheckpoint to fetch.
+     */
+    where?: SimulationCheckpointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationCheckpoints to fetch.
+     */
+    orderBy?: SimulationCheckpointOrderByWithRelationInput | SimulationCheckpointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SimulationCheckpoints.
+     */
+    cursor?: SimulationCheckpointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationCheckpoints from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationCheckpoints.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SimulationCheckpoints.
+     */
+    distinct?: SimulationCheckpointScalarFieldEnum | SimulationCheckpointScalarFieldEnum[]
+  }
+
+  /**
+   * SimulationCheckpoint findFirstOrThrow
+   */
+  export type SimulationCheckpointFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationCheckpoint
+     */
+    select?: SimulationCheckpointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationCheckpoint
+     */
+    omit?: SimulationCheckpointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationCheckpointInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationCheckpoint to fetch.
+     */
+    where?: SimulationCheckpointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationCheckpoints to fetch.
+     */
+    orderBy?: SimulationCheckpointOrderByWithRelationInput | SimulationCheckpointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SimulationCheckpoints.
+     */
+    cursor?: SimulationCheckpointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationCheckpoints from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationCheckpoints.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SimulationCheckpoints.
+     */
+    distinct?: SimulationCheckpointScalarFieldEnum | SimulationCheckpointScalarFieldEnum[]
+  }
+
+  /**
+   * SimulationCheckpoint findMany
+   */
+  export type SimulationCheckpointFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationCheckpoint
+     */
+    select?: SimulationCheckpointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationCheckpoint
+     */
+    omit?: SimulationCheckpointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationCheckpointInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationCheckpoints to fetch.
+     */
+    where?: SimulationCheckpointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationCheckpoints to fetch.
+     */
+    orderBy?: SimulationCheckpointOrderByWithRelationInput | SimulationCheckpointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SimulationCheckpoints.
+     */
+    cursor?: SimulationCheckpointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationCheckpoints from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationCheckpoints.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SimulationCheckpoints.
+     */
+    distinct?: SimulationCheckpointScalarFieldEnum | SimulationCheckpointScalarFieldEnum[]
+  }
+
+  /**
+   * SimulationCheckpoint create
+   */
+  export type SimulationCheckpointCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationCheckpoint
+     */
+    select?: SimulationCheckpointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationCheckpoint
+     */
+    omit?: SimulationCheckpointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationCheckpointInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SimulationCheckpoint.
+     */
+    data: XOR<SimulationCheckpointCreateInput, SimulationCheckpointUncheckedCreateInput>
+  }
+
+  /**
+   * SimulationCheckpoint createMany
+   */
+  export type SimulationCheckpointCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SimulationCheckpoints.
+     */
+    data: SimulationCheckpointCreateManyInput | SimulationCheckpointCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SimulationCheckpoint createManyAndReturn
+   */
+  export type SimulationCheckpointCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationCheckpoint
+     */
+    select?: SimulationCheckpointSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationCheckpoint
+     */
+    omit?: SimulationCheckpointOmit<ExtArgs> | null
+    /**
+     * The data used to create many SimulationCheckpoints.
+     */
+    data: SimulationCheckpointCreateManyInput | SimulationCheckpointCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationCheckpointIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SimulationCheckpoint update
+   */
+  export type SimulationCheckpointUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationCheckpoint
+     */
+    select?: SimulationCheckpointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationCheckpoint
+     */
+    omit?: SimulationCheckpointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationCheckpointInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SimulationCheckpoint.
+     */
+    data: XOR<SimulationCheckpointUpdateInput, SimulationCheckpointUncheckedUpdateInput>
+    /**
+     * Choose, which SimulationCheckpoint to update.
+     */
+    where: SimulationCheckpointWhereUniqueInput
+  }
+
+  /**
+   * SimulationCheckpoint updateMany
+   */
+  export type SimulationCheckpointUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SimulationCheckpoints.
+     */
+    data: XOR<SimulationCheckpointUpdateManyMutationInput, SimulationCheckpointUncheckedUpdateManyInput>
+    /**
+     * Filter which SimulationCheckpoints to update
+     */
+    where?: SimulationCheckpointWhereInput
+    /**
+     * Limit how many SimulationCheckpoints to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SimulationCheckpoint updateManyAndReturn
+   */
+  export type SimulationCheckpointUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationCheckpoint
+     */
+    select?: SimulationCheckpointSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationCheckpoint
+     */
+    omit?: SimulationCheckpointOmit<ExtArgs> | null
+    /**
+     * The data used to update SimulationCheckpoints.
+     */
+    data: XOR<SimulationCheckpointUpdateManyMutationInput, SimulationCheckpointUncheckedUpdateManyInput>
+    /**
+     * Filter which SimulationCheckpoints to update
+     */
+    where?: SimulationCheckpointWhereInput
+    /**
+     * Limit how many SimulationCheckpoints to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationCheckpointIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SimulationCheckpoint upsert
+   */
+  export type SimulationCheckpointUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationCheckpoint
+     */
+    select?: SimulationCheckpointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationCheckpoint
+     */
+    omit?: SimulationCheckpointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationCheckpointInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SimulationCheckpoint to update in case it exists.
+     */
+    where: SimulationCheckpointWhereUniqueInput
+    /**
+     * In case the SimulationCheckpoint found by the `where` argument doesn't exist, create a new SimulationCheckpoint with this data.
+     */
+    create: XOR<SimulationCheckpointCreateInput, SimulationCheckpointUncheckedCreateInput>
+    /**
+     * In case the SimulationCheckpoint was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SimulationCheckpointUpdateInput, SimulationCheckpointUncheckedUpdateInput>
+  }
+
+  /**
+   * SimulationCheckpoint delete
+   */
+  export type SimulationCheckpointDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationCheckpoint
+     */
+    select?: SimulationCheckpointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationCheckpoint
+     */
+    omit?: SimulationCheckpointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationCheckpointInclude<ExtArgs> | null
+    /**
+     * Filter which SimulationCheckpoint to delete.
+     */
+    where: SimulationCheckpointWhereUniqueInput
+  }
+
+  /**
+   * SimulationCheckpoint deleteMany
+   */
+  export type SimulationCheckpointDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SimulationCheckpoints to delete
+     */
+    where?: SimulationCheckpointWhereInput
+    /**
+     * Limit how many SimulationCheckpoints to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SimulationCheckpoint without action
+   */
+  export type SimulationCheckpointDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationCheckpoint
+     */
+    select?: SimulationCheckpointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationCheckpoint
+     */
+    omit?: SimulationCheckpointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationCheckpointInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SimulationMetric
+   */
+
+  export type AggregateSimulationMetric = {
+    _count: SimulationMetricCountAggregateOutputType | null
+    _avg: SimulationMetricAvgAggregateOutputType | null
+    _sum: SimulationMetricSumAggregateOutputType | null
+    _min: SimulationMetricMinAggregateOutputType | null
+    _max: SimulationMetricMaxAggregateOutputType | null
+  }
+
+  export type SimulationMetricAvgAggregateOutputType = {
+    tick: number | null
+  }
+
+  export type SimulationMetricSumAggregateOutputType = {
+    tick: number | null
+  }
+
+  export type SimulationMetricMinAggregateOutputType = {
+    runId: string | null
+    tick: number | null
+  }
+
+  export type SimulationMetricMaxAggregateOutputType = {
+    runId: string | null
+    tick: number | null
+  }
+
+  export type SimulationMetricCountAggregateOutputType = {
+    runId: number
+    tick: number
+    values: number
+    _all: number
+  }
+
+
+  export type SimulationMetricAvgAggregateInputType = {
+    tick?: true
+  }
+
+  export type SimulationMetricSumAggregateInputType = {
+    tick?: true
+  }
+
+  export type SimulationMetricMinAggregateInputType = {
+    runId?: true
+    tick?: true
+  }
+
+  export type SimulationMetricMaxAggregateInputType = {
+    runId?: true
+    tick?: true
+  }
+
+  export type SimulationMetricCountAggregateInputType = {
+    runId?: true
+    tick?: true
+    values?: true
+    _all?: true
+  }
+
+  export type SimulationMetricAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SimulationMetric to aggregate.
+     */
+    where?: SimulationMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationMetrics to fetch.
+     */
+    orderBy?: SimulationMetricOrderByWithRelationInput | SimulationMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SimulationMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SimulationMetrics
+    **/
+    _count?: true | SimulationMetricCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SimulationMetricAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SimulationMetricSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SimulationMetricMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SimulationMetricMaxAggregateInputType
+  }
+
+  export type GetSimulationMetricAggregateType<T extends SimulationMetricAggregateArgs> = {
+        [P in keyof T & keyof AggregateSimulationMetric]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSimulationMetric[P]>
+      : GetScalarType<T[P], AggregateSimulationMetric[P]>
+  }
+
+
+
+
+  export type SimulationMetricGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SimulationMetricWhereInput
+    orderBy?: SimulationMetricOrderByWithAggregationInput | SimulationMetricOrderByWithAggregationInput[]
+    by: SimulationMetricScalarFieldEnum[] | SimulationMetricScalarFieldEnum
+    having?: SimulationMetricScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SimulationMetricCountAggregateInputType | true
+    _avg?: SimulationMetricAvgAggregateInputType
+    _sum?: SimulationMetricSumAggregateInputType
+    _min?: SimulationMetricMinAggregateInputType
+    _max?: SimulationMetricMaxAggregateInputType
+  }
+
+  export type SimulationMetricGroupByOutputType = {
+    runId: string
+    tick: number
+    values: JsonValue
+    _count: SimulationMetricCountAggregateOutputType | null
+    _avg: SimulationMetricAvgAggregateOutputType | null
+    _sum: SimulationMetricSumAggregateOutputType | null
+    _min: SimulationMetricMinAggregateOutputType | null
+    _max: SimulationMetricMaxAggregateOutputType | null
+  }
+
+  type GetSimulationMetricGroupByPayload<T extends SimulationMetricGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SimulationMetricGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SimulationMetricGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SimulationMetricGroupByOutputType[P]>
+            : GetScalarType<T[P], SimulationMetricGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SimulationMetricSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    runId?: boolean
+    tick?: boolean
+    values?: boolean
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["simulationMetric"]>
+
+  export type SimulationMetricSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    runId?: boolean
+    tick?: boolean
+    values?: boolean
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["simulationMetric"]>
+
+  export type SimulationMetricSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    runId?: boolean
+    tick?: boolean
+    values?: boolean
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["simulationMetric"]>
+
+  export type SimulationMetricSelectScalar = {
+    runId?: boolean
+    tick?: boolean
+    values?: boolean
+  }
+
+  export type SimulationMetricOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"runId" | "tick" | "values", ExtArgs["result"]["simulationMetric"]>
+  export type SimulationMetricInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }
+  export type SimulationMetricIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }
+  export type SimulationMetricIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    run?: boolean | SimulationRunDefaultArgs<ExtArgs>
+  }
+
+  export type $SimulationMetricPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SimulationMetric"
+    objects: {
+      run: Prisma.$SimulationRunPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      runId: string
+      tick: number
+      values: Prisma.JsonValue
+    }, ExtArgs["result"]["simulationMetric"]>
+    composites: {}
+  }
+
+  type SimulationMetricGetPayload<S extends boolean | null | undefined | SimulationMetricDefaultArgs> = $Result.GetResult<Prisma.$SimulationMetricPayload, S>
+
+  type SimulationMetricCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SimulationMetricFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SimulationMetricCountAggregateInputType | true
+    }
+
+  export interface SimulationMetricDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SimulationMetric'], meta: { name: 'SimulationMetric' } }
+    /**
+     * Find zero or one SimulationMetric that matches the filter.
+     * @param {SimulationMetricFindUniqueArgs} args - Arguments to find a SimulationMetric
+     * @example
+     * // Get one SimulationMetric
+     * const simulationMetric = await prisma.simulationMetric.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SimulationMetricFindUniqueArgs>(args: SelectSubset<T, SimulationMetricFindUniqueArgs<ExtArgs>>): Prisma__SimulationMetricClient<$Result.GetResult<Prisma.$SimulationMetricPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SimulationMetric that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SimulationMetricFindUniqueOrThrowArgs} args - Arguments to find a SimulationMetric
+     * @example
+     * // Get one SimulationMetric
+     * const simulationMetric = await prisma.simulationMetric.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SimulationMetricFindUniqueOrThrowArgs>(args: SelectSubset<T, SimulationMetricFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SimulationMetricClient<$Result.GetResult<Prisma.$SimulationMetricPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SimulationMetric that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationMetricFindFirstArgs} args - Arguments to find a SimulationMetric
+     * @example
+     * // Get one SimulationMetric
+     * const simulationMetric = await prisma.simulationMetric.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SimulationMetricFindFirstArgs>(args?: SelectSubset<T, SimulationMetricFindFirstArgs<ExtArgs>>): Prisma__SimulationMetricClient<$Result.GetResult<Prisma.$SimulationMetricPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SimulationMetric that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationMetricFindFirstOrThrowArgs} args - Arguments to find a SimulationMetric
+     * @example
+     * // Get one SimulationMetric
+     * const simulationMetric = await prisma.simulationMetric.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SimulationMetricFindFirstOrThrowArgs>(args?: SelectSubset<T, SimulationMetricFindFirstOrThrowArgs<ExtArgs>>): Prisma__SimulationMetricClient<$Result.GetResult<Prisma.$SimulationMetricPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SimulationMetrics that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationMetricFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SimulationMetrics
+     * const simulationMetrics = await prisma.simulationMetric.findMany()
+     * 
+     * // Get first 10 SimulationMetrics
+     * const simulationMetrics = await prisma.simulationMetric.findMany({ take: 10 })
+     * 
+     * // Only select the `runId`
+     * const simulationMetricWithRunIdOnly = await prisma.simulationMetric.findMany({ select: { runId: true } })
+     * 
+     */
+    findMany<T extends SimulationMetricFindManyArgs>(args?: SelectSubset<T, SimulationMetricFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationMetricPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SimulationMetric.
+     * @param {SimulationMetricCreateArgs} args - Arguments to create a SimulationMetric.
+     * @example
+     * // Create one SimulationMetric
+     * const SimulationMetric = await prisma.simulationMetric.create({
+     *   data: {
+     *     // ... data to create a SimulationMetric
+     *   }
+     * })
+     * 
+     */
+    create<T extends SimulationMetricCreateArgs>(args: SelectSubset<T, SimulationMetricCreateArgs<ExtArgs>>): Prisma__SimulationMetricClient<$Result.GetResult<Prisma.$SimulationMetricPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SimulationMetrics.
+     * @param {SimulationMetricCreateManyArgs} args - Arguments to create many SimulationMetrics.
+     * @example
+     * // Create many SimulationMetrics
+     * const simulationMetric = await prisma.simulationMetric.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SimulationMetricCreateManyArgs>(args?: SelectSubset<T, SimulationMetricCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SimulationMetrics and returns the data saved in the database.
+     * @param {SimulationMetricCreateManyAndReturnArgs} args - Arguments to create many SimulationMetrics.
+     * @example
+     * // Create many SimulationMetrics
+     * const simulationMetric = await prisma.simulationMetric.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SimulationMetrics and only return the `runId`
+     * const simulationMetricWithRunIdOnly = await prisma.simulationMetric.createManyAndReturn({
+     *   select: { runId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SimulationMetricCreateManyAndReturnArgs>(args?: SelectSubset<T, SimulationMetricCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationMetricPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SimulationMetric.
+     * @param {SimulationMetricDeleteArgs} args - Arguments to delete one SimulationMetric.
+     * @example
+     * // Delete one SimulationMetric
+     * const SimulationMetric = await prisma.simulationMetric.delete({
+     *   where: {
+     *     // ... filter to delete one SimulationMetric
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SimulationMetricDeleteArgs>(args: SelectSubset<T, SimulationMetricDeleteArgs<ExtArgs>>): Prisma__SimulationMetricClient<$Result.GetResult<Prisma.$SimulationMetricPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SimulationMetric.
+     * @param {SimulationMetricUpdateArgs} args - Arguments to update one SimulationMetric.
+     * @example
+     * // Update one SimulationMetric
+     * const simulationMetric = await prisma.simulationMetric.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SimulationMetricUpdateArgs>(args: SelectSubset<T, SimulationMetricUpdateArgs<ExtArgs>>): Prisma__SimulationMetricClient<$Result.GetResult<Prisma.$SimulationMetricPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SimulationMetrics.
+     * @param {SimulationMetricDeleteManyArgs} args - Arguments to filter SimulationMetrics to delete.
+     * @example
+     * // Delete a few SimulationMetrics
+     * const { count } = await prisma.simulationMetric.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SimulationMetricDeleteManyArgs>(args?: SelectSubset<T, SimulationMetricDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SimulationMetrics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationMetricUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SimulationMetrics
+     * const simulationMetric = await prisma.simulationMetric.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SimulationMetricUpdateManyArgs>(args: SelectSubset<T, SimulationMetricUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SimulationMetrics and returns the data updated in the database.
+     * @param {SimulationMetricUpdateManyAndReturnArgs} args - Arguments to update many SimulationMetrics.
+     * @example
+     * // Update many SimulationMetrics
+     * const simulationMetric = await prisma.simulationMetric.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SimulationMetrics and only return the `runId`
+     * const simulationMetricWithRunIdOnly = await prisma.simulationMetric.updateManyAndReturn({
+     *   select: { runId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SimulationMetricUpdateManyAndReturnArgs>(args: SelectSubset<T, SimulationMetricUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SimulationMetricPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SimulationMetric.
+     * @param {SimulationMetricUpsertArgs} args - Arguments to update or create a SimulationMetric.
+     * @example
+     * // Update or create a SimulationMetric
+     * const simulationMetric = await prisma.simulationMetric.upsert({
+     *   create: {
+     *     // ... data to create a SimulationMetric
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SimulationMetric we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SimulationMetricUpsertArgs>(args: SelectSubset<T, SimulationMetricUpsertArgs<ExtArgs>>): Prisma__SimulationMetricClient<$Result.GetResult<Prisma.$SimulationMetricPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SimulationMetrics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationMetricCountArgs} args - Arguments to filter SimulationMetrics to count.
+     * @example
+     * // Count the number of SimulationMetrics
+     * const count = await prisma.simulationMetric.count({
+     *   where: {
+     *     // ... the filter for the SimulationMetrics we want to count
+     *   }
+     * })
+    **/
+    count<T extends SimulationMetricCountArgs>(
+      args?: Subset<T, SimulationMetricCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SimulationMetricCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SimulationMetric.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationMetricAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SimulationMetricAggregateArgs>(args: Subset<T, SimulationMetricAggregateArgs>): Prisma.PrismaPromise<GetSimulationMetricAggregateType<T>>
+
+    /**
+     * Group by SimulationMetric.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SimulationMetricGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SimulationMetricGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SimulationMetricGroupByArgs['orderBy'] }
+        : { orderBy?: SimulationMetricGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SimulationMetricGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSimulationMetricGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SimulationMetric model
+   */
+  readonly fields: SimulationMetricFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SimulationMetric.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SimulationMetricClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    run<T extends SimulationRunDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SimulationRunDefaultArgs<ExtArgs>>): Prisma__SimulationRunClient<$Result.GetResult<Prisma.$SimulationRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SimulationMetric model
+   */
+  interface SimulationMetricFieldRefs {
+    readonly runId: FieldRef<"SimulationMetric", 'String'>
+    readonly tick: FieldRef<"SimulationMetric", 'Int'>
+    readonly values: FieldRef<"SimulationMetric", 'Json'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SimulationMetric findUnique
+   */
+  export type SimulationMetricFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationMetric
+     */
+    select?: SimulationMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationMetric
+     */
+    omit?: SimulationMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationMetric to fetch.
+     */
+    where: SimulationMetricWhereUniqueInput
+  }
+
+  /**
+   * SimulationMetric findUniqueOrThrow
+   */
+  export type SimulationMetricFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationMetric
+     */
+    select?: SimulationMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationMetric
+     */
+    omit?: SimulationMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationMetric to fetch.
+     */
+    where: SimulationMetricWhereUniqueInput
+  }
+
+  /**
+   * SimulationMetric findFirst
+   */
+  export type SimulationMetricFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationMetric
+     */
+    select?: SimulationMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationMetric
+     */
+    omit?: SimulationMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationMetric to fetch.
+     */
+    where?: SimulationMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationMetrics to fetch.
+     */
+    orderBy?: SimulationMetricOrderByWithRelationInput | SimulationMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SimulationMetrics.
+     */
+    cursor?: SimulationMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SimulationMetrics.
+     */
+    distinct?: SimulationMetricScalarFieldEnum | SimulationMetricScalarFieldEnum[]
+  }
+
+  /**
+   * SimulationMetric findFirstOrThrow
+   */
+  export type SimulationMetricFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationMetric
+     */
+    select?: SimulationMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationMetric
+     */
+    omit?: SimulationMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationMetric to fetch.
+     */
+    where?: SimulationMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationMetrics to fetch.
+     */
+    orderBy?: SimulationMetricOrderByWithRelationInput | SimulationMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SimulationMetrics.
+     */
+    cursor?: SimulationMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SimulationMetrics.
+     */
+    distinct?: SimulationMetricScalarFieldEnum | SimulationMetricScalarFieldEnum[]
+  }
+
+  /**
+   * SimulationMetric findMany
+   */
+  export type SimulationMetricFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationMetric
+     */
+    select?: SimulationMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationMetric
+     */
+    omit?: SimulationMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which SimulationMetrics to fetch.
+     */
+    where?: SimulationMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SimulationMetrics to fetch.
+     */
+    orderBy?: SimulationMetricOrderByWithRelationInput | SimulationMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SimulationMetrics.
+     */
+    cursor?: SimulationMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SimulationMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SimulationMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SimulationMetrics.
+     */
+    distinct?: SimulationMetricScalarFieldEnum | SimulationMetricScalarFieldEnum[]
+  }
+
+  /**
+   * SimulationMetric create
+   */
+  export type SimulationMetricCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationMetric
+     */
+    select?: SimulationMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationMetric
+     */
+    omit?: SimulationMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationMetricInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SimulationMetric.
+     */
+    data: XOR<SimulationMetricCreateInput, SimulationMetricUncheckedCreateInput>
+  }
+
+  /**
+   * SimulationMetric createMany
+   */
+  export type SimulationMetricCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SimulationMetrics.
+     */
+    data: SimulationMetricCreateManyInput | SimulationMetricCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SimulationMetric createManyAndReturn
+   */
+  export type SimulationMetricCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationMetric
+     */
+    select?: SimulationMetricSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationMetric
+     */
+    omit?: SimulationMetricOmit<ExtArgs> | null
+    /**
+     * The data used to create many SimulationMetrics.
+     */
+    data: SimulationMetricCreateManyInput | SimulationMetricCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationMetricIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SimulationMetric update
+   */
+  export type SimulationMetricUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationMetric
+     */
+    select?: SimulationMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationMetric
+     */
+    omit?: SimulationMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationMetricInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SimulationMetric.
+     */
+    data: XOR<SimulationMetricUpdateInput, SimulationMetricUncheckedUpdateInput>
+    /**
+     * Choose, which SimulationMetric to update.
+     */
+    where: SimulationMetricWhereUniqueInput
+  }
+
+  /**
+   * SimulationMetric updateMany
+   */
+  export type SimulationMetricUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SimulationMetrics.
+     */
+    data: XOR<SimulationMetricUpdateManyMutationInput, SimulationMetricUncheckedUpdateManyInput>
+    /**
+     * Filter which SimulationMetrics to update
+     */
+    where?: SimulationMetricWhereInput
+    /**
+     * Limit how many SimulationMetrics to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SimulationMetric updateManyAndReturn
+   */
+  export type SimulationMetricUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationMetric
+     */
+    select?: SimulationMetricSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationMetric
+     */
+    omit?: SimulationMetricOmit<ExtArgs> | null
+    /**
+     * The data used to update SimulationMetrics.
+     */
+    data: XOR<SimulationMetricUpdateManyMutationInput, SimulationMetricUncheckedUpdateManyInput>
+    /**
+     * Filter which SimulationMetrics to update
+     */
+    where?: SimulationMetricWhereInput
+    /**
+     * Limit how many SimulationMetrics to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationMetricIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SimulationMetric upsert
+   */
+  export type SimulationMetricUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationMetric
+     */
+    select?: SimulationMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationMetric
+     */
+    omit?: SimulationMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationMetricInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SimulationMetric to update in case it exists.
+     */
+    where: SimulationMetricWhereUniqueInput
+    /**
+     * In case the SimulationMetric found by the `where` argument doesn't exist, create a new SimulationMetric with this data.
+     */
+    create: XOR<SimulationMetricCreateInput, SimulationMetricUncheckedCreateInput>
+    /**
+     * In case the SimulationMetric was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SimulationMetricUpdateInput, SimulationMetricUncheckedUpdateInput>
+  }
+
+  /**
+   * SimulationMetric delete
+   */
+  export type SimulationMetricDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationMetric
+     */
+    select?: SimulationMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationMetric
+     */
+    omit?: SimulationMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationMetricInclude<ExtArgs> | null
+    /**
+     * Filter which SimulationMetric to delete.
+     */
+    where: SimulationMetricWhereUniqueInput
+  }
+
+  /**
+   * SimulationMetric deleteMany
+   */
+  export type SimulationMetricDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SimulationMetrics to delete
+     */
+    where?: SimulationMetricWhereInput
+    /**
+     * Limit how many SimulationMetrics to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SimulationMetric without action
+   */
+  export type SimulationMetricDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SimulationMetric
+     */
+    select?: SimulationMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SimulationMetric
+     */
+    omit?: SimulationMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SimulationMetricInclude<ExtArgs> | null
   }
 
 
@@ -6895,6 +11887,53 @@ export namespace Prisma {
   export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
 
 
+  export const SimulationRunScalarFieldEnum: {
+    id: 'id',
+    sceneId: 'sceneId',
+    setup: 'setup',
+    engineVersion: 'engineVersion',
+    status: 'status',
+    lastTick: 'lastTick',
+    startedAt: 'startedAt',
+    lastHeartbeatAt: 'lastHeartbeatAt',
+    endedAt: 'endedAt'
+  };
+
+  export type SimulationRunScalarFieldEnum = (typeof SimulationRunScalarFieldEnum)[keyof typeof SimulationRunScalarFieldEnum]
+
+
+  export const SimulationRunChunkScalarFieldEnum: {
+    runId: 'runId',
+    seq: 'seq',
+    fromTick: 'fromTick',
+    toTick: 'toTick',
+    commands: 'commands',
+    events: 'events',
+    createdAt: 'createdAt'
+  };
+
+  export type SimulationRunChunkScalarFieldEnum = (typeof SimulationRunChunkScalarFieldEnum)[keyof typeof SimulationRunChunkScalarFieldEnum]
+
+
+  export const SimulationCheckpointScalarFieldEnum: {
+    runId: 'runId',
+    tick: 'tick',
+    hash: 'hash',
+    state: 'state'
+  };
+
+  export type SimulationCheckpointScalarFieldEnum = (typeof SimulationCheckpointScalarFieldEnum)[keyof typeof SimulationCheckpointScalarFieldEnum]
+
+
+  export const SimulationMetricScalarFieldEnum: {
+    runId: 'runId',
+    tick: 'tick',
+    values: 'values'
+  };
+
+  export type SimulationMetricScalarFieldEnum = (typeof SimulationMetricScalarFieldEnum)[keyof typeof SimulationMetricScalarFieldEnum]
+
+
   export const UserScalarFieldEnum: {
     id: 'id',
     email: 'email',
@@ -7018,6 +12057,34 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'SimulationRunStatus'
+   */
+  export type EnumSimulationRunStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SimulationRunStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'SimulationRunStatus[]'
+   */
+  export type ListEnumSimulationRunStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SimulationRunStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -7155,6 +12222,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Scene"> | Date | string
     updatedAt?: DateTimeFilter<"Scene"> | Date | string
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+    runs?: SimulationRunListRelationFilter
   }
 
   export type SceneOrderByWithRelationInput = {
@@ -7165,6 +12233,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     project?: ProjectOrderByWithRelationInput
+    runs?: SimulationRunOrderByRelationAggregateInput
   }
 
   export type SceneWhereUniqueInput = Prisma.AtLeast<{
@@ -7178,6 +12247,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Scene"> | Date | string
     updatedAt?: DateTimeFilter<"Scene"> | Date | string
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+    runs?: SimulationRunListRelationFilter
   }, "id">
 
   export type SceneOrderByWithAggregationInput = {
@@ -7262,6 +12332,261 @@ export namespace Prisma {
     expiresAt?: DateTimeWithAggregatesFilter<"Session"> | Date | string
     revokedAt?: DateTimeNullableWithAggregatesFilter<"Session"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Session"> | Date | string
+  }
+
+  export type SimulationRunWhereInput = {
+    AND?: SimulationRunWhereInput | SimulationRunWhereInput[]
+    OR?: SimulationRunWhereInput[]
+    NOT?: SimulationRunWhereInput | SimulationRunWhereInput[]
+    id?: UuidFilter<"SimulationRun"> | string
+    sceneId?: UuidFilter<"SimulationRun"> | string
+    setup?: JsonFilter<"SimulationRun">
+    engineVersion?: IntFilter<"SimulationRun"> | number
+    status?: EnumSimulationRunStatusFilter<"SimulationRun"> | $Enums.SimulationRunStatus
+    lastTick?: IntFilter<"SimulationRun"> | number
+    startedAt?: DateTimeFilter<"SimulationRun"> | Date | string
+    lastHeartbeatAt?: DateTimeFilter<"SimulationRun"> | Date | string
+    endedAt?: DateTimeNullableFilter<"SimulationRun"> | Date | string | null
+    scene?: XOR<SceneScalarRelationFilter, SceneWhereInput>
+    chunks?: SimulationRunChunkListRelationFilter
+    checkpoints?: SimulationCheckpointListRelationFilter
+    metrics?: SimulationMetricListRelationFilter
+  }
+
+  export type SimulationRunOrderByWithRelationInput = {
+    id?: SortOrder
+    sceneId?: SortOrder
+    setup?: SortOrder
+    engineVersion?: SortOrder
+    status?: SortOrder
+    lastTick?: SortOrder
+    startedAt?: SortOrder
+    lastHeartbeatAt?: SortOrder
+    endedAt?: SortOrderInput | SortOrder
+    scene?: SceneOrderByWithRelationInput
+    chunks?: SimulationRunChunkOrderByRelationAggregateInput
+    checkpoints?: SimulationCheckpointOrderByRelationAggregateInput
+    metrics?: SimulationMetricOrderByRelationAggregateInput
+  }
+
+  export type SimulationRunWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SimulationRunWhereInput | SimulationRunWhereInput[]
+    OR?: SimulationRunWhereInput[]
+    NOT?: SimulationRunWhereInput | SimulationRunWhereInput[]
+    sceneId?: UuidFilter<"SimulationRun"> | string
+    setup?: JsonFilter<"SimulationRun">
+    engineVersion?: IntFilter<"SimulationRun"> | number
+    status?: EnumSimulationRunStatusFilter<"SimulationRun"> | $Enums.SimulationRunStatus
+    lastTick?: IntFilter<"SimulationRun"> | number
+    startedAt?: DateTimeFilter<"SimulationRun"> | Date | string
+    lastHeartbeatAt?: DateTimeFilter<"SimulationRun"> | Date | string
+    endedAt?: DateTimeNullableFilter<"SimulationRun"> | Date | string | null
+    scene?: XOR<SceneScalarRelationFilter, SceneWhereInput>
+    chunks?: SimulationRunChunkListRelationFilter
+    checkpoints?: SimulationCheckpointListRelationFilter
+    metrics?: SimulationMetricListRelationFilter
+  }, "id">
+
+  export type SimulationRunOrderByWithAggregationInput = {
+    id?: SortOrder
+    sceneId?: SortOrder
+    setup?: SortOrder
+    engineVersion?: SortOrder
+    status?: SortOrder
+    lastTick?: SortOrder
+    startedAt?: SortOrder
+    lastHeartbeatAt?: SortOrder
+    endedAt?: SortOrderInput | SortOrder
+    _count?: SimulationRunCountOrderByAggregateInput
+    _avg?: SimulationRunAvgOrderByAggregateInput
+    _max?: SimulationRunMaxOrderByAggregateInput
+    _min?: SimulationRunMinOrderByAggregateInput
+    _sum?: SimulationRunSumOrderByAggregateInput
+  }
+
+  export type SimulationRunScalarWhereWithAggregatesInput = {
+    AND?: SimulationRunScalarWhereWithAggregatesInput | SimulationRunScalarWhereWithAggregatesInput[]
+    OR?: SimulationRunScalarWhereWithAggregatesInput[]
+    NOT?: SimulationRunScalarWhereWithAggregatesInput | SimulationRunScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"SimulationRun"> | string
+    sceneId?: UuidWithAggregatesFilter<"SimulationRun"> | string
+    setup?: JsonWithAggregatesFilter<"SimulationRun">
+    engineVersion?: IntWithAggregatesFilter<"SimulationRun"> | number
+    status?: EnumSimulationRunStatusWithAggregatesFilter<"SimulationRun"> | $Enums.SimulationRunStatus
+    lastTick?: IntWithAggregatesFilter<"SimulationRun"> | number
+    startedAt?: DateTimeWithAggregatesFilter<"SimulationRun"> | Date | string
+    lastHeartbeatAt?: DateTimeWithAggregatesFilter<"SimulationRun"> | Date | string
+    endedAt?: DateTimeNullableWithAggregatesFilter<"SimulationRun"> | Date | string | null
+  }
+
+  export type SimulationRunChunkWhereInput = {
+    AND?: SimulationRunChunkWhereInput | SimulationRunChunkWhereInput[]
+    OR?: SimulationRunChunkWhereInput[]
+    NOT?: SimulationRunChunkWhereInput | SimulationRunChunkWhereInput[]
+    runId?: UuidFilter<"SimulationRunChunk"> | string
+    seq?: IntFilter<"SimulationRunChunk"> | number
+    fromTick?: IntFilter<"SimulationRunChunk"> | number
+    toTick?: IntFilter<"SimulationRunChunk"> | number
+    commands?: JsonFilter<"SimulationRunChunk">
+    events?: JsonFilter<"SimulationRunChunk">
+    createdAt?: DateTimeFilter<"SimulationRunChunk"> | Date | string
+    run?: XOR<SimulationRunScalarRelationFilter, SimulationRunWhereInput>
+  }
+
+  export type SimulationRunChunkOrderByWithRelationInput = {
+    runId?: SortOrder
+    seq?: SortOrder
+    fromTick?: SortOrder
+    toTick?: SortOrder
+    commands?: SortOrder
+    events?: SortOrder
+    createdAt?: SortOrder
+    run?: SimulationRunOrderByWithRelationInput
+  }
+
+  export type SimulationRunChunkWhereUniqueInput = Prisma.AtLeast<{
+    runId_seq?: SimulationRunChunkRunIdSeqCompoundUniqueInput
+    AND?: SimulationRunChunkWhereInput | SimulationRunChunkWhereInput[]
+    OR?: SimulationRunChunkWhereInput[]
+    NOT?: SimulationRunChunkWhereInput | SimulationRunChunkWhereInput[]
+    runId?: UuidFilter<"SimulationRunChunk"> | string
+    seq?: IntFilter<"SimulationRunChunk"> | number
+    fromTick?: IntFilter<"SimulationRunChunk"> | number
+    toTick?: IntFilter<"SimulationRunChunk"> | number
+    commands?: JsonFilter<"SimulationRunChunk">
+    events?: JsonFilter<"SimulationRunChunk">
+    createdAt?: DateTimeFilter<"SimulationRunChunk"> | Date | string
+    run?: XOR<SimulationRunScalarRelationFilter, SimulationRunWhereInput>
+  }, "runId_seq">
+
+  export type SimulationRunChunkOrderByWithAggregationInput = {
+    runId?: SortOrder
+    seq?: SortOrder
+    fromTick?: SortOrder
+    toTick?: SortOrder
+    commands?: SortOrder
+    events?: SortOrder
+    createdAt?: SortOrder
+    _count?: SimulationRunChunkCountOrderByAggregateInput
+    _avg?: SimulationRunChunkAvgOrderByAggregateInput
+    _max?: SimulationRunChunkMaxOrderByAggregateInput
+    _min?: SimulationRunChunkMinOrderByAggregateInput
+    _sum?: SimulationRunChunkSumOrderByAggregateInput
+  }
+
+  export type SimulationRunChunkScalarWhereWithAggregatesInput = {
+    AND?: SimulationRunChunkScalarWhereWithAggregatesInput | SimulationRunChunkScalarWhereWithAggregatesInput[]
+    OR?: SimulationRunChunkScalarWhereWithAggregatesInput[]
+    NOT?: SimulationRunChunkScalarWhereWithAggregatesInput | SimulationRunChunkScalarWhereWithAggregatesInput[]
+    runId?: UuidWithAggregatesFilter<"SimulationRunChunk"> | string
+    seq?: IntWithAggregatesFilter<"SimulationRunChunk"> | number
+    fromTick?: IntWithAggregatesFilter<"SimulationRunChunk"> | number
+    toTick?: IntWithAggregatesFilter<"SimulationRunChunk"> | number
+    commands?: JsonWithAggregatesFilter<"SimulationRunChunk">
+    events?: JsonWithAggregatesFilter<"SimulationRunChunk">
+    createdAt?: DateTimeWithAggregatesFilter<"SimulationRunChunk"> | Date | string
+  }
+
+  export type SimulationCheckpointWhereInput = {
+    AND?: SimulationCheckpointWhereInput | SimulationCheckpointWhereInput[]
+    OR?: SimulationCheckpointWhereInput[]
+    NOT?: SimulationCheckpointWhereInput | SimulationCheckpointWhereInput[]
+    runId?: UuidFilter<"SimulationCheckpoint"> | string
+    tick?: IntFilter<"SimulationCheckpoint"> | number
+    hash?: StringFilter<"SimulationCheckpoint"> | string
+    state?: JsonFilter<"SimulationCheckpoint">
+    run?: XOR<SimulationRunScalarRelationFilter, SimulationRunWhereInput>
+  }
+
+  export type SimulationCheckpointOrderByWithRelationInput = {
+    runId?: SortOrder
+    tick?: SortOrder
+    hash?: SortOrder
+    state?: SortOrder
+    run?: SimulationRunOrderByWithRelationInput
+  }
+
+  export type SimulationCheckpointWhereUniqueInput = Prisma.AtLeast<{
+    runId_tick?: SimulationCheckpointRunIdTickCompoundUniqueInput
+    AND?: SimulationCheckpointWhereInput | SimulationCheckpointWhereInput[]
+    OR?: SimulationCheckpointWhereInput[]
+    NOT?: SimulationCheckpointWhereInput | SimulationCheckpointWhereInput[]
+    runId?: UuidFilter<"SimulationCheckpoint"> | string
+    tick?: IntFilter<"SimulationCheckpoint"> | number
+    hash?: StringFilter<"SimulationCheckpoint"> | string
+    state?: JsonFilter<"SimulationCheckpoint">
+    run?: XOR<SimulationRunScalarRelationFilter, SimulationRunWhereInput>
+  }, "runId_tick">
+
+  export type SimulationCheckpointOrderByWithAggregationInput = {
+    runId?: SortOrder
+    tick?: SortOrder
+    hash?: SortOrder
+    state?: SortOrder
+    _count?: SimulationCheckpointCountOrderByAggregateInput
+    _avg?: SimulationCheckpointAvgOrderByAggregateInput
+    _max?: SimulationCheckpointMaxOrderByAggregateInput
+    _min?: SimulationCheckpointMinOrderByAggregateInput
+    _sum?: SimulationCheckpointSumOrderByAggregateInput
+  }
+
+  export type SimulationCheckpointScalarWhereWithAggregatesInput = {
+    AND?: SimulationCheckpointScalarWhereWithAggregatesInput | SimulationCheckpointScalarWhereWithAggregatesInput[]
+    OR?: SimulationCheckpointScalarWhereWithAggregatesInput[]
+    NOT?: SimulationCheckpointScalarWhereWithAggregatesInput | SimulationCheckpointScalarWhereWithAggregatesInput[]
+    runId?: UuidWithAggregatesFilter<"SimulationCheckpoint"> | string
+    tick?: IntWithAggregatesFilter<"SimulationCheckpoint"> | number
+    hash?: StringWithAggregatesFilter<"SimulationCheckpoint"> | string
+    state?: JsonWithAggregatesFilter<"SimulationCheckpoint">
+  }
+
+  export type SimulationMetricWhereInput = {
+    AND?: SimulationMetricWhereInput | SimulationMetricWhereInput[]
+    OR?: SimulationMetricWhereInput[]
+    NOT?: SimulationMetricWhereInput | SimulationMetricWhereInput[]
+    runId?: UuidFilter<"SimulationMetric"> | string
+    tick?: IntFilter<"SimulationMetric"> | number
+    values?: JsonFilter<"SimulationMetric">
+    run?: XOR<SimulationRunScalarRelationFilter, SimulationRunWhereInput>
+  }
+
+  export type SimulationMetricOrderByWithRelationInput = {
+    runId?: SortOrder
+    tick?: SortOrder
+    values?: SortOrder
+    run?: SimulationRunOrderByWithRelationInput
+  }
+
+  export type SimulationMetricWhereUniqueInput = Prisma.AtLeast<{
+    runId_tick?: SimulationMetricRunIdTickCompoundUniqueInput
+    AND?: SimulationMetricWhereInput | SimulationMetricWhereInput[]
+    OR?: SimulationMetricWhereInput[]
+    NOT?: SimulationMetricWhereInput | SimulationMetricWhereInput[]
+    runId?: UuidFilter<"SimulationMetric"> | string
+    tick?: IntFilter<"SimulationMetric"> | number
+    values?: JsonFilter<"SimulationMetric">
+    run?: XOR<SimulationRunScalarRelationFilter, SimulationRunWhereInput>
+  }, "runId_tick">
+
+  export type SimulationMetricOrderByWithAggregationInput = {
+    runId?: SortOrder
+    tick?: SortOrder
+    values?: SortOrder
+    _count?: SimulationMetricCountOrderByAggregateInput
+    _avg?: SimulationMetricAvgOrderByAggregateInput
+    _max?: SimulationMetricMaxOrderByAggregateInput
+    _min?: SimulationMetricMinOrderByAggregateInput
+    _sum?: SimulationMetricSumOrderByAggregateInput
+  }
+
+  export type SimulationMetricScalarWhereWithAggregatesInput = {
+    AND?: SimulationMetricScalarWhereWithAggregatesInput | SimulationMetricScalarWhereWithAggregatesInput[]
+    OR?: SimulationMetricScalarWhereWithAggregatesInput[]
+    NOT?: SimulationMetricScalarWhereWithAggregatesInput | SimulationMetricScalarWhereWithAggregatesInput[]
+    runId?: UuidWithAggregatesFilter<"SimulationMetric"> | string
+    tick?: IntWithAggregatesFilter<"SimulationMetric"> | number
+    values?: JsonWithAggregatesFilter<"SimulationMetric">
   }
 
   export type UserWhereInput = {
@@ -7449,6 +12774,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     project: ProjectCreateNestedOneWithoutScenesInput
+    runs?: SimulationRunCreateNestedManyWithoutSceneInput
   }
 
   export type SceneUncheckedCreateInput = {
@@ -7458,6 +12784,7 @@ export namespace Prisma {
     data?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    runs?: SimulationRunUncheckedCreateNestedManyWithoutSceneInput
   }
 
   export type SceneUpdateInput = {
@@ -7467,6 +12794,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     project?: ProjectUpdateOneRequiredWithoutScenesNestedInput
+    runs?: SimulationRunUpdateManyWithoutSceneNestedInput
   }
 
   export type SceneUncheckedUpdateInput = {
@@ -7476,6 +12804,7 @@ export namespace Prisma {
     data?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    runs?: SimulationRunUncheckedUpdateManyWithoutSceneNestedInput
   }
 
   export type SceneCreateManyInput = {
@@ -7564,6 +12893,259 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SimulationRunCreateInput = {
+    id?: string
+    setup: JsonNullValueInput | InputJsonValue
+    engineVersion: number
+    status?: $Enums.SimulationRunStatus
+    lastTick?: number
+    startedAt?: Date | string
+    lastHeartbeatAt?: Date | string
+    endedAt?: Date | string | null
+    scene: SceneCreateNestedOneWithoutRunsInput
+    chunks?: SimulationRunChunkCreateNestedManyWithoutRunInput
+    checkpoints?: SimulationCheckpointCreateNestedManyWithoutRunInput
+    metrics?: SimulationMetricCreateNestedManyWithoutRunInput
+  }
+
+  export type SimulationRunUncheckedCreateInput = {
+    id?: string
+    sceneId: string
+    setup: JsonNullValueInput | InputJsonValue
+    engineVersion: number
+    status?: $Enums.SimulationRunStatus
+    lastTick?: number
+    startedAt?: Date | string
+    lastHeartbeatAt?: Date | string
+    endedAt?: Date | string | null
+    chunks?: SimulationRunChunkUncheckedCreateNestedManyWithoutRunInput
+    checkpoints?: SimulationCheckpointUncheckedCreateNestedManyWithoutRunInput
+    metrics?: SimulationMetricUncheckedCreateNestedManyWithoutRunInput
+  }
+
+  export type SimulationRunUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    setup?: JsonNullValueInput | InputJsonValue
+    engineVersion?: IntFieldUpdateOperationsInput | number
+    status?: EnumSimulationRunStatusFieldUpdateOperationsInput | $Enums.SimulationRunStatus
+    lastTick?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    scene?: SceneUpdateOneRequiredWithoutRunsNestedInput
+    chunks?: SimulationRunChunkUpdateManyWithoutRunNestedInput
+    checkpoints?: SimulationCheckpointUpdateManyWithoutRunNestedInput
+    metrics?: SimulationMetricUpdateManyWithoutRunNestedInput
+  }
+
+  export type SimulationRunUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sceneId?: StringFieldUpdateOperationsInput | string
+    setup?: JsonNullValueInput | InputJsonValue
+    engineVersion?: IntFieldUpdateOperationsInput | number
+    status?: EnumSimulationRunStatusFieldUpdateOperationsInput | $Enums.SimulationRunStatus
+    lastTick?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chunks?: SimulationRunChunkUncheckedUpdateManyWithoutRunNestedInput
+    checkpoints?: SimulationCheckpointUncheckedUpdateManyWithoutRunNestedInput
+    metrics?: SimulationMetricUncheckedUpdateManyWithoutRunNestedInput
+  }
+
+  export type SimulationRunCreateManyInput = {
+    id?: string
+    sceneId: string
+    setup: JsonNullValueInput | InputJsonValue
+    engineVersion: number
+    status?: $Enums.SimulationRunStatus
+    lastTick?: number
+    startedAt?: Date | string
+    lastHeartbeatAt?: Date | string
+    endedAt?: Date | string | null
+  }
+
+  export type SimulationRunUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    setup?: JsonNullValueInput | InputJsonValue
+    engineVersion?: IntFieldUpdateOperationsInput | number
+    status?: EnumSimulationRunStatusFieldUpdateOperationsInput | $Enums.SimulationRunStatus
+    lastTick?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SimulationRunUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sceneId?: StringFieldUpdateOperationsInput | string
+    setup?: JsonNullValueInput | InputJsonValue
+    engineVersion?: IntFieldUpdateOperationsInput | number
+    status?: EnumSimulationRunStatusFieldUpdateOperationsInput | $Enums.SimulationRunStatus
+    lastTick?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SimulationRunChunkCreateInput = {
+    seq: number
+    fromTick: number
+    toTick: number
+    commands: JsonNullValueInput | InputJsonValue
+    events: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    run: SimulationRunCreateNestedOneWithoutChunksInput
+  }
+
+  export type SimulationRunChunkUncheckedCreateInput = {
+    runId: string
+    seq: number
+    fromTick: number
+    toTick: number
+    commands: JsonNullValueInput | InputJsonValue
+    events: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type SimulationRunChunkUpdateInput = {
+    seq?: IntFieldUpdateOperationsInput | number
+    fromTick?: IntFieldUpdateOperationsInput | number
+    toTick?: IntFieldUpdateOperationsInput | number
+    commands?: JsonNullValueInput | InputJsonValue
+    events?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    run?: SimulationRunUpdateOneRequiredWithoutChunksNestedInput
+  }
+
+  export type SimulationRunChunkUncheckedUpdateInput = {
+    runId?: StringFieldUpdateOperationsInput | string
+    seq?: IntFieldUpdateOperationsInput | number
+    fromTick?: IntFieldUpdateOperationsInput | number
+    toTick?: IntFieldUpdateOperationsInput | number
+    commands?: JsonNullValueInput | InputJsonValue
+    events?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SimulationRunChunkCreateManyInput = {
+    runId: string
+    seq: number
+    fromTick: number
+    toTick: number
+    commands: JsonNullValueInput | InputJsonValue
+    events: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type SimulationRunChunkUpdateManyMutationInput = {
+    seq?: IntFieldUpdateOperationsInput | number
+    fromTick?: IntFieldUpdateOperationsInput | number
+    toTick?: IntFieldUpdateOperationsInput | number
+    commands?: JsonNullValueInput | InputJsonValue
+    events?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SimulationRunChunkUncheckedUpdateManyInput = {
+    runId?: StringFieldUpdateOperationsInput | string
+    seq?: IntFieldUpdateOperationsInput | number
+    fromTick?: IntFieldUpdateOperationsInput | number
+    toTick?: IntFieldUpdateOperationsInput | number
+    commands?: JsonNullValueInput | InputJsonValue
+    events?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SimulationCheckpointCreateInput = {
+    tick: number
+    hash: string
+    state: JsonNullValueInput | InputJsonValue
+    run: SimulationRunCreateNestedOneWithoutCheckpointsInput
+  }
+
+  export type SimulationCheckpointUncheckedCreateInput = {
+    runId: string
+    tick: number
+    hash: string
+    state: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationCheckpointUpdateInput = {
+    tick?: IntFieldUpdateOperationsInput | number
+    hash?: StringFieldUpdateOperationsInput | string
+    state?: JsonNullValueInput | InputJsonValue
+    run?: SimulationRunUpdateOneRequiredWithoutCheckpointsNestedInput
+  }
+
+  export type SimulationCheckpointUncheckedUpdateInput = {
+    runId?: StringFieldUpdateOperationsInput | string
+    tick?: IntFieldUpdateOperationsInput | number
+    hash?: StringFieldUpdateOperationsInput | string
+    state?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationCheckpointCreateManyInput = {
+    runId: string
+    tick: number
+    hash: string
+    state: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationCheckpointUpdateManyMutationInput = {
+    tick?: IntFieldUpdateOperationsInput | number
+    hash?: StringFieldUpdateOperationsInput | string
+    state?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationCheckpointUncheckedUpdateManyInput = {
+    runId?: StringFieldUpdateOperationsInput | string
+    tick?: IntFieldUpdateOperationsInput | number
+    hash?: StringFieldUpdateOperationsInput | string
+    state?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationMetricCreateInput = {
+    tick: number
+    values: JsonNullValueInput | InputJsonValue
+    run: SimulationRunCreateNestedOneWithoutMetricsInput
+  }
+
+  export type SimulationMetricUncheckedCreateInput = {
+    runId: string
+    tick: number
+    values: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationMetricUpdateInput = {
+    tick?: IntFieldUpdateOperationsInput | number
+    values?: JsonNullValueInput | InputJsonValue
+    run?: SimulationRunUpdateOneRequiredWithoutMetricsNestedInput
+  }
+
+  export type SimulationMetricUncheckedUpdateInput = {
+    runId?: StringFieldUpdateOperationsInput | string
+    tick?: IntFieldUpdateOperationsInput | number
+    values?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationMetricCreateManyInput = {
+    runId: string
+    tick: number
+    values: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationMetricUpdateManyMutationInput = {
+    tick?: IntFieldUpdateOperationsInput | number
+    values?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationMetricUncheckedUpdateManyInput = {
+    runId?: StringFieldUpdateOperationsInput | string
+    tick?: IntFieldUpdateOperationsInput | number
+    values?: JsonNullValueInput | InputJsonValue
   }
 
   export type UserCreateInput = {
@@ -7880,6 +13462,16 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type SimulationRunListRelationFilter = {
+    every?: SimulationRunWhereInput
+    some?: SimulationRunWhereInput
+    none?: SimulationRunWhereInput
+  }
+
+  export type SimulationRunOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type SceneCountOrderByAggregateInput = {
     id?: SortOrder
     projectId?: SortOrder
@@ -7981,6 +13573,238 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type EnumSimulationRunStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.SimulationRunStatus | EnumSimulationRunStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SimulationRunStatus[] | ListEnumSimulationRunStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SimulationRunStatus[] | ListEnumSimulationRunStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSimulationRunStatusFilter<$PrismaModel> | $Enums.SimulationRunStatus
+  }
+
+  export type SceneScalarRelationFilter = {
+    is?: SceneWhereInput
+    isNot?: SceneWhereInput
+  }
+
+  export type SimulationRunChunkListRelationFilter = {
+    every?: SimulationRunChunkWhereInput
+    some?: SimulationRunChunkWhereInput
+    none?: SimulationRunChunkWhereInput
+  }
+
+  export type SimulationCheckpointListRelationFilter = {
+    every?: SimulationCheckpointWhereInput
+    some?: SimulationCheckpointWhereInput
+    none?: SimulationCheckpointWhereInput
+  }
+
+  export type SimulationMetricListRelationFilter = {
+    every?: SimulationMetricWhereInput
+    some?: SimulationMetricWhereInput
+    none?: SimulationMetricWhereInput
+  }
+
+  export type SimulationRunChunkOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SimulationCheckpointOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SimulationMetricOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SimulationRunCountOrderByAggregateInput = {
+    id?: SortOrder
+    sceneId?: SortOrder
+    setup?: SortOrder
+    engineVersion?: SortOrder
+    status?: SortOrder
+    lastTick?: SortOrder
+    startedAt?: SortOrder
+    lastHeartbeatAt?: SortOrder
+    endedAt?: SortOrder
+  }
+
+  export type SimulationRunAvgOrderByAggregateInput = {
+    engineVersion?: SortOrder
+    lastTick?: SortOrder
+  }
+
+  export type SimulationRunMaxOrderByAggregateInput = {
+    id?: SortOrder
+    sceneId?: SortOrder
+    engineVersion?: SortOrder
+    status?: SortOrder
+    lastTick?: SortOrder
+    startedAt?: SortOrder
+    lastHeartbeatAt?: SortOrder
+    endedAt?: SortOrder
+  }
+
+  export type SimulationRunMinOrderByAggregateInput = {
+    id?: SortOrder
+    sceneId?: SortOrder
+    engineVersion?: SortOrder
+    status?: SortOrder
+    lastTick?: SortOrder
+    startedAt?: SortOrder
+    lastHeartbeatAt?: SortOrder
+    endedAt?: SortOrder
+  }
+
+  export type SimulationRunSumOrderByAggregateInput = {
+    engineVersion?: SortOrder
+    lastTick?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type EnumSimulationRunStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SimulationRunStatus | EnumSimulationRunStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SimulationRunStatus[] | ListEnumSimulationRunStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SimulationRunStatus[] | ListEnumSimulationRunStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSimulationRunStatusWithAggregatesFilter<$PrismaModel> | $Enums.SimulationRunStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSimulationRunStatusFilter<$PrismaModel>
+    _max?: NestedEnumSimulationRunStatusFilter<$PrismaModel>
+  }
+
+  export type SimulationRunScalarRelationFilter = {
+    is?: SimulationRunWhereInput
+    isNot?: SimulationRunWhereInput
+  }
+
+  export type SimulationRunChunkRunIdSeqCompoundUniqueInput = {
+    runId: string
+    seq: number
+  }
+
+  export type SimulationRunChunkCountOrderByAggregateInput = {
+    runId?: SortOrder
+    seq?: SortOrder
+    fromTick?: SortOrder
+    toTick?: SortOrder
+    commands?: SortOrder
+    events?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SimulationRunChunkAvgOrderByAggregateInput = {
+    seq?: SortOrder
+    fromTick?: SortOrder
+    toTick?: SortOrder
+  }
+
+  export type SimulationRunChunkMaxOrderByAggregateInput = {
+    runId?: SortOrder
+    seq?: SortOrder
+    fromTick?: SortOrder
+    toTick?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SimulationRunChunkMinOrderByAggregateInput = {
+    runId?: SortOrder
+    seq?: SortOrder
+    fromTick?: SortOrder
+    toTick?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SimulationRunChunkSumOrderByAggregateInput = {
+    seq?: SortOrder
+    fromTick?: SortOrder
+    toTick?: SortOrder
+  }
+
+  export type SimulationCheckpointRunIdTickCompoundUniqueInput = {
+    runId: string
+    tick: number
+  }
+
+  export type SimulationCheckpointCountOrderByAggregateInput = {
+    runId?: SortOrder
+    tick?: SortOrder
+    hash?: SortOrder
+    state?: SortOrder
+  }
+
+  export type SimulationCheckpointAvgOrderByAggregateInput = {
+    tick?: SortOrder
+  }
+
+  export type SimulationCheckpointMaxOrderByAggregateInput = {
+    runId?: SortOrder
+    tick?: SortOrder
+    hash?: SortOrder
+  }
+
+  export type SimulationCheckpointMinOrderByAggregateInput = {
+    runId?: SortOrder
+    tick?: SortOrder
+    hash?: SortOrder
+  }
+
+  export type SimulationCheckpointSumOrderByAggregateInput = {
+    tick?: SortOrder
+  }
+
+  export type SimulationMetricRunIdTickCompoundUniqueInput = {
+    runId: string
+    tick: number
+  }
+
+  export type SimulationMetricCountOrderByAggregateInput = {
+    runId?: SortOrder
+    tick?: SortOrder
+    values?: SortOrder
+  }
+
+  export type SimulationMetricAvgOrderByAggregateInput = {
+    tick?: SortOrder
+  }
+
+  export type SimulationMetricMaxOrderByAggregateInput = {
+    runId?: SortOrder
+    tick?: SortOrder
+  }
+
+  export type SimulationMetricMinOrderByAggregateInput = {
+    runId?: SortOrder
+    tick?: SortOrder
+  }
+
+  export type SimulationMetricSumOrderByAggregateInput = {
+    tick?: SortOrder
   }
 
   export type SessionListRelationFilter = {
@@ -8175,12 +13999,54 @@ export namespace Prisma {
     connect?: ProjectWhereUniqueInput
   }
 
+  export type SimulationRunCreateNestedManyWithoutSceneInput = {
+    create?: XOR<SimulationRunCreateWithoutSceneInput, SimulationRunUncheckedCreateWithoutSceneInput> | SimulationRunCreateWithoutSceneInput[] | SimulationRunUncheckedCreateWithoutSceneInput[]
+    connectOrCreate?: SimulationRunCreateOrConnectWithoutSceneInput | SimulationRunCreateOrConnectWithoutSceneInput[]
+    createMany?: SimulationRunCreateManySceneInputEnvelope
+    connect?: SimulationRunWhereUniqueInput | SimulationRunWhereUniqueInput[]
+  }
+
+  export type SimulationRunUncheckedCreateNestedManyWithoutSceneInput = {
+    create?: XOR<SimulationRunCreateWithoutSceneInput, SimulationRunUncheckedCreateWithoutSceneInput> | SimulationRunCreateWithoutSceneInput[] | SimulationRunUncheckedCreateWithoutSceneInput[]
+    connectOrCreate?: SimulationRunCreateOrConnectWithoutSceneInput | SimulationRunCreateOrConnectWithoutSceneInput[]
+    createMany?: SimulationRunCreateManySceneInputEnvelope
+    connect?: SimulationRunWhereUniqueInput | SimulationRunWhereUniqueInput[]
+  }
+
   export type ProjectUpdateOneRequiredWithoutScenesNestedInput = {
     create?: XOR<ProjectCreateWithoutScenesInput, ProjectUncheckedCreateWithoutScenesInput>
     connectOrCreate?: ProjectCreateOrConnectWithoutScenesInput
     upsert?: ProjectUpsertWithoutScenesInput
     connect?: ProjectWhereUniqueInput
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutScenesInput, ProjectUpdateWithoutScenesInput>, ProjectUncheckedUpdateWithoutScenesInput>
+  }
+
+  export type SimulationRunUpdateManyWithoutSceneNestedInput = {
+    create?: XOR<SimulationRunCreateWithoutSceneInput, SimulationRunUncheckedCreateWithoutSceneInput> | SimulationRunCreateWithoutSceneInput[] | SimulationRunUncheckedCreateWithoutSceneInput[]
+    connectOrCreate?: SimulationRunCreateOrConnectWithoutSceneInput | SimulationRunCreateOrConnectWithoutSceneInput[]
+    upsert?: SimulationRunUpsertWithWhereUniqueWithoutSceneInput | SimulationRunUpsertWithWhereUniqueWithoutSceneInput[]
+    createMany?: SimulationRunCreateManySceneInputEnvelope
+    set?: SimulationRunWhereUniqueInput | SimulationRunWhereUniqueInput[]
+    disconnect?: SimulationRunWhereUniqueInput | SimulationRunWhereUniqueInput[]
+    delete?: SimulationRunWhereUniqueInput | SimulationRunWhereUniqueInput[]
+    connect?: SimulationRunWhereUniqueInput | SimulationRunWhereUniqueInput[]
+    update?: SimulationRunUpdateWithWhereUniqueWithoutSceneInput | SimulationRunUpdateWithWhereUniqueWithoutSceneInput[]
+    updateMany?: SimulationRunUpdateManyWithWhereWithoutSceneInput | SimulationRunUpdateManyWithWhereWithoutSceneInput[]
+    deleteMany?: SimulationRunScalarWhereInput | SimulationRunScalarWhereInput[]
+  }
+
+  export type SimulationRunUncheckedUpdateManyWithoutSceneNestedInput = {
+    create?: XOR<SimulationRunCreateWithoutSceneInput, SimulationRunUncheckedCreateWithoutSceneInput> | SimulationRunCreateWithoutSceneInput[] | SimulationRunUncheckedCreateWithoutSceneInput[]
+    connectOrCreate?: SimulationRunCreateOrConnectWithoutSceneInput | SimulationRunCreateOrConnectWithoutSceneInput[]
+    upsert?: SimulationRunUpsertWithWhereUniqueWithoutSceneInput | SimulationRunUpsertWithWhereUniqueWithoutSceneInput[]
+    createMany?: SimulationRunCreateManySceneInputEnvelope
+    set?: SimulationRunWhereUniqueInput | SimulationRunWhereUniqueInput[]
+    disconnect?: SimulationRunWhereUniqueInput | SimulationRunWhereUniqueInput[]
+    delete?: SimulationRunWhereUniqueInput | SimulationRunWhereUniqueInput[]
+    connect?: SimulationRunWhereUniqueInput | SimulationRunWhereUniqueInput[]
+    update?: SimulationRunUpdateWithWhereUniqueWithoutSceneInput | SimulationRunUpdateWithWhereUniqueWithoutSceneInput[]
+    updateMany?: SimulationRunUpdateManyWithWhereWithoutSceneInput | SimulationRunUpdateManyWithWhereWithoutSceneInput[]
+    deleteMany?: SimulationRunScalarWhereInput | SimulationRunScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutSessionsInput = {
@@ -8199,6 +14065,200 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutSessionsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSessionsInput, UserUpdateWithoutSessionsInput>, UserUncheckedUpdateWithoutSessionsInput>
+  }
+
+  export type SceneCreateNestedOneWithoutRunsInput = {
+    create?: XOR<SceneCreateWithoutRunsInput, SceneUncheckedCreateWithoutRunsInput>
+    connectOrCreate?: SceneCreateOrConnectWithoutRunsInput
+    connect?: SceneWhereUniqueInput
+  }
+
+  export type SimulationRunChunkCreateNestedManyWithoutRunInput = {
+    create?: XOR<SimulationRunChunkCreateWithoutRunInput, SimulationRunChunkUncheckedCreateWithoutRunInput> | SimulationRunChunkCreateWithoutRunInput[] | SimulationRunChunkUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: SimulationRunChunkCreateOrConnectWithoutRunInput | SimulationRunChunkCreateOrConnectWithoutRunInput[]
+    createMany?: SimulationRunChunkCreateManyRunInputEnvelope
+    connect?: SimulationRunChunkWhereUniqueInput | SimulationRunChunkWhereUniqueInput[]
+  }
+
+  export type SimulationCheckpointCreateNestedManyWithoutRunInput = {
+    create?: XOR<SimulationCheckpointCreateWithoutRunInput, SimulationCheckpointUncheckedCreateWithoutRunInput> | SimulationCheckpointCreateWithoutRunInput[] | SimulationCheckpointUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: SimulationCheckpointCreateOrConnectWithoutRunInput | SimulationCheckpointCreateOrConnectWithoutRunInput[]
+    createMany?: SimulationCheckpointCreateManyRunInputEnvelope
+    connect?: SimulationCheckpointWhereUniqueInput | SimulationCheckpointWhereUniqueInput[]
+  }
+
+  export type SimulationMetricCreateNestedManyWithoutRunInput = {
+    create?: XOR<SimulationMetricCreateWithoutRunInput, SimulationMetricUncheckedCreateWithoutRunInput> | SimulationMetricCreateWithoutRunInput[] | SimulationMetricUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: SimulationMetricCreateOrConnectWithoutRunInput | SimulationMetricCreateOrConnectWithoutRunInput[]
+    createMany?: SimulationMetricCreateManyRunInputEnvelope
+    connect?: SimulationMetricWhereUniqueInput | SimulationMetricWhereUniqueInput[]
+  }
+
+  export type SimulationRunChunkUncheckedCreateNestedManyWithoutRunInput = {
+    create?: XOR<SimulationRunChunkCreateWithoutRunInput, SimulationRunChunkUncheckedCreateWithoutRunInput> | SimulationRunChunkCreateWithoutRunInput[] | SimulationRunChunkUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: SimulationRunChunkCreateOrConnectWithoutRunInput | SimulationRunChunkCreateOrConnectWithoutRunInput[]
+    createMany?: SimulationRunChunkCreateManyRunInputEnvelope
+    connect?: SimulationRunChunkWhereUniqueInput | SimulationRunChunkWhereUniqueInput[]
+  }
+
+  export type SimulationCheckpointUncheckedCreateNestedManyWithoutRunInput = {
+    create?: XOR<SimulationCheckpointCreateWithoutRunInput, SimulationCheckpointUncheckedCreateWithoutRunInput> | SimulationCheckpointCreateWithoutRunInput[] | SimulationCheckpointUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: SimulationCheckpointCreateOrConnectWithoutRunInput | SimulationCheckpointCreateOrConnectWithoutRunInput[]
+    createMany?: SimulationCheckpointCreateManyRunInputEnvelope
+    connect?: SimulationCheckpointWhereUniqueInput | SimulationCheckpointWhereUniqueInput[]
+  }
+
+  export type SimulationMetricUncheckedCreateNestedManyWithoutRunInput = {
+    create?: XOR<SimulationMetricCreateWithoutRunInput, SimulationMetricUncheckedCreateWithoutRunInput> | SimulationMetricCreateWithoutRunInput[] | SimulationMetricUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: SimulationMetricCreateOrConnectWithoutRunInput | SimulationMetricCreateOrConnectWithoutRunInput[]
+    createMany?: SimulationMetricCreateManyRunInputEnvelope
+    connect?: SimulationMetricWhereUniqueInput | SimulationMetricWhereUniqueInput[]
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type EnumSimulationRunStatusFieldUpdateOperationsInput = {
+    set?: $Enums.SimulationRunStatus
+  }
+
+  export type SceneUpdateOneRequiredWithoutRunsNestedInput = {
+    create?: XOR<SceneCreateWithoutRunsInput, SceneUncheckedCreateWithoutRunsInput>
+    connectOrCreate?: SceneCreateOrConnectWithoutRunsInput
+    upsert?: SceneUpsertWithoutRunsInput
+    connect?: SceneWhereUniqueInput
+    update?: XOR<XOR<SceneUpdateToOneWithWhereWithoutRunsInput, SceneUpdateWithoutRunsInput>, SceneUncheckedUpdateWithoutRunsInput>
+  }
+
+  export type SimulationRunChunkUpdateManyWithoutRunNestedInput = {
+    create?: XOR<SimulationRunChunkCreateWithoutRunInput, SimulationRunChunkUncheckedCreateWithoutRunInput> | SimulationRunChunkCreateWithoutRunInput[] | SimulationRunChunkUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: SimulationRunChunkCreateOrConnectWithoutRunInput | SimulationRunChunkCreateOrConnectWithoutRunInput[]
+    upsert?: SimulationRunChunkUpsertWithWhereUniqueWithoutRunInput | SimulationRunChunkUpsertWithWhereUniqueWithoutRunInput[]
+    createMany?: SimulationRunChunkCreateManyRunInputEnvelope
+    set?: SimulationRunChunkWhereUniqueInput | SimulationRunChunkWhereUniqueInput[]
+    disconnect?: SimulationRunChunkWhereUniqueInput | SimulationRunChunkWhereUniqueInput[]
+    delete?: SimulationRunChunkWhereUniqueInput | SimulationRunChunkWhereUniqueInput[]
+    connect?: SimulationRunChunkWhereUniqueInput | SimulationRunChunkWhereUniqueInput[]
+    update?: SimulationRunChunkUpdateWithWhereUniqueWithoutRunInput | SimulationRunChunkUpdateWithWhereUniqueWithoutRunInput[]
+    updateMany?: SimulationRunChunkUpdateManyWithWhereWithoutRunInput | SimulationRunChunkUpdateManyWithWhereWithoutRunInput[]
+    deleteMany?: SimulationRunChunkScalarWhereInput | SimulationRunChunkScalarWhereInput[]
+  }
+
+  export type SimulationCheckpointUpdateManyWithoutRunNestedInput = {
+    create?: XOR<SimulationCheckpointCreateWithoutRunInput, SimulationCheckpointUncheckedCreateWithoutRunInput> | SimulationCheckpointCreateWithoutRunInput[] | SimulationCheckpointUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: SimulationCheckpointCreateOrConnectWithoutRunInput | SimulationCheckpointCreateOrConnectWithoutRunInput[]
+    upsert?: SimulationCheckpointUpsertWithWhereUniqueWithoutRunInput | SimulationCheckpointUpsertWithWhereUniqueWithoutRunInput[]
+    createMany?: SimulationCheckpointCreateManyRunInputEnvelope
+    set?: SimulationCheckpointWhereUniqueInput | SimulationCheckpointWhereUniqueInput[]
+    disconnect?: SimulationCheckpointWhereUniqueInput | SimulationCheckpointWhereUniqueInput[]
+    delete?: SimulationCheckpointWhereUniqueInput | SimulationCheckpointWhereUniqueInput[]
+    connect?: SimulationCheckpointWhereUniqueInput | SimulationCheckpointWhereUniqueInput[]
+    update?: SimulationCheckpointUpdateWithWhereUniqueWithoutRunInput | SimulationCheckpointUpdateWithWhereUniqueWithoutRunInput[]
+    updateMany?: SimulationCheckpointUpdateManyWithWhereWithoutRunInput | SimulationCheckpointUpdateManyWithWhereWithoutRunInput[]
+    deleteMany?: SimulationCheckpointScalarWhereInput | SimulationCheckpointScalarWhereInput[]
+  }
+
+  export type SimulationMetricUpdateManyWithoutRunNestedInput = {
+    create?: XOR<SimulationMetricCreateWithoutRunInput, SimulationMetricUncheckedCreateWithoutRunInput> | SimulationMetricCreateWithoutRunInput[] | SimulationMetricUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: SimulationMetricCreateOrConnectWithoutRunInput | SimulationMetricCreateOrConnectWithoutRunInput[]
+    upsert?: SimulationMetricUpsertWithWhereUniqueWithoutRunInput | SimulationMetricUpsertWithWhereUniqueWithoutRunInput[]
+    createMany?: SimulationMetricCreateManyRunInputEnvelope
+    set?: SimulationMetricWhereUniqueInput | SimulationMetricWhereUniqueInput[]
+    disconnect?: SimulationMetricWhereUniqueInput | SimulationMetricWhereUniqueInput[]
+    delete?: SimulationMetricWhereUniqueInput | SimulationMetricWhereUniqueInput[]
+    connect?: SimulationMetricWhereUniqueInput | SimulationMetricWhereUniqueInput[]
+    update?: SimulationMetricUpdateWithWhereUniqueWithoutRunInput | SimulationMetricUpdateWithWhereUniqueWithoutRunInput[]
+    updateMany?: SimulationMetricUpdateManyWithWhereWithoutRunInput | SimulationMetricUpdateManyWithWhereWithoutRunInput[]
+    deleteMany?: SimulationMetricScalarWhereInput | SimulationMetricScalarWhereInput[]
+  }
+
+  export type SimulationRunChunkUncheckedUpdateManyWithoutRunNestedInput = {
+    create?: XOR<SimulationRunChunkCreateWithoutRunInput, SimulationRunChunkUncheckedCreateWithoutRunInput> | SimulationRunChunkCreateWithoutRunInput[] | SimulationRunChunkUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: SimulationRunChunkCreateOrConnectWithoutRunInput | SimulationRunChunkCreateOrConnectWithoutRunInput[]
+    upsert?: SimulationRunChunkUpsertWithWhereUniqueWithoutRunInput | SimulationRunChunkUpsertWithWhereUniqueWithoutRunInput[]
+    createMany?: SimulationRunChunkCreateManyRunInputEnvelope
+    set?: SimulationRunChunkWhereUniqueInput | SimulationRunChunkWhereUniqueInput[]
+    disconnect?: SimulationRunChunkWhereUniqueInput | SimulationRunChunkWhereUniqueInput[]
+    delete?: SimulationRunChunkWhereUniqueInput | SimulationRunChunkWhereUniqueInput[]
+    connect?: SimulationRunChunkWhereUniqueInput | SimulationRunChunkWhereUniqueInput[]
+    update?: SimulationRunChunkUpdateWithWhereUniqueWithoutRunInput | SimulationRunChunkUpdateWithWhereUniqueWithoutRunInput[]
+    updateMany?: SimulationRunChunkUpdateManyWithWhereWithoutRunInput | SimulationRunChunkUpdateManyWithWhereWithoutRunInput[]
+    deleteMany?: SimulationRunChunkScalarWhereInput | SimulationRunChunkScalarWhereInput[]
+  }
+
+  export type SimulationCheckpointUncheckedUpdateManyWithoutRunNestedInput = {
+    create?: XOR<SimulationCheckpointCreateWithoutRunInput, SimulationCheckpointUncheckedCreateWithoutRunInput> | SimulationCheckpointCreateWithoutRunInput[] | SimulationCheckpointUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: SimulationCheckpointCreateOrConnectWithoutRunInput | SimulationCheckpointCreateOrConnectWithoutRunInput[]
+    upsert?: SimulationCheckpointUpsertWithWhereUniqueWithoutRunInput | SimulationCheckpointUpsertWithWhereUniqueWithoutRunInput[]
+    createMany?: SimulationCheckpointCreateManyRunInputEnvelope
+    set?: SimulationCheckpointWhereUniqueInput | SimulationCheckpointWhereUniqueInput[]
+    disconnect?: SimulationCheckpointWhereUniqueInput | SimulationCheckpointWhereUniqueInput[]
+    delete?: SimulationCheckpointWhereUniqueInput | SimulationCheckpointWhereUniqueInput[]
+    connect?: SimulationCheckpointWhereUniqueInput | SimulationCheckpointWhereUniqueInput[]
+    update?: SimulationCheckpointUpdateWithWhereUniqueWithoutRunInput | SimulationCheckpointUpdateWithWhereUniqueWithoutRunInput[]
+    updateMany?: SimulationCheckpointUpdateManyWithWhereWithoutRunInput | SimulationCheckpointUpdateManyWithWhereWithoutRunInput[]
+    deleteMany?: SimulationCheckpointScalarWhereInput | SimulationCheckpointScalarWhereInput[]
+  }
+
+  export type SimulationMetricUncheckedUpdateManyWithoutRunNestedInput = {
+    create?: XOR<SimulationMetricCreateWithoutRunInput, SimulationMetricUncheckedCreateWithoutRunInput> | SimulationMetricCreateWithoutRunInput[] | SimulationMetricUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: SimulationMetricCreateOrConnectWithoutRunInput | SimulationMetricCreateOrConnectWithoutRunInput[]
+    upsert?: SimulationMetricUpsertWithWhereUniqueWithoutRunInput | SimulationMetricUpsertWithWhereUniqueWithoutRunInput[]
+    createMany?: SimulationMetricCreateManyRunInputEnvelope
+    set?: SimulationMetricWhereUniqueInput | SimulationMetricWhereUniqueInput[]
+    disconnect?: SimulationMetricWhereUniqueInput | SimulationMetricWhereUniqueInput[]
+    delete?: SimulationMetricWhereUniqueInput | SimulationMetricWhereUniqueInput[]
+    connect?: SimulationMetricWhereUniqueInput | SimulationMetricWhereUniqueInput[]
+    update?: SimulationMetricUpdateWithWhereUniqueWithoutRunInput | SimulationMetricUpdateWithWhereUniqueWithoutRunInput[]
+    updateMany?: SimulationMetricUpdateManyWithWhereWithoutRunInput | SimulationMetricUpdateManyWithWhereWithoutRunInput[]
+    deleteMany?: SimulationMetricScalarWhereInput | SimulationMetricScalarWhereInput[]
+  }
+
+  export type SimulationRunCreateNestedOneWithoutChunksInput = {
+    create?: XOR<SimulationRunCreateWithoutChunksInput, SimulationRunUncheckedCreateWithoutChunksInput>
+    connectOrCreate?: SimulationRunCreateOrConnectWithoutChunksInput
+    connect?: SimulationRunWhereUniqueInput
+  }
+
+  export type SimulationRunUpdateOneRequiredWithoutChunksNestedInput = {
+    create?: XOR<SimulationRunCreateWithoutChunksInput, SimulationRunUncheckedCreateWithoutChunksInput>
+    connectOrCreate?: SimulationRunCreateOrConnectWithoutChunksInput
+    upsert?: SimulationRunUpsertWithoutChunksInput
+    connect?: SimulationRunWhereUniqueInput
+    update?: XOR<XOR<SimulationRunUpdateToOneWithWhereWithoutChunksInput, SimulationRunUpdateWithoutChunksInput>, SimulationRunUncheckedUpdateWithoutChunksInput>
+  }
+
+  export type SimulationRunCreateNestedOneWithoutCheckpointsInput = {
+    create?: XOR<SimulationRunCreateWithoutCheckpointsInput, SimulationRunUncheckedCreateWithoutCheckpointsInput>
+    connectOrCreate?: SimulationRunCreateOrConnectWithoutCheckpointsInput
+    connect?: SimulationRunWhereUniqueInput
+  }
+
+  export type SimulationRunUpdateOneRequiredWithoutCheckpointsNestedInput = {
+    create?: XOR<SimulationRunCreateWithoutCheckpointsInput, SimulationRunUncheckedCreateWithoutCheckpointsInput>
+    connectOrCreate?: SimulationRunCreateOrConnectWithoutCheckpointsInput
+    upsert?: SimulationRunUpsertWithoutCheckpointsInput
+    connect?: SimulationRunWhereUniqueInput
+    update?: XOR<XOR<SimulationRunUpdateToOneWithWhereWithoutCheckpointsInput, SimulationRunUpdateWithoutCheckpointsInput>, SimulationRunUncheckedUpdateWithoutCheckpointsInput>
+  }
+
+  export type SimulationRunCreateNestedOneWithoutMetricsInput = {
+    create?: XOR<SimulationRunCreateWithoutMetricsInput, SimulationRunUncheckedCreateWithoutMetricsInput>
+    connectOrCreate?: SimulationRunCreateOrConnectWithoutMetricsInput
+    connect?: SimulationRunWhereUniqueInput
+  }
+
+  export type SimulationRunUpdateOneRequiredWithoutMetricsNestedInput = {
+    create?: XOR<SimulationRunCreateWithoutMetricsInput, SimulationRunUncheckedCreateWithoutMetricsInput>
+    connectOrCreate?: SimulationRunCreateOrConnectWithoutMetricsInput
+    upsert?: SimulationRunUpsertWithoutMetricsInput
+    connect?: SimulationRunWhereUniqueInput
+    update?: XOR<XOR<SimulationRunUpdateToOneWithWhereWithoutMetricsInput, SimulationRunUpdateWithoutMetricsInput>, SimulationRunUncheckedUpdateWithoutMetricsInput>
   }
 
   export type SessionCreateNestedManyWithoutUserInput = {
@@ -8526,6 +14586,50 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumSimulationRunStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.SimulationRunStatus | EnumSimulationRunStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SimulationRunStatus[] | ListEnumSimulationRunStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SimulationRunStatus[] | ListEnumSimulationRunStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSimulationRunStatusFilter<$PrismaModel> | $Enums.SimulationRunStatus
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedEnumSimulationRunStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SimulationRunStatus | EnumSimulationRunStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SimulationRunStatus[] | ListEnumSimulationRunStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SimulationRunStatus[] | ListEnumSimulationRunStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSimulationRunStatusWithAggregatesFilter<$PrismaModel> | $Enums.SimulationRunStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSimulationRunStatusFilter<$PrismaModel>
+    _max?: NestedEnumSimulationRunStatusFilter<$PrismaModel>
+  }
+
   export type UserCreateWithoutProjectsInput = {
     id?: string
     email: string
@@ -8579,6 +14683,7 @@ export namespace Prisma {
     data?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    runs?: SimulationRunCreateNestedManyWithoutSceneInput
   }
 
   export type SceneUncheckedCreateWithoutProjectInput = {
@@ -8587,6 +14692,7 @@ export namespace Prisma {
     data?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    runs?: SimulationRunUncheckedCreateNestedManyWithoutSceneInput
   }
 
   export type SceneCreateOrConnectWithoutProjectInput = {
@@ -8821,6 +14927,44 @@ export namespace Prisma {
     create: XOR<ProjectCreateWithoutScenesInput, ProjectUncheckedCreateWithoutScenesInput>
   }
 
+  export type SimulationRunCreateWithoutSceneInput = {
+    id?: string
+    setup: JsonNullValueInput | InputJsonValue
+    engineVersion: number
+    status?: $Enums.SimulationRunStatus
+    lastTick?: number
+    startedAt?: Date | string
+    lastHeartbeatAt?: Date | string
+    endedAt?: Date | string | null
+    chunks?: SimulationRunChunkCreateNestedManyWithoutRunInput
+    checkpoints?: SimulationCheckpointCreateNestedManyWithoutRunInput
+    metrics?: SimulationMetricCreateNestedManyWithoutRunInput
+  }
+
+  export type SimulationRunUncheckedCreateWithoutSceneInput = {
+    id?: string
+    setup: JsonNullValueInput | InputJsonValue
+    engineVersion: number
+    status?: $Enums.SimulationRunStatus
+    lastTick?: number
+    startedAt?: Date | string
+    lastHeartbeatAt?: Date | string
+    endedAt?: Date | string | null
+    chunks?: SimulationRunChunkUncheckedCreateNestedManyWithoutRunInput
+    checkpoints?: SimulationCheckpointUncheckedCreateNestedManyWithoutRunInput
+    metrics?: SimulationMetricUncheckedCreateNestedManyWithoutRunInput
+  }
+
+  export type SimulationRunCreateOrConnectWithoutSceneInput = {
+    where: SimulationRunWhereUniqueInput
+    create: XOR<SimulationRunCreateWithoutSceneInput, SimulationRunUncheckedCreateWithoutSceneInput>
+  }
+
+  export type SimulationRunCreateManySceneInputEnvelope = {
+    data: SimulationRunCreateManySceneInput | SimulationRunCreateManySceneInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ProjectUpsertWithoutScenesInput = {
     update: XOR<ProjectUpdateWithoutScenesInput, ProjectUncheckedUpdateWithoutScenesInput>
     create: XOR<ProjectCreateWithoutScenesInput, ProjectUncheckedCreateWithoutScenesInput>
@@ -8850,6 +14994,37 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: ProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
+  }
+
+  export type SimulationRunUpsertWithWhereUniqueWithoutSceneInput = {
+    where: SimulationRunWhereUniqueInput
+    update: XOR<SimulationRunUpdateWithoutSceneInput, SimulationRunUncheckedUpdateWithoutSceneInput>
+    create: XOR<SimulationRunCreateWithoutSceneInput, SimulationRunUncheckedCreateWithoutSceneInput>
+  }
+
+  export type SimulationRunUpdateWithWhereUniqueWithoutSceneInput = {
+    where: SimulationRunWhereUniqueInput
+    data: XOR<SimulationRunUpdateWithoutSceneInput, SimulationRunUncheckedUpdateWithoutSceneInput>
+  }
+
+  export type SimulationRunUpdateManyWithWhereWithoutSceneInput = {
+    where: SimulationRunScalarWhereInput
+    data: XOR<SimulationRunUpdateManyMutationInput, SimulationRunUncheckedUpdateManyWithoutSceneInput>
+  }
+
+  export type SimulationRunScalarWhereInput = {
+    AND?: SimulationRunScalarWhereInput | SimulationRunScalarWhereInput[]
+    OR?: SimulationRunScalarWhereInput[]
+    NOT?: SimulationRunScalarWhereInput | SimulationRunScalarWhereInput[]
+    id?: UuidFilter<"SimulationRun"> | string
+    sceneId?: UuidFilter<"SimulationRun"> | string
+    setup?: JsonFilter<"SimulationRun">
+    engineVersion?: IntFilter<"SimulationRun"> | number
+    status?: EnumSimulationRunStatusFilter<"SimulationRun"> | $Enums.SimulationRunStatus
+    lastTick?: IntFilter<"SimulationRun"> | number
+    startedAt?: DateTimeFilter<"SimulationRun"> | Date | string
+    lastHeartbeatAt?: DateTimeFilter<"SimulationRun"> | Date | string
+    endedAt?: DateTimeNullableFilter<"SimulationRun"> | Date | string | null
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -8906,6 +15081,424 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     projects?: ProjectUncheckedUpdateManyWithoutUserNestedInput
     members?: ProjectMemberUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type SceneCreateWithoutRunsInput = {
+    id?: string
+    name: string
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    project: ProjectCreateNestedOneWithoutScenesInput
+  }
+
+  export type SceneUncheckedCreateWithoutRunsInput = {
+    id?: string
+    projectId: string
+    name: string
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SceneCreateOrConnectWithoutRunsInput = {
+    where: SceneWhereUniqueInput
+    create: XOR<SceneCreateWithoutRunsInput, SceneUncheckedCreateWithoutRunsInput>
+  }
+
+  export type SimulationRunChunkCreateWithoutRunInput = {
+    seq: number
+    fromTick: number
+    toTick: number
+    commands: JsonNullValueInput | InputJsonValue
+    events: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type SimulationRunChunkUncheckedCreateWithoutRunInput = {
+    seq: number
+    fromTick: number
+    toTick: number
+    commands: JsonNullValueInput | InputJsonValue
+    events: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type SimulationRunChunkCreateOrConnectWithoutRunInput = {
+    where: SimulationRunChunkWhereUniqueInput
+    create: XOR<SimulationRunChunkCreateWithoutRunInput, SimulationRunChunkUncheckedCreateWithoutRunInput>
+  }
+
+  export type SimulationRunChunkCreateManyRunInputEnvelope = {
+    data: SimulationRunChunkCreateManyRunInput | SimulationRunChunkCreateManyRunInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SimulationCheckpointCreateWithoutRunInput = {
+    tick: number
+    hash: string
+    state: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationCheckpointUncheckedCreateWithoutRunInput = {
+    tick: number
+    hash: string
+    state: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationCheckpointCreateOrConnectWithoutRunInput = {
+    where: SimulationCheckpointWhereUniqueInput
+    create: XOR<SimulationCheckpointCreateWithoutRunInput, SimulationCheckpointUncheckedCreateWithoutRunInput>
+  }
+
+  export type SimulationCheckpointCreateManyRunInputEnvelope = {
+    data: SimulationCheckpointCreateManyRunInput | SimulationCheckpointCreateManyRunInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SimulationMetricCreateWithoutRunInput = {
+    tick: number
+    values: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationMetricUncheckedCreateWithoutRunInput = {
+    tick: number
+    values: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationMetricCreateOrConnectWithoutRunInput = {
+    where: SimulationMetricWhereUniqueInput
+    create: XOR<SimulationMetricCreateWithoutRunInput, SimulationMetricUncheckedCreateWithoutRunInput>
+  }
+
+  export type SimulationMetricCreateManyRunInputEnvelope = {
+    data: SimulationMetricCreateManyRunInput | SimulationMetricCreateManyRunInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SceneUpsertWithoutRunsInput = {
+    update: XOR<SceneUpdateWithoutRunsInput, SceneUncheckedUpdateWithoutRunsInput>
+    create: XOR<SceneCreateWithoutRunsInput, SceneUncheckedCreateWithoutRunsInput>
+    where?: SceneWhereInput
+  }
+
+  export type SceneUpdateToOneWithWhereWithoutRunsInput = {
+    where?: SceneWhereInput
+    data: XOR<SceneUpdateWithoutRunsInput, SceneUncheckedUpdateWithoutRunsInput>
+  }
+
+  export type SceneUpdateWithoutRunsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    project?: ProjectUpdateOneRequiredWithoutScenesNestedInput
+  }
+
+  export type SceneUncheckedUpdateWithoutRunsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SimulationRunChunkUpsertWithWhereUniqueWithoutRunInput = {
+    where: SimulationRunChunkWhereUniqueInput
+    update: XOR<SimulationRunChunkUpdateWithoutRunInput, SimulationRunChunkUncheckedUpdateWithoutRunInput>
+    create: XOR<SimulationRunChunkCreateWithoutRunInput, SimulationRunChunkUncheckedCreateWithoutRunInput>
+  }
+
+  export type SimulationRunChunkUpdateWithWhereUniqueWithoutRunInput = {
+    where: SimulationRunChunkWhereUniqueInput
+    data: XOR<SimulationRunChunkUpdateWithoutRunInput, SimulationRunChunkUncheckedUpdateWithoutRunInput>
+  }
+
+  export type SimulationRunChunkUpdateManyWithWhereWithoutRunInput = {
+    where: SimulationRunChunkScalarWhereInput
+    data: XOR<SimulationRunChunkUpdateManyMutationInput, SimulationRunChunkUncheckedUpdateManyWithoutRunInput>
+  }
+
+  export type SimulationRunChunkScalarWhereInput = {
+    AND?: SimulationRunChunkScalarWhereInput | SimulationRunChunkScalarWhereInput[]
+    OR?: SimulationRunChunkScalarWhereInput[]
+    NOT?: SimulationRunChunkScalarWhereInput | SimulationRunChunkScalarWhereInput[]
+    runId?: UuidFilter<"SimulationRunChunk"> | string
+    seq?: IntFilter<"SimulationRunChunk"> | number
+    fromTick?: IntFilter<"SimulationRunChunk"> | number
+    toTick?: IntFilter<"SimulationRunChunk"> | number
+    commands?: JsonFilter<"SimulationRunChunk">
+    events?: JsonFilter<"SimulationRunChunk">
+    createdAt?: DateTimeFilter<"SimulationRunChunk"> | Date | string
+  }
+
+  export type SimulationCheckpointUpsertWithWhereUniqueWithoutRunInput = {
+    where: SimulationCheckpointWhereUniqueInput
+    update: XOR<SimulationCheckpointUpdateWithoutRunInput, SimulationCheckpointUncheckedUpdateWithoutRunInput>
+    create: XOR<SimulationCheckpointCreateWithoutRunInput, SimulationCheckpointUncheckedCreateWithoutRunInput>
+  }
+
+  export type SimulationCheckpointUpdateWithWhereUniqueWithoutRunInput = {
+    where: SimulationCheckpointWhereUniqueInput
+    data: XOR<SimulationCheckpointUpdateWithoutRunInput, SimulationCheckpointUncheckedUpdateWithoutRunInput>
+  }
+
+  export type SimulationCheckpointUpdateManyWithWhereWithoutRunInput = {
+    where: SimulationCheckpointScalarWhereInput
+    data: XOR<SimulationCheckpointUpdateManyMutationInput, SimulationCheckpointUncheckedUpdateManyWithoutRunInput>
+  }
+
+  export type SimulationCheckpointScalarWhereInput = {
+    AND?: SimulationCheckpointScalarWhereInput | SimulationCheckpointScalarWhereInput[]
+    OR?: SimulationCheckpointScalarWhereInput[]
+    NOT?: SimulationCheckpointScalarWhereInput | SimulationCheckpointScalarWhereInput[]
+    runId?: UuidFilter<"SimulationCheckpoint"> | string
+    tick?: IntFilter<"SimulationCheckpoint"> | number
+    hash?: StringFilter<"SimulationCheckpoint"> | string
+    state?: JsonFilter<"SimulationCheckpoint">
+  }
+
+  export type SimulationMetricUpsertWithWhereUniqueWithoutRunInput = {
+    where: SimulationMetricWhereUniqueInput
+    update: XOR<SimulationMetricUpdateWithoutRunInput, SimulationMetricUncheckedUpdateWithoutRunInput>
+    create: XOR<SimulationMetricCreateWithoutRunInput, SimulationMetricUncheckedCreateWithoutRunInput>
+  }
+
+  export type SimulationMetricUpdateWithWhereUniqueWithoutRunInput = {
+    where: SimulationMetricWhereUniqueInput
+    data: XOR<SimulationMetricUpdateWithoutRunInput, SimulationMetricUncheckedUpdateWithoutRunInput>
+  }
+
+  export type SimulationMetricUpdateManyWithWhereWithoutRunInput = {
+    where: SimulationMetricScalarWhereInput
+    data: XOR<SimulationMetricUpdateManyMutationInput, SimulationMetricUncheckedUpdateManyWithoutRunInput>
+  }
+
+  export type SimulationMetricScalarWhereInput = {
+    AND?: SimulationMetricScalarWhereInput | SimulationMetricScalarWhereInput[]
+    OR?: SimulationMetricScalarWhereInput[]
+    NOT?: SimulationMetricScalarWhereInput | SimulationMetricScalarWhereInput[]
+    runId?: UuidFilter<"SimulationMetric"> | string
+    tick?: IntFilter<"SimulationMetric"> | number
+    values?: JsonFilter<"SimulationMetric">
+  }
+
+  export type SimulationRunCreateWithoutChunksInput = {
+    id?: string
+    setup: JsonNullValueInput | InputJsonValue
+    engineVersion: number
+    status?: $Enums.SimulationRunStatus
+    lastTick?: number
+    startedAt?: Date | string
+    lastHeartbeatAt?: Date | string
+    endedAt?: Date | string | null
+    scene: SceneCreateNestedOneWithoutRunsInput
+    checkpoints?: SimulationCheckpointCreateNestedManyWithoutRunInput
+    metrics?: SimulationMetricCreateNestedManyWithoutRunInput
+  }
+
+  export type SimulationRunUncheckedCreateWithoutChunksInput = {
+    id?: string
+    sceneId: string
+    setup: JsonNullValueInput | InputJsonValue
+    engineVersion: number
+    status?: $Enums.SimulationRunStatus
+    lastTick?: number
+    startedAt?: Date | string
+    lastHeartbeatAt?: Date | string
+    endedAt?: Date | string | null
+    checkpoints?: SimulationCheckpointUncheckedCreateNestedManyWithoutRunInput
+    metrics?: SimulationMetricUncheckedCreateNestedManyWithoutRunInput
+  }
+
+  export type SimulationRunCreateOrConnectWithoutChunksInput = {
+    where: SimulationRunWhereUniqueInput
+    create: XOR<SimulationRunCreateWithoutChunksInput, SimulationRunUncheckedCreateWithoutChunksInput>
+  }
+
+  export type SimulationRunUpsertWithoutChunksInput = {
+    update: XOR<SimulationRunUpdateWithoutChunksInput, SimulationRunUncheckedUpdateWithoutChunksInput>
+    create: XOR<SimulationRunCreateWithoutChunksInput, SimulationRunUncheckedCreateWithoutChunksInput>
+    where?: SimulationRunWhereInput
+  }
+
+  export type SimulationRunUpdateToOneWithWhereWithoutChunksInput = {
+    where?: SimulationRunWhereInput
+    data: XOR<SimulationRunUpdateWithoutChunksInput, SimulationRunUncheckedUpdateWithoutChunksInput>
+  }
+
+  export type SimulationRunUpdateWithoutChunksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    setup?: JsonNullValueInput | InputJsonValue
+    engineVersion?: IntFieldUpdateOperationsInput | number
+    status?: EnumSimulationRunStatusFieldUpdateOperationsInput | $Enums.SimulationRunStatus
+    lastTick?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    scene?: SceneUpdateOneRequiredWithoutRunsNestedInput
+    checkpoints?: SimulationCheckpointUpdateManyWithoutRunNestedInput
+    metrics?: SimulationMetricUpdateManyWithoutRunNestedInput
+  }
+
+  export type SimulationRunUncheckedUpdateWithoutChunksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sceneId?: StringFieldUpdateOperationsInput | string
+    setup?: JsonNullValueInput | InputJsonValue
+    engineVersion?: IntFieldUpdateOperationsInput | number
+    status?: EnumSimulationRunStatusFieldUpdateOperationsInput | $Enums.SimulationRunStatus
+    lastTick?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    checkpoints?: SimulationCheckpointUncheckedUpdateManyWithoutRunNestedInput
+    metrics?: SimulationMetricUncheckedUpdateManyWithoutRunNestedInput
+  }
+
+  export type SimulationRunCreateWithoutCheckpointsInput = {
+    id?: string
+    setup: JsonNullValueInput | InputJsonValue
+    engineVersion: number
+    status?: $Enums.SimulationRunStatus
+    lastTick?: number
+    startedAt?: Date | string
+    lastHeartbeatAt?: Date | string
+    endedAt?: Date | string | null
+    scene: SceneCreateNestedOneWithoutRunsInput
+    chunks?: SimulationRunChunkCreateNestedManyWithoutRunInput
+    metrics?: SimulationMetricCreateNestedManyWithoutRunInput
+  }
+
+  export type SimulationRunUncheckedCreateWithoutCheckpointsInput = {
+    id?: string
+    sceneId: string
+    setup: JsonNullValueInput | InputJsonValue
+    engineVersion: number
+    status?: $Enums.SimulationRunStatus
+    lastTick?: number
+    startedAt?: Date | string
+    lastHeartbeatAt?: Date | string
+    endedAt?: Date | string | null
+    chunks?: SimulationRunChunkUncheckedCreateNestedManyWithoutRunInput
+    metrics?: SimulationMetricUncheckedCreateNestedManyWithoutRunInput
+  }
+
+  export type SimulationRunCreateOrConnectWithoutCheckpointsInput = {
+    where: SimulationRunWhereUniqueInput
+    create: XOR<SimulationRunCreateWithoutCheckpointsInput, SimulationRunUncheckedCreateWithoutCheckpointsInput>
+  }
+
+  export type SimulationRunUpsertWithoutCheckpointsInput = {
+    update: XOR<SimulationRunUpdateWithoutCheckpointsInput, SimulationRunUncheckedUpdateWithoutCheckpointsInput>
+    create: XOR<SimulationRunCreateWithoutCheckpointsInput, SimulationRunUncheckedCreateWithoutCheckpointsInput>
+    where?: SimulationRunWhereInput
+  }
+
+  export type SimulationRunUpdateToOneWithWhereWithoutCheckpointsInput = {
+    where?: SimulationRunWhereInput
+    data: XOR<SimulationRunUpdateWithoutCheckpointsInput, SimulationRunUncheckedUpdateWithoutCheckpointsInput>
+  }
+
+  export type SimulationRunUpdateWithoutCheckpointsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    setup?: JsonNullValueInput | InputJsonValue
+    engineVersion?: IntFieldUpdateOperationsInput | number
+    status?: EnumSimulationRunStatusFieldUpdateOperationsInput | $Enums.SimulationRunStatus
+    lastTick?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    scene?: SceneUpdateOneRequiredWithoutRunsNestedInput
+    chunks?: SimulationRunChunkUpdateManyWithoutRunNestedInput
+    metrics?: SimulationMetricUpdateManyWithoutRunNestedInput
+  }
+
+  export type SimulationRunUncheckedUpdateWithoutCheckpointsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sceneId?: StringFieldUpdateOperationsInput | string
+    setup?: JsonNullValueInput | InputJsonValue
+    engineVersion?: IntFieldUpdateOperationsInput | number
+    status?: EnumSimulationRunStatusFieldUpdateOperationsInput | $Enums.SimulationRunStatus
+    lastTick?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chunks?: SimulationRunChunkUncheckedUpdateManyWithoutRunNestedInput
+    metrics?: SimulationMetricUncheckedUpdateManyWithoutRunNestedInput
+  }
+
+  export type SimulationRunCreateWithoutMetricsInput = {
+    id?: string
+    setup: JsonNullValueInput | InputJsonValue
+    engineVersion: number
+    status?: $Enums.SimulationRunStatus
+    lastTick?: number
+    startedAt?: Date | string
+    lastHeartbeatAt?: Date | string
+    endedAt?: Date | string | null
+    scene: SceneCreateNestedOneWithoutRunsInput
+    chunks?: SimulationRunChunkCreateNestedManyWithoutRunInput
+    checkpoints?: SimulationCheckpointCreateNestedManyWithoutRunInput
+  }
+
+  export type SimulationRunUncheckedCreateWithoutMetricsInput = {
+    id?: string
+    sceneId: string
+    setup: JsonNullValueInput | InputJsonValue
+    engineVersion: number
+    status?: $Enums.SimulationRunStatus
+    lastTick?: number
+    startedAt?: Date | string
+    lastHeartbeatAt?: Date | string
+    endedAt?: Date | string | null
+    chunks?: SimulationRunChunkUncheckedCreateNestedManyWithoutRunInput
+    checkpoints?: SimulationCheckpointUncheckedCreateNestedManyWithoutRunInput
+  }
+
+  export type SimulationRunCreateOrConnectWithoutMetricsInput = {
+    where: SimulationRunWhereUniqueInput
+    create: XOR<SimulationRunCreateWithoutMetricsInput, SimulationRunUncheckedCreateWithoutMetricsInput>
+  }
+
+  export type SimulationRunUpsertWithoutMetricsInput = {
+    update: XOR<SimulationRunUpdateWithoutMetricsInput, SimulationRunUncheckedUpdateWithoutMetricsInput>
+    create: XOR<SimulationRunCreateWithoutMetricsInput, SimulationRunUncheckedCreateWithoutMetricsInput>
+    where?: SimulationRunWhereInput
+  }
+
+  export type SimulationRunUpdateToOneWithWhereWithoutMetricsInput = {
+    where?: SimulationRunWhereInput
+    data: XOR<SimulationRunUpdateWithoutMetricsInput, SimulationRunUncheckedUpdateWithoutMetricsInput>
+  }
+
+  export type SimulationRunUpdateWithoutMetricsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    setup?: JsonNullValueInput | InputJsonValue
+    engineVersion?: IntFieldUpdateOperationsInput | number
+    status?: EnumSimulationRunStatusFieldUpdateOperationsInput | $Enums.SimulationRunStatus
+    lastTick?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    scene?: SceneUpdateOneRequiredWithoutRunsNestedInput
+    chunks?: SimulationRunChunkUpdateManyWithoutRunNestedInput
+    checkpoints?: SimulationCheckpointUpdateManyWithoutRunNestedInput
+  }
+
+  export type SimulationRunUncheckedUpdateWithoutMetricsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sceneId?: StringFieldUpdateOperationsInput | string
+    setup?: JsonNullValueInput | InputJsonValue
+    engineVersion?: IntFieldUpdateOperationsInput | number
+    status?: EnumSimulationRunStatusFieldUpdateOperationsInput | $Enums.SimulationRunStatus
+    lastTick?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chunks?: SimulationRunChunkUncheckedUpdateManyWithoutRunNestedInput
+    checkpoints?: SimulationCheckpointUncheckedUpdateManyWithoutRunNestedInput
   }
 
   export type SessionCreateWithoutUserInput = {
@@ -9096,6 +15689,7 @@ export namespace Prisma {
     data?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    runs?: SimulationRunUpdateManyWithoutSceneNestedInput
   }
 
   export type SceneUncheckedUpdateWithoutProjectInput = {
@@ -9104,6 +15698,7 @@ export namespace Prisma {
     data?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    runs?: SimulationRunUncheckedUpdateManyWithoutSceneNestedInput
   }
 
   export type SceneUncheckedUpdateManyWithoutProjectInput = {
@@ -9112,6 +15707,136 @@ export namespace Prisma {
     data?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SimulationRunCreateManySceneInput = {
+    id?: string
+    setup: JsonNullValueInput | InputJsonValue
+    engineVersion: number
+    status?: $Enums.SimulationRunStatus
+    lastTick?: number
+    startedAt?: Date | string
+    lastHeartbeatAt?: Date | string
+    endedAt?: Date | string | null
+  }
+
+  export type SimulationRunUpdateWithoutSceneInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    setup?: JsonNullValueInput | InputJsonValue
+    engineVersion?: IntFieldUpdateOperationsInput | number
+    status?: EnumSimulationRunStatusFieldUpdateOperationsInput | $Enums.SimulationRunStatus
+    lastTick?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chunks?: SimulationRunChunkUpdateManyWithoutRunNestedInput
+    checkpoints?: SimulationCheckpointUpdateManyWithoutRunNestedInput
+    metrics?: SimulationMetricUpdateManyWithoutRunNestedInput
+  }
+
+  export type SimulationRunUncheckedUpdateWithoutSceneInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    setup?: JsonNullValueInput | InputJsonValue
+    engineVersion?: IntFieldUpdateOperationsInput | number
+    status?: EnumSimulationRunStatusFieldUpdateOperationsInput | $Enums.SimulationRunStatus
+    lastTick?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chunks?: SimulationRunChunkUncheckedUpdateManyWithoutRunNestedInput
+    checkpoints?: SimulationCheckpointUncheckedUpdateManyWithoutRunNestedInput
+    metrics?: SimulationMetricUncheckedUpdateManyWithoutRunNestedInput
+  }
+
+  export type SimulationRunUncheckedUpdateManyWithoutSceneInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    setup?: JsonNullValueInput | InputJsonValue
+    engineVersion?: IntFieldUpdateOperationsInput | number
+    status?: EnumSimulationRunStatusFieldUpdateOperationsInput | $Enums.SimulationRunStatus
+    lastTick?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SimulationRunChunkCreateManyRunInput = {
+    seq: number
+    fromTick: number
+    toTick: number
+    commands: JsonNullValueInput | InputJsonValue
+    events: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type SimulationCheckpointCreateManyRunInput = {
+    tick: number
+    hash: string
+    state: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationMetricCreateManyRunInput = {
+    tick: number
+    values: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationRunChunkUpdateWithoutRunInput = {
+    seq?: IntFieldUpdateOperationsInput | number
+    fromTick?: IntFieldUpdateOperationsInput | number
+    toTick?: IntFieldUpdateOperationsInput | number
+    commands?: JsonNullValueInput | InputJsonValue
+    events?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SimulationRunChunkUncheckedUpdateWithoutRunInput = {
+    seq?: IntFieldUpdateOperationsInput | number
+    fromTick?: IntFieldUpdateOperationsInput | number
+    toTick?: IntFieldUpdateOperationsInput | number
+    commands?: JsonNullValueInput | InputJsonValue
+    events?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SimulationRunChunkUncheckedUpdateManyWithoutRunInput = {
+    seq?: IntFieldUpdateOperationsInput | number
+    fromTick?: IntFieldUpdateOperationsInput | number
+    toTick?: IntFieldUpdateOperationsInput | number
+    commands?: JsonNullValueInput | InputJsonValue
+    events?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SimulationCheckpointUpdateWithoutRunInput = {
+    tick?: IntFieldUpdateOperationsInput | number
+    hash?: StringFieldUpdateOperationsInput | string
+    state?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationCheckpointUncheckedUpdateWithoutRunInput = {
+    tick?: IntFieldUpdateOperationsInput | number
+    hash?: StringFieldUpdateOperationsInput | string
+    state?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationCheckpointUncheckedUpdateManyWithoutRunInput = {
+    tick?: IntFieldUpdateOperationsInput | number
+    hash?: StringFieldUpdateOperationsInput | string
+    state?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationMetricUpdateWithoutRunInput = {
+    tick?: IntFieldUpdateOperationsInput | number
+    values?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationMetricUncheckedUpdateWithoutRunInput = {
+    tick?: IntFieldUpdateOperationsInput | number
+    values?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type SimulationMetricUncheckedUpdateManyWithoutRunInput = {
+    tick?: IntFieldUpdateOperationsInput | number
+    values?: JsonNullValueInput | InputJsonValue
   }
 
   export type SessionCreateManyUserInput = {

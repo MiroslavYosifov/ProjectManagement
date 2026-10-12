@@ -10,7 +10,7 @@ if (!/test/i.test(url)) {
 
 export async function resetDb() {
     await prisma.$executeRawUnsafe(
-        'TRUNCATE "project_members","scenes","projects","sessions","users" RESTART IDENTITY CASCADE'
+        'TRUNCATE "simulation_metrics","simulation_checkpoints","simulation_run_chunks","simulation_runs","project_members","scenes","projects","sessions","users" RESTART IDENTITY CASCADE'
     );
 }
 

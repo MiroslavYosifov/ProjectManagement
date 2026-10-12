@@ -1,4 +1,5 @@
-import type { SimulationSnapshot } from '@simulation-engine/core';
+import type { SceneSetup, SimulationSnapshot } from '@simulation-engine/core';
+import type { RunSink } from '../../runs/core/RunUpload';
 
 export interface Renderer {
   draw(snapshot: SimulationSnapshot): void;
@@ -16,9 +17,12 @@ export type EditorState = {
   status: EditorStatus;
   tick: number;
   dirty: boolean;
+  recording: boolean;
 };
 
 export const browserScheduler: FrameScheduler = {
   request: (callback) => requestAnimationFrame(callback),
   cancel: (handle) => cancelAnimationFrame(handle),
 };
+
+export type StartRun = (setup: SceneSetup) => RunSink | null;

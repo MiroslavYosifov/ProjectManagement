@@ -362,3 +362,117 @@ a { text-decoration: none; color: wheat; }
     grid-template-columns: 1fr;
   }
 }
+
+.run-status {
+  text-transform: capitalize;
+}
+
+.run-status-running {
+  color: var(--accent);
+}
+
+.run-status-interrupted {
+  color: var(--error);
+}
+
+.run-timeline {
+  width: 100%;
+  margin-bottom: 1rem;
+  accent-color: var(--accent);
+}
+
+.metric-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.metric-chart {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.metric-chart figcaption {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.metric-chart-body {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.metric-chart-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  text-align: right;
+  min-width: 2rem;
+}
+
+.metric-chart-plot {
+  position: relative;
+  flex: 1;
+  height: 100px;
+  cursor: crosshair;
+}
+
+.metric-chart-plot svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.metric-chart-grid {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.metric-chart-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.metric-chart-cursor {
+  stroke: var(--text);
+  stroke-width: 1;
+}
+
+.metric-chart-crosshair {
+  stroke: var(--muted);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.metric-chart-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 2px var(--card);
+  pointer-events: none;
+}
+
+.metric-chart-tooltip {
+  position: absolute;
+  top: -0.25rem;
+  transform: translateY(-100%);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  pointer-events: none;
+}

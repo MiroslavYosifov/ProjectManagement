@@ -1,9 +1,15 @@
+import { useEffect } from 'react';
 import { NavLink, Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../../features/auth/AuthContext';
 import LogoutButton from '../../features/auth/components/LogoutButton';
+import { resumePendingRunUploads } from '../../features/runs/runUploads';
 
 export default function MainLayout() {
   const { user } = useAuth();
+
+  useEffect(() => {
+    resumePendingRunUploads();
+  }, []);
 
   return (
     <>

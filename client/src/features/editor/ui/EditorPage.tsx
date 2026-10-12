@@ -1,12 +1,15 @@
-import { useEffect, useState, type MouseEvent } from 'react';
+import { useCallback, useEffect, useRef, useState, type MouseEvent } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import type { EntitySetup } from '@simulation-engine/core';
 import type { EditorController } from '../core/EditorController';
+import type { StartRun } from '../core/types';
 import EditorCanvas from './EditorCanvas';
 import EditorToolbar from './EditorToolbar';
 import SceneSettings from '../../scenes/components/SceneSettings';
 import { useEditorState } from './useEditor';
 import { useSceneDocument } from './useSceneDocument';
+import { startRunUpload } from '../../runs/runUploads';
+import type { RunTarget } from '../../runs/api';
 
 function between(min: number, max: number) {
   return min + Math.random() * (max - min);
@@ -29,6 +32,14 @@ export default function EditorPage() {
   const [controller, setController] = useState<EditorController | null>(null);
   const state = useEditorState(controller);
   const [name, setName] = useState('');
+  const runTarget = useRef<RunTarget | null>(null);
+
+  runTarget.current = document?.sceneId ? { projectId: projectId!, sceneId: document.sceneId } : null;
+
+  const startRun = useCallback<StartRun>(
+    (setup) => (runTarget.current ? startRunUpload(runTarget.current, setup) : null),
+    [],
+  );
 
   useEffect(() => {
     if (document) setName(document.savedName);
@@ -49,6 +60,15 @@ export default function EditorPage() {
     }
   }
 
+  function handleAddEntity() {
+    if (!controller) return;
+    if (state.status === 'idle') {
+      controller.updateSetup((setup) => ({ ...setup, entities: [...setup.entities, randomEntity()] }));
+    } else {
+      controller.dispatch({ type: 'spawnEntity', entity: randomEntity() });
+    }
+  }
+
   async function handleSave() {
     if (!controller) return;
     const saved = await save(controller.getSetup(), name.trim());
@@ -65,6 +85,12 @@ export default function EditorPage() {
     <div className="editor-page">
       <p>
         <Link to={`/projects/${projectId}`} onClick={handleBack}>← Back to project</Link>
+        {document.sceneId && (
+          <>
+            {' · '}
+            <Link to={`/projects/${projectId}/scenes/${document.sceneId}/runs`} onClick={handleBack}>Recorded runs</Link>
+          </>
+        )}
       </p>
 
       <EditorToolbar
@@ -75,13 +101,13 @@ export default function EditorPage() {
         onPlay={() => controller?.play()}
         onPause={() => controller?.pause()}
         onReset={() => controller?.reset()}
-        onAddEntity={() => controller?.updateSetup((setup) => ({ ...setup, entities: [...setup.entities, randomEntity()] }))}
+        onAddEntity={handleAddEntity}
         onSave={handleSave}
       />
       {saveError && <p className="form-error">{saveError}</p>}
 
       <div className="editor-body">
-        <EditorCanvas setup={document.initialSetup} onControllerChange={setController} />
+        <EditorCanvas setup={document.initialSetup} startRun={startRun} onControllerChange={setController} />
         <SceneSettings
           name={name}
           seed={seed}

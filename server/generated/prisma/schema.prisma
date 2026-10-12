@@ -42,7 +42,8 @@ model Scene {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  project Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  runs    SimulationRun[]
 
   @@index([projectId])
   @@map("scenes")
@@ -70,6 +71,72 @@ model Session {
   @@index([userId])
   @@index([expiresAt])
   @@map("sessions")
+}
+
+enum SimulationRunStatus {
+  RUNNING
+  COMPLETED
+  INTERRUPTED
+}
+
+model SimulationRun {
+  id              String              @id @default(uuid()) @db.Uuid
+  sceneId         String              @map("scene_id") @db.Uuid
+  setup           Json
+  engineVersion   Int                 @map("engine_version")
+  status          SimulationRunStatus @default(RUNNING)
+  lastTick        Int                 @default(0) @map("last_tick")
+  startedAt       DateTime            @default(now()) @map("started_at") @db.Timestamptz(6)
+  lastHeartbeatAt DateTime            @default(now()) @map("last_heartbeat_at") @db.Timestamptz(6)
+  endedAt         DateTime?           @map("ended_at") @db.Timestamptz(6)
+
+  scene       Scene                  @relation(fields: [sceneId], references: [id], onDelete: Cascade)
+  chunks      SimulationRunChunk[]
+  checkpoints SimulationCheckpoint[]
+  metrics     SimulationMetric[]
+
+  @@index([sceneId, startedAt])
+  @@index([status, lastHeartbeatAt])
+  @@map("simulation_runs")
+}
+
+model SimulationRunChunk {
+  runId     String   @map("run_id") @db.Uuid
+  seq       Int
+  fromTick  Int      @map("from_tick")
+  toTick    Int      @map("to_tick")
+  commands  Json
+  events    Json
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  run SimulationRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@id([runId, seq])
+  @@index([runId, fromTick])
+  @@map("simulation_run_chunks")
+}
+
+model SimulationCheckpoint {
+  runId String @map("run_id") @db.Uuid
+  tick  Int
+  hash  String
+  state Json
+
+  run SimulationRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@id([runId, tick])
+  @@map("simulation_checkpoints")
+}
+
+model SimulationMetric {
+  runId  String @map("run_id") @db.Uuid
+  tick   Int
+  values Json
+
+  run SimulationRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@id([runId, tick])
+  @@map("simulation_metrics")
 }
 
 model User {

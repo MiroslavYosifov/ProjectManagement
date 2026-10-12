@@ -13,6 +13,8 @@ const ProjectsPage = lazy(() => import("../features/projects/pages/ProjectsPage"
 const ProjectDetailsPage = lazy(() => import("../features/projects/pages/ProjectDetailsPage"));
 const NotFoundPage = lazy(() => import("../pages/NotFoundPage"));
 const EditorPage = lazy(() => import("../features/editor/ui/EditorPage"));
+const RunsPage = lazy(() => import("../features/runs/pages/RunsPage"));
+const RunPlayerPage = lazy(() => import("../features/runs/pages/RunPlayerPage"));
 
 export default function App() {
   return (
@@ -30,6 +32,8 @@ export default function App() {
             <Route path="/projects/:id" element={<ProjectDetailsPage />} />
             <Route path="/projects/:projectId/scenes/new" element={<EditorPage />} />
             <Route path="/projects/:projectId/scenes/:sceneId" element={<EditorPage />} />
+            <Route path="/projects/:projectId/scenes/:sceneId/runs" element={<RunsPage />} />
+            <Route path="/projects/:projectId/scenes/:sceneId/runs/:runId" element={<RunPlayerPage />} />
           </Route>
         </Route>
 

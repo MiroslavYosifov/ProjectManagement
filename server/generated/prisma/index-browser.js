@@ -154,6 +154,41 @@ exports.Prisma.SessionScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.SimulationRunScalarFieldEnum = {
+  id: 'id',
+  sceneId: 'sceneId',
+  setup: 'setup',
+  engineVersion: 'engineVersion',
+  status: 'status',
+  lastTick: 'lastTick',
+  startedAt: 'startedAt',
+  lastHeartbeatAt: 'lastHeartbeatAt',
+  endedAt: 'endedAt'
+};
+
+exports.Prisma.SimulationRunChunkScalarFieldEnum = {
+  runId: 'runId',
+  seq: 'seq',
+  fromTick: 'fromTick',
+  toTick: 'toTick',
+  commands: 'commands',
+  events: 'events',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.SimulationCheckpointScalarFieldEnum = {
+  runId: 'runId',
+  tick: 'tick',
+  hash: 'hash',
+  state: 'state'
+};
+
+exports.Prisma.SimulationMetricScalarFieldEnum = {
+  runId: 'runId',
+  tick: 'tick',
+  values: 'values'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -192,11 +227,21 @@ exports.ProjectRole = exports.$Enums.ProjectRole = {
   OWNER: 'OWNER'
 };
 
+exports.SimulationRunStatus = exports.$Enums.SimulationRunStatus = {
+  RUNNING: 'RUNNING',
+  COMPLETED: 'COMPLETED',
+  INTERRUPTED: 'INTERRUPTED'
+};
+
 exports.Prisma.ModelName = {
   Project: 'Project',
   ProjectMember: 'ProjectMember',
   Scene: 'Scene',
   Session: 'Session',
+  SimulationRun: 'SimulationRun',
+  SimulationRunChunk: 'SimulationRunChunk',
+  SimulationCheckpoint: 'SimulationCheckpoint',
+  SimulationMetric: 'SimulationMetric',
   User: 'User'
 };
 

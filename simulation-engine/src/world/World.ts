@@ -4,7 +4,7 @@ import type { Movement } from "../components/Movement.js";
 import type { Appearance } from "../components/Appearance.js";
 
 export class World {
-    private nextEntityId: EntityId = 1;
+    nextEntityId: EntityId = 1;
     readonly entities = new Set<EntityId>();
     readonly positions = new Map<EntityId, Position>();
     readonly movements = new Map<EntityId, Movement>();

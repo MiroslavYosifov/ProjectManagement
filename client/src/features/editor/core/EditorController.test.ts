@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import type { SceneSetup, SimulationSnapshot } from '@simulation-engine/core';
+import { Replayer, type RecordingChunk, type SceneSetup, type SimulationSnapshot } from '@simulation-engine/core';
 
 import { EditorController } from './EditorController';
 import type { FrameScheduler, Renderer } from './types';
@@ -59,7 +59,7 @@ test('renders the initial snapshot and starts idle', () => {
 
   const controller = new EditorController(setup(), view.renderer, clock.scheduler);
 
-  assert.deepEqual(controller.getState(), { status: 'idle', tick: 0, dirty: false });
+  assert.deepEqual(controller.getState(), { status: 'idle', tick: 0, dirty: false, recording: false });
   assert.equal(view.draws.length, 1);
   assert.equal(view.last().tick, 0);
 });
@@ -100,7 +100,7 @@ test('pause stops the loop and keeps the current tick', () => {
   clock.frame(1000);
 
   assert.equal(clock.pending(), 0);
-  assert.deepEqual(controller.getState(), { status: 'paused', tick: 10, dirty: false });
+  assert.deepEqual(controller.getState(), { status: 'paused', tick: 10, dirty: false, recording: false });
 });
 
 test('reset returns to the initial state of the setup', () => {
@@ -113,7 +113,7 @@ test('reset returns to the initial state of the setup', () => {
   playFrames(clock, 10, 17);
   controller.reset();
 
-  assert.deepEqual(controller.getState(), { status: 'idle', tick: 0, dirty: false });
+  assert.deepEqual(controller.getState(), { status: 'idle', tick: 0, dirty: false, recording: false });
   assert.deepEqual(view.last(), initial);
   assert.equal(clock.pending(), 0);
 });
@@ -126,7 +126,7 @@ test('updateSetup marks the scene dirty, resets, and markSaved clears it', () =>
   controller.updateSetup((current) => ({ ...current, seed: 99 }));
 
   assert.equal(controller.getSetup().seed, 99);
-  assert.deepEqual(controller.getState(), { status: 'idle', tick: 0, dirty: true });
+  assert.deepEqual(controller.getState(), { status: 'idle', tick: 0, dirty: true, recording: false });
 
   controller.markSaved();
   assert.equal(controller.getState().dirty, false);
@@ -165,4 +165,79 @@ test('subscribers are notified on changes and can unsubscribe', () => {
   controller.reset();
 
   assert.equal(calls, 2);
+});
+
+function recordingSink() {
+  const chunks: RecordingChunk[] = [];
+  const setups: SceneSetup[] = [];
+  let finished = 0;
+  const startRun = (runSetup: SceneSetup) => {
+    setups.push(runSetup);
+    return { push: (chunk: RecordingChunk) => chunks.push(chunk), finish: () => finished++ };
+  };
+  return { startRun, chunks, setups, finished: () => finished };
+}
+
+test('playing from idle starts a recorded run that ends on reset', () => {
+  const clock = fakeScheduler();
+  const view = recordingRenderer();
+  const sink = recordingSink();
+  const controller = new EditorController(setup(), view.renderer, clock.scheduler, sink.startRun);
+
+  controller.play();
+  assert.equal(controller.getState().recording, true);
+  assert.deepEqual(sink.setups, [setup()]);
+
+  playFrames(clock, 20, 17);
+  controller.pause();
+  controller.play();
+  playFrames(clock, 20, 17);
+  controller.reset();
+
+  assert.equal(sink.setups.length, 1);
+  assert.equal(sink.finished(), 1);
+  assert.equal(controller.getState().recording, false);
+  assert.equal(sink.chunks.at(-1)!.toTick, sink.chunks.at(-1)!.checkpoints.at(-1)!.tick);
+});
+
+test('commands sent while playing are recorded and replay to the same state', () => {
+  const clock = fakeScheduler();
+  const view = recordingRenderer();
+  const sink = recordingSink();
+  const controller = new EditorController(setup(), view.renderer, clock.scheduler, sink.startRun);
+
+  controller.play();
+  playFrames(clock, 10, 17);
+  controller.dispatch({
+    type: 'spawnEntity',
+    entity: { position: { x: 5, y: 5 }, movement: { velocityX: -10, velocityY: 3 }, appearance: { kind: 'circle', color: 1, radius: 2 } },
+  });
+  for (let i = 11; i <= 20; i++) clock.frame(i * 17);
+  controller.pause();
+  const live = view.last();
+  controller.destroy();
+
+  const commands = sink.chunks.flatMap((chunk) => chunk.commands);
+  const checkpoints = sink.chunks.flatMap((chunk) => chunk.checkpoints);
+  assert.equal(commands.length, 1);
+  assert.equal(live.entities.length, 2);
+
+  const replayed = Replayer.seek(checkpoints, commands, live.tick).getSnapshot();
+  assert.deepEqual(replayed, live);
+});
+
+test('dispatch is rejected before the simulation has started', () => {
+  const clock = fakeScheduler();
+  const controller = new EditorController(setup(), recordingRenderer().renderer, clock.scheduler);
+
+  assert.throws(() => controller.dispatch({ type: 'removeEntity', id: 1 }));
+});
+
+test('without a run starter nothing is recorded', () => {
+  const clock = fakeScheduler();
+  const controller = new EditorController(setup(), recordingRenderer().renderer, clock.scheduler, () => null);
+
+  controller.play();
+
+  assert.equal(controller.getState().recording, false);
 });

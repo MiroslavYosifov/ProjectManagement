@@ -11,6 +11,7 @@ COPY shared/package.json shared/
 COPY simulation-engine/package.json simulation-engine/
 RUN pnpm install --frozen-lockfile --filter @simulations-project-management/server...
 
+COPY simulation-engine simulation-engine
 COPY shared shared
 COPY server server
 

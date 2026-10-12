@@ -1,18 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
 import type { SceneSetup } from '@simulation-engine/core';
 import { EditorController } from '../core/EditorController';
-import { browserScheduler } from '../core/types';
+import { browserScheduler, type StartRun } from '../core/types';
 import { PixiRenderer } from '../renderer/PixiRenderer';
 import { getErrorMessage } from '../../../common/api/client';
 
 type EditorCanvasProps = {
   setup: SceneSetup;
+  startRun: StartRun;
   onControllerChange: (controller: EditorController | null) => void;
 };
 
-export default function EditorCanvas({ setup, onControllerChange }: EditorCanvasProps) {
+export default function EditorCanvas({ setup, startRun, onControllerChange }: EditorCanvasProps) {
   const hostRef = useRef<HTMLDivElement>(null);
+  const startRunRef = useRef(startRun);
   const [error, setError] = useState<string | null>(null);
+
+  startRunRef.current = startRun;
 
   useEffect(() => {
     const host = hostRef.current!;
@@ -27,7 +31,7 @@ export default function EditorCanvas({ setup, onControllerChange }: EditorCanvas
           return;
         }
         renderer = created;
-        controller = new EditorController(setup, created, browserScheduler);
+        controller = new EditorController(setup, created, browserScheduler, (runSetup) => startRunRef.current(runSetup));
         onControllerChange(controller);
       })
       .catch((err) => {

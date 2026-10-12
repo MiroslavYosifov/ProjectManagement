@@ -5,6 +5,16 @@ export class SeededRandom {
         this.state = seed >>> 0;
     }
 
+    static fromState(state: number): SeededRandom {
+        const random = new SeededRandom(0);
+        random.state = state >>> 0;
+        return random;
+    }
+
+    getState(): number {
+        return this.state;
+    }
+
     next(): number {
         this.state = (this.state + 0x6d2b79f5) >>> 0;
         let t = this.state;
